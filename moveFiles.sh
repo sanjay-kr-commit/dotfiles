@@ -17,8 +17,10 @@ FileCount=$( find $args )
 
 if [[ ${#FileCount} -ne 0 ]]
 then
-  find $args -print0 | xargs -0 mv -t $HOME
-  echo "Files moved"
+  find $args -print0 | xargs -0 cp -r -t $HOME
+  echo "Files Copied"
+  find $args -print0 | xargs -0 rm -r
+  echo "Cleaned Files"
 else
   echo "Nothing to move"
 fi
