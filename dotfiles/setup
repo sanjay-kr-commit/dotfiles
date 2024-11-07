@@ -2,26 +2,50 @@
 
 scriptPath="$(pwd)"
 
-if [[ "$BASH_SOURCE" =~ ^\.\/.* ]] ; then 
+if [[ "$BASH_SOURCE" =~ ^\.\/.* ]] ; then
   scriptPath="$scriptPath${BASH_SOURCE:1}"
 else
   scriptPath="$scriptPath/$BASH_SOURCE"
-fi 
+fi
 scriptPath="${scriptPath%/*}"
+
+if ! [[ -d "$scriptPath/.git" ]] ; then
+
+  dir="$(pwd)"
+  cd $scriptPath
+
+  for file in $(ls -a .) ; do
+
+    if [[ $file != "." && $file != ".." ]] ; then
+      mv $file ..
+    fi
+
+  done
+
+  cd ..
+  rm -r $scriptPath
+  temp="$(pwd)"
+  if [[ $scriptPath != $dir ]] ; then
+    cd $dir
+  fi
+
+  scriptPath=$temp
+
+fi
 
 worktree=""
 
-if [[ "$UID" == "0" ]] ; then 
+if [[ "$UID" == "0" ]] ; then
 
   if [[ "$#" -gt "0" && $1 == "--root" ]] ; then
     worktree="/"
-  else 
+  else
     echo "To set root as worktree"
     echo "Pass \"--root\" as first argument"
     exit
-  fi 
+  fi
 
-else 
+else
   worktree="/home/$USER"
 fi
 
@@ -39,13 +63,13 @@ echo "created alias file"
 source "$scriptPath/alias"
 
 isSaved="$(cat $worktree/.zshrc|grep "source $scriptPath/alias")"
-if [[  "${#isSaved}" == "0" ]] ; then 
+if [[  "${#isSaved}" == "0" ]] ; then
   echo "source $scriptPath/alias" >> $worktree/.zshrc
   echo "Sourced to .zshrc"
-fi 
+fi
 
 isSaved="$(cat $worktree/.bashrc|grep "source $scriptPath/alias")"
-if [[  "${#isSaved}" == "0" ]] ; then 
+if [[  "${#isSaved}" == "0" ]] ; then
   echo "source $scriptPath/alias" >> $worktree/.bashrc
   echo "Sourced to .bashrc"
-fi 
+fi
