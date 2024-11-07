@@ -7,7 +7,6 @@ if [[ "$BASH_SOURCE" =~ ^\.\/.* ]] ; then
 else
   scriptPath="$scriptPath/$BASH_SOURCE"
 fi 
-
 scriptPath="${scriptPath%/*}"
 
 worktree=""
@@ -35,3 +34,18 @@ if [[ -f "$scriptPath/alias" ]] ; then
 fi
 
 echo "alias 'dotfiles'='git --git-dir=$scriptPath/.git' " > "$scriptPath/alias"
+echo "created alias file"
+
+source "$scriptPath/alias"
+
+isSaved="$(cat $worktree/.zshrc|grep "source $scriptPath/alias")"
+if [[  "${#isSaved}" == "0" ]] ; then 
+  echo "source $scriptPath/alias" >> $worktree/.zshrc
+  echo "Sourced to .zshrc"
+fi 
+
+isSaved="$(cat $worktree/.bashrc|grep "source $scriptPath/alias")"
+if [[  "${#isSaved}" == "0" ]] ; then 
+  echo "source $scriptPath/alias" >> $worktree/.bashrc
+  echo "Sourced to .bashrc"
+fi 
