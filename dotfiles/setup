@@ -1,5 +1,15 @@
 #!/bin/bash
 
+scriptPath="$(pwd)"
+
+if [[ "$BASH_SOURCE" =~ ^\.\/.* ]] ; then 
+  scriptPath="$scriptPath${BASH_SOURCE:1}"
+else
+  scriptPath="$scriptPath/$BASH_SOURCE"
+fi 
+
+scriptPath="${scriptPath%/*}"
+
 worktree=""
 
 if [[ "$UID" == "0" ]] ; then 
@@ -19,3 +29,9 @@ fi
 git config --local core.worktree $worktree
 
 echo "worktree is set to $worktree"
+
+if [[ -f "$scriptPath/alias" ]] ; then
+  rm "$scriptPath/alias"
+fi
+
+echo "alias 'dotfiles'='git --git-dir=$scriptPath/.git' " > "$scriptPath/alias"
