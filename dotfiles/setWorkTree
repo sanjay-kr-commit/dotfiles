@@ -1,0 +1,21 @@
+#!/bin/bash
+
+worktree=""
+
+if [[ "$UID" == "0" ]] ; then 
+
+  if [[ "$#" -gt "0" && $1 == "--root" ]] ; then
+    worktree="/"
+  else 
+    echo "To set root as worktree"
+    echo "Pass \"--root\" as first argument"
+    exit
+  fi 
+
+else 
+  worktree="/home/$USER"
+fi
+
+git config --local core.worktree $worktree
+
+echo "worktree is set to $worktree"
