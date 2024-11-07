@@ -1,0 +1,70 @@
+#!/bin/bash 
+
+SYNCTHEMESCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+
+themeSyncRoot() {
+  bash $SYNCTHEMESCRIPTPATH/script askRoot
+}
+
+# ask for root
+if [[ "$UID" != "0" ]] && [[ "$1" == "askRoot" ]] ; then
+  echo "Root permission required"
+  echo -n "Enter 'y' for confirmation : "
+  read confirmation
+  if [[ "$confirmation" == "y" ]] ; then
+    sudo bash $SYNCTHEMESCRIPTPATH/script $HOME
+  fi
+fi
+
+# root acquired
+if [[ "$UID" == "0" ]] ; then
+
+  # actual sync logic if here
+  USERHOME=$1
+
+  if [[ -d "$USERHOME/.config/gtk-3.0" ]] ; then
+    rm -r "/root/.config/gtk-3.0"
+    cp -r "$USERHOME/.config/gtk-3.0" "/root/.config/"
+    echo "copied $USERHOME/.config/gtk-3.0 -> /root/.config/gtk-3.0"
+  fi
+
+  if [[ -d "$USERHOME/.config/gtk-4.0" ]] ; then
+    rm -r "/root/.config/gtk-4.0"
+    cp -r "$USERHOME/.config/gtk-4.0" "/root/.config/"
+    echo "copied $USERHOME/.config/gtk-4.0 -> /root/.config/gtk-4.0"
+  fi
+
+  if [[ -d "$USERHOME/.config/Kvantum" ]] ; then
+    rm -r "/root/.config/Kvantum"
+    cp -r "$USERHOME/.config/Kvantum" "/root/.config/"
+    echo "copied $USERHOME/.config/Kvantum -> /root/.config/Kvantum"
+  fi
+
+  if [[ -f "$USERHOME/.config/gtkrc" ]] ; then
+    rm "/root/.config/gtkrc"
+    cp "$USERHOME/.config/gtkrc" "/root/.config/"
+    echo "copied $USERHOME/.config/gtkrc -> /root/.config/gtkrc"
+  fi
+
+  if [[ -f "$USERHOME/.config/gtkrc-2.0" ]] ; then
+    rm "/root/.config/gtkrc-2.0"
+    cp "$USERHOME/.config/gtkrc-2.0" "/root/.config/"
+    echo "copied $USERHOME/.config/gtkrc-2.0 -> /root/.config/gtkrc-2.0"
+  fi 
+
+  if [[ -f "$USERHOME/.config/kdeglobals" ]] ; then
+    rm "/root/.config/kdeglobals"
+    cp "$USERHOME/.config/kdeglobals" "/root/.config/"
+    icon=$(kreadconfig6 --file /root/.config/kdeglobals --group Icons --key Theme)
+    if [[ ! -d "/root/.local/share/icons/$icon" ]] ; then
+      if [[ ! -d "/root/.local/share/icons" ]] ; then
+        mkdir -p "/root/.local/share/icons"
+      fi
+      echo "copying icon pack : $icon"
+      cp -r "$USERHOME/.local/share/icons/$icon" "/root/.local/share/icons"
+      echo "copied icon pack : $icon"
+    fi
+    echo "copied $USERHOME/.config/kdeglobals -> /root/.config/kdeglobals"
+  fi
+
+fi

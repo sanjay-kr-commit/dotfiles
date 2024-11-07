@@ -1,0 +1,46 @@
+#!/bin/bash
+
+local GITPUSHSCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+
+gitPass() {
+
+  if [[ $# == 0 ]] 
+  then
+    echo "Overridden Instructions"
+    echo ""
+    echo "Create a variable in keys file : $GITPUSHSCRIPTPATH/keys"
+    echo "With username and key seperated by space and pass that variable name to this file"
+    echo "For Ex : ' dummy=\"username gitKey\" '"
+    echo "Then pass variable name at the end of git command like this : 'git 'gitArg' dummy ' "
+    echo ""
+    git
+    return -1
+  fi 
+
+  accountVariable=$(eval "echo \$$#")
+  gitCommandSize=$#
+  gitCommandSize=$gitCommandSize-1
+  gitCommand=($@)
+  gitCommand=("${gitCommand[@]:0:$gitCommandSize}") 
+  gitCommand="git $gitCommand"
+
+  eval "source $GITPUSHSCRIPTPATH/keys"
+
+  credentials=($(eval "echo \$$accountVariable"))
+
+  if [[ "${#credentials[@]}" != "2" ]] ; then
+    echo "Either \"$accountVariable\" doesn't exist or malformed"
+    return
+  fi
+
+  if [[ $(which expect) == "expect not found" ]] ;
+  then 
+    echo "Install \"expect\" to use this function"
+    return -1
+  fi
+
+  gitCommandSize=$#
+
+  eval "expect $GITPUSHSCRIPTPATH/expect ${credentials[1]} ${credentials[2]} ${gitCommandSize} $gitCommand"
+
+}

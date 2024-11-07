@@ -1,0 +1,147 @@
+#!/bin/bash
+
+local STOREALIASSCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+
+if [[ ! -f "$STOREALIASSCRIPTPATH/STOREDALIAS" ]] ; then
+  touch "$STOREALIASSCRIPTPATH/STOREDALIAS"
+else 
+  source "$STOREALIASSCRIPTPATH/STOREDALIAS"
+fi
+
+deleteAlias() {
+
+  argv=($@)
+  argc=${#argv[@]}
+  
+  if [[ "$argc" == "0" ]] ; then 
+    echo ""
+    echo "No alias name was passed"
+    echo "storeAlias an alias"
+    echo "pass it to this function to delete it"
+    echo "for example : "
+    echo ""
+    echo "    alias hello='echo hello'"
+    echo "    storeAlias hello"
+    echo "    deleteAlias hello"
+    return
+  fi
+
+  if [[ "$argc" != "1" ]] ; then
+    for arg in ${argv[@]} ; 
+    do 
+      storeAlias $arg 
+    done
+    return 
+  fi 
+
+  arg=${argv[1]}
+  didFound=false
+
+  # to avoid overwrites
+  while IFS= read -r line; do
+    isAlias=$( echo $line |  grep -o "alias *$arg *=" )
+    if [[ "${#isAlias[@]}" != "0" ]] ; then
+      didFound=true
+    fi 
+  done < "$STOREALIASSCRIPTPATH/STOREDALIAS"
+
+  if [[ "$didFound" == "false" ]] ; then
+    "$arg not found in db"
+    return
+  fi 
+
+  echo "$arg found in db"
+  
+  if [[ -f "$STOREALIASSCRIPTPATH/STOREDALIAS.temp" ]] ; then
+    rm "$STOREALIASSCRIPTPATH/STOREDALIAS.temp"
+  fi 
+
+  touch "$STOREALIASSCRIPTPATH/STOREDALIAS.temp"
+  oldAlias=""
+
+  while IFS= read -r line; do
+    isAlias=$( echo $line |  grep "alias *$arg=" )
+    if [[ "${#isAlias[@]}" == "0" ]] ; then
+      echo $line >> "$STOREALIASSCRIPTPATH/STOREDALIAS.temp"
+    else 
+      oldAlias=$line
+    fi 
+  done < "$STOREALIASSCRIPTPATH/STOREDALIAS"
+
+  mv "$STOREALIASSCRIPTPATH/STOREDALIAS.temp" "$STOREALIASSCRIPTPATH/STOREDALIAS"
+
+  echo "remove $oldAlias from db"
+  unalias $arg
+
+}
+
+
+saveAlias() {
+
+  argv=($@)
+  argc=${#argv[@]}
+  
+  if [[ "$argc" == "0" ]] ; then 
+    echo ""
+    echo "No alias name was passed"
+    echo "create an alias"
+    echo "pass it to this function to save it"
+    echo "for example : "
+    echo ""
+    echo "    alias hello='echo hello'"
+    echo "    storeAlias hello"
+    return
+  fi
+
+  if [[ "$argc" != "1" ]] ; then
+    for arg in ${argv[@]} ; 
+    do 
+      saveAlias $arg
+    done
+    return 
+  fi 
+
+  arg=${argv[1]}
+
+  echo "saving $arg"
+  
+  Alias=$(which $arg)
+  isAlias=$( echo $Alias | grep -o "$arg *: *aliased" )
+
+  if [[ "${#isAlias}" == "0" ]] ; then 
+    echo "Not An Alias"
+    return 
+  fi  
+
+  read arr <<<"$Alias"
+  condition="$arg: aliased to "
+  str=""
+
+  if [[ "${#arr[1]}" == "1" ]] ; then 
+    offset=$((${#arg}+13))
+    newSize=${#arr[@]}
+    newSize=$(($newSize-$offset))
+    str=${arr[@]:$offset:$newSize}
+  else 
+    offset=4
+    newSize=${#arr[@]}
+    newSize=$(($newSize-$offset))
+    newSize=$(($newSize-1))
+    str=${arr[@]:$offset:$newSize}
+  fi 
+
+  if [[ ! -f "$STOREALIASSCRIPTPATH/STOREDALIAS" ]] ; then
+    touch "$STOREALIASSCRIPTPATH/STOREDALIAS"
+  fi 
+
+  echo "Delete Old Alias if found"
+  deleteAlias $arg 
+  echo "alias $arg='$str'" >> "$STOREALIASSCRIPTPATH/STOREDALIAS"
+  echo "Added New Alias to DB"
+  eval "alias $arg='$str'"
+  echo "updated alias"
+}
+
+savedAliases() {
+  cat "$STOREALIASSCRIPTPATH/STOREDALIAS"
+}

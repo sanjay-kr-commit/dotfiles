@@ -1,0 +1,108 @@
+#!/bin/bash
+
+sudo() {
+
+  sudoPath="/usr/bin/sudo"
+  newArgs=""
+  isLocal=false
+  shouldConfirm=false
+  haveExport=false
+  unaliasAlias=" "
+  updateLocalAlias=""
+  mountConfiguration=false
+
+  for arg in $@ ;
+  do  
+
+    if [[ "$arg" == "-Q" ]] ; then
+      shouldConfirm=true
+    elif [[ "$arg" == "-H" ]] || [[ "$arg" == "-h" ]]  ; then
+      echo "Argment provided by sudo script"
+      echo "You can use \"-L\" followed by local program name for using local installed program with sudo"
+      echo "You can use \"-LH\" followed by local program name for using local installed program with home configuration as sudo"
+      echo "You can use \"-Q\" for verifying parsed query before executing"
+      echo ""
+      eval "$sudoPath $arg"
+      return 0
+    elif [[ "$arg" == "-LH" ]] ; then
+      isLocal=true
+      mountConfiguration=true
+    elif [[ "$arg" == "-L" ]] ; then 
+      isLocal=true
+    elif [[ "$isLocal" == "true" ]] ; then
+      absolutePath=$(which $arg)
+      if [[ "$arg not found" == "$absolutePath" ]] ; then 
+        echo "Local program \"$arg\" not found"
+        return -1 
+      fi
+
+      isFunction=$( echo $absolutePath | grep "$arg *( *)" )
+      isFunction=${isFunction//[[:blank:]]/}
+      if [[ "$isFunction" != "" ]] ; then 
+        isFunction=${isFunction:0:(${#isFunction}-1)}
+        isFunction=${isFunction//[[:blank:]]/}
+      fi
+
+      isAlias=$( echo $absolutePath |  grep "$arg *: *aliased *to *" )
+      isAlias=( `echo ${isAlias}` )
+      isAlias=${isAlias[@]:3:(${#isAlias[@]})}
+
+      if [[ "$isFunction" != "" ]] ; then 
+        haveExport=true
+        newArgs="export $absolutePath && $newArgs sudo $arg"
+      elif [[ "${isAlias//[[:blank:]]/}" != "" ]]; then
+        haveExport=true
+        newArgs="alias $arg=\"$isAlias\" && $newArgs sudo $arg"
+        unaliasAlias="$unaliasAlias && sudo unalias $arg"
+      else
+        newArgs="$newArgs $absolutePath"
+      fi 
+
+      isLocal=false
+    else 
+      newArgs="$newArgs $arg"
+    fi
+
+  done
+
+  if [[ "$haveExport" == "true" ]] ; then 
+    newArgs=" echo -n \"\" && $newArgs $unaliasAlias"
+  fi 
+  
+  if [[ "$shouldConfirm" == "true" ]]; then
+
+    echo "sudo $newArgs"
+    echo -n "Enter \"y\" to confirm : "
+    read confirm 
+    if [[ "$confirm" != "y" ]] ; then 
+      return
+    fi
+
+  fi 
+
+  if [[ "$mountConfiguration" == "true" ]] ; then 
+    homePath=$(echo $USER)
+    if [[ "$homePath" == "root" ]] ; then
+      homePath=$(echo $SUDO_USER)
+    fi
+    homePath="/home/$homePath/"
+    mountPoint="/root/"
+    for i in $(ls -a $homePath | grep "^\\..*") ; do 
+      if [[ "$i" != "." && "$i" != ".." && ! -f "$homePath$i" ]] ; then
+        if [[ ! -d "$mountPoint$i" ]] ; then 
+          $sudoPath mkdir "$mountPoint$i"
+        fi
+        $sudoPath "mount --bind $homePath$i $mountPoint$i"
+      fi 
+    done
+    $sudoPath $newArgs
+    for i in $(ls -a $homePath | grep "^\\..*") ; do 
+      if [[ "$i" != "." && "$i" != ".." ]] ; then
+        $sudoPath umount -l "$mountPoint$i"
+      fi 
+    done
+  else 
+    eval "$sudoPath $newArgs" 
+  fi
+
+}

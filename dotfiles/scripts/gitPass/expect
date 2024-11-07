@@ -1,0 +1,24 @@
+#!/usr/bin/expect -f
+
+set USERNAME [lindex $argv 0]
+set KEY [lindex $argv 1]
+set GITCOMMANDSIZE [lindex $argv 2]
+incr GITCOMMANDSIZE
+incr GITCOMMANDSIZE
+incr GITCOMMANDSIZE
+set GITCOMMAND ""
+
+for {set x 3} {$x<$GITCOMMANDSIZE} {incr x} {
+  set TEMP [lindex $argv $x] 
+  set GITCOMMAND "$GITCOMMAND $TEMP"
+  unset TEMP
+}
+
+spawn bash -c "$GITCOMMAND"
+
+expect "Username for 'https://github.com': "
+send "$USERNAME\n"
+expect "Password for 'https://$USERNAME@github.com':"
+send "$KEY\n"
+
+interact
