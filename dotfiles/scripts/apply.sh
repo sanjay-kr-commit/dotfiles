@@ -15,7 +15,7 @@ eval "source $SCRIPTPATH/runUserBinariesWithSudo/script"
 eval "source $SCRIPTPATH/gitPass/script"
 
 # comment below line to disable flatpakAliases
-eval "source $SCRIPTPATH/flatpakAliases/script"
+eval "source $SCRIPTPATH/flatpakAlias/script"
 
 # comment below line to remove syncTheme 
 eval "source $SCRIPTPATH/syncThemeToRoot/script"

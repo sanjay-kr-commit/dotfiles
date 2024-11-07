@@ -1,0 +1,86 @@
+#!/bin/bash
+
+local ALIASFLATPAKSCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+
+aliasFlatpak() {
+
+  systemFlatpakApp=()
+  localFlatpakApp=()
+
+  if [[ -d "/var/lib/flatpak/app" ]] ; then 
+    systemFlatpakApp=($( ls /var/lib/flatpak/app ))
+  fi 
+
+  if [[ -d "$HOME/.local/share/flatpak/app" ]] ; then 
+    localFlatpakApp=($( ls $HOME/.local/share/flatpak/app ))
+  fi 
+
+  if [[ -f "$ALIASFLATPAKSCRIPTPATH/flatpakCount" ]] && [[ -f "$ALIASFLATPAKSCRIPTPATH/flatpakAliases" ]] ; then
+    previousCount=($( cat "$ALIASFLATPAKSCRIPTPATH/flatpakCount" ))
+    if [[ "${previousCount[1]}" == "${#systemFlatpakApp[@]}" ]] && [[ "${previousCount[2]}" == "${#localFlatpakApp[@]}" ]] ; then 
+      eval "source $ALIASFLATPAKSCRIPTPATH/flatpakAliases"
+      return
+    fi
+  fi 
+
+  if [[ -f "$ALIASFLATPAKSCRIPTPATH/flatpakCount" ]] ; then
+    rm "$ALIASFLATPAKSCRIPTPATH/flatpakCount"
+  fi 
+
+  if [[ -f "$ALIASFLATPAKSCRIPTPATH/flatpakAliases" ]] ; then 
+    rm "$ALIASFLATPAKSCRIPTPATH/flatpakAliases"
+  fi
+
+  touch "$ALIASFLATPAKSCRIPTPATH/flatpakCount" "$ALIASFLATPAKSCRIPTPATH/flatpakAliases"
+
+  echo "${#systemFlatpakApp[@]} ${#localFlatpakApp[@]} last updated on $(date)" > "$ALIASFLATPAKSCRIPTPATH/flatpakCount"
+  echo "#!/bin/bash" >> "$ALIASFLATPAKSCRIPTPATH/flatpakAliases" 
+
+  # alias systemFlatpaks 
+  for packageName in ${systemFlatpakApp[@]} ;
+  do 
+    
+    appName=$( flatpak info $packageName | grep -o ".* -" )
+    appName=${appName:0:(${#appName}-2)}
+    appName=(`echo ${appName}`)
+    if [[ ${appName[1]} =~ [A-Z] ]]; then
+      lower=$(echo ${appName[1]} | tr '[:upper:]' '[:lower:]')
+      appName="$lower${appName[@]:1:(${#appName[@]})}"
+    fi
+    appName=${appName[@]}
+    appName=${appName//[[:blank:]]/}
+
+    echo "alias $appName='flatpak run $packageName'" >> "$ALIASFLATPAKSCRIPTPATH/flatpakAliases"
+
+  done 
+
+  # alias localFlatpaks 
+  for packageName in ${locakFlatpakApp[@]} ;
+  do 
+
+    appName=$( flatpak info $packageName | grep -o ".* -" )
+    appName=${appName:0:(${#appName}-2)}
+    appName=(`echo ${appName}`)
+    if [[ ${appName[1]} =~ [A-Z] ]]; then
+      lower=$(echo ${appName[1]} | tr '[:upper:]' '[:lower:]')
+      appName="$lower${appName[@]:1:(${#appName[@]})}"
+    fi
+    appName=${appName[@]}
+    appName=${appName//[[:blank:]]/}
+
+    echo "alias $appName='flatpak run $packageName'" >> "$ALIASFLATPAKSCRIPTPATH/flatpakAliases"
+  
+  done 
+
+  eval "source $ALIASFLATPAKSCRIPTPATH/flatpakAliases"
+
+}
+
+aliasFlatpak
+
+unset ALIASFLATPAKSCRIPTPATH
+unset -f aliasFlatpak
+
+flatpakAliases() {
+  alias | grep "flatpak run " | less
+}
