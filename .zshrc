@@ -20,7 +20,7 @@ else
   fortune | cowsay > /dev/shm/ascii
   #fortune | pokemonsay > /dev/shm/ascii
 fi
-fastfetch --file /dev/shm/ascii | lolcat --animate --duration=2 -t
+fastfetch --file /dev/shm/ascii | lolcat --animate --duration=1 -t
 #macchina --theme cowthink | lolcat --animate --duration=2 -t
 rm /dev/shm/ascii
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
