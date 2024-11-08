@@ -6,8 +6,8 @@ fi
 export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
 export HOMEBREW_NO_ENV_HINTS=true
 # print info
-if [[ "$(which cowsay)" == "cowsay not found" || "$(which macchina)" == "macchina not found" || "$(which fortune)" == "fortune not found" || "$(which cowthink)" == "cowthink not found" || "$(which lolcat)" == "lolcat not found" ]] ; then
-  brew install cowthink fortune macchina lolcat
+if [[ "$(which cowsay)" == "cowsay not found" || "$(which fastfetch)" == "fastfetch not found" || "$(which fortune)" == "fortune not found" || "$(which cowthink)" == "cowthink not found" || "$(which lolcat)" == "lolcat not found" ]] ; then
+  brew install cowthink fortune fastfetch lolcat
   clear
 fi 
 if [[ "$(which pacstall)" == "pacstall not found" ]] ; then
@@ -19,8 +19,9 @@ if [[ "$(( $RANDOM % 2 ))" == "1" ]] ; then
 else 
   fortune | cowsay > /dev/shm/ascii
   #fortune | pokemonsay > /dev/shm/ascii
-fi 
-macchina --theme cowthink | lolcat --animate --duration=2 -t
+fi
+fastfetch --file /dev/shm/ascii | lolcat --animate --duration=2 -t
+#macchina --theme cowthink | lolcat --animate --duration=2 -t
 rm /dev/shm/ascii
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
