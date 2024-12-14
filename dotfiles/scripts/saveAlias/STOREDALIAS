@@ -11,4 +11,5 @@ alias dotpush='currentDir=$(pwd) && cd $HOME/dotfiles && push && cd $currentDir 
 alias gitRemove='git rm --cached'
 alias c+='zig c++'
 alias updateList='apt list --upgradable| less'
-alias ratemirror='rate-mirrors arch | sudo tee /etc/pacman.d/mirrorlist && rate-mirrors endeavouros | sudo tee /etc/pacman.d/endeavouros-mirrorlist && sudo pacman -Syyu'
+alias ratemirror='rate-mirrors arch | sudo tee /etc/pacman.d/mirrorlist && rate-mirrors endeavouros | sudo tee /etc/pacman.d/endeavouros-mirrorlist'
+alias ratemirrorandupdate='rate-mirrors arch | sudo tee /etc/pacman.d/mirrorlist && rate-mirrors endeavouros | sudo tee /etc/pacman.d/endeavouros-mirrorlist && eos-update --aur'
