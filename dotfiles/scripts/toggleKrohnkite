@@ -1,0 +1,18 @@
+#!/bin/env bash
+
+current=`kreadconfig6 --file kwinrc --group Plugins --key krohnkiteEnabled`
+
+if [ $current = "true" ]; then
+  xdotool key super+shift+f
+  sleep 0.2
+  kwriteconfig6 --file kwinrc --group Plugins --key krohnkiteEnabled false
+  sleep 0.2
+  notify-send "Disabled Krohnkite"
+elif [ $current = "false" ]; then
+  kwriteconfig6 --file kwinrc --group Plugins --key krohnkiteEnabled true
+  sleep 0.2
+  notify-send "Enabled Krohnkite"
+fi
+
+sleep 0.2
+qdbus6 org.kde.KWin /KWin reconfigure
