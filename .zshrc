@@ -143,8 +143,6 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias qdbusviewer='/usr/lib/qt6/bin/qdbusviewer'
-alias btop='btop --utf-force'
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
@@ -169,11 +167,3 @@ fi
 source /home/sanjay/dotfiles/scripts/apply.sh
 export PATH=$HOME/.local/bin:$PATH
 source /home/sanjay/dotfiles/alias
-
-#if [[ "$TMUX" -eq "" ]] ; then
-#  if [[ "$(tmux ls | grep "main-session" )" -eq "" ]] ; then 
-#    tmux new -s main-session
-#  else 
-#    tmux attach
-#  fi
-#fi 
