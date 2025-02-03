@@ -1,3 +1,11 @@
+if [[ ! -v TMUX ]] ; then 
+  if [[ "$(tmux ls | grep "main-session")" == "" ]] ; then
+    tmux -u new -s main-session && exit
+  else 
+    notify-send --app-name="Tmux" "Session Restored"
+    tmux -u attach && exit
+  fi
+fi 
 # home brew path export
 if [[ ! -d "/home/linuxbrew" ]] ; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -5,24 +13,28 @@ if [[ ! -d "/home/linuxbrew" ]] ; then
 fi
 export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
 export HOMEBREW_NO_ENV_HINTS=true
-# print info
-if [[ "$(which cowsay)" == "cowsay not found" || "$(which fastfetch)" == "fastfetch not found" || "$(which fortune)" == "fortune not found" || "$(which cowthink)" == "cowthink not found" || "$(which lolcat)" == "lolcat not found" ]] ; then
-  brew install cowthink fortune fastfetch lolcat
-  clear
-fi 
-if [[ "$(which pacstall)" == "pacstall not found" ]] ; then
-  bash -c "sudo bash -c \"\$(curl -fsSL https://pacstall.dev/q/install || wget -q https://pacstall.dev/q/install -O -)\""
-fi
-if [[ "$(( $RANDOM % 2 ))" == "1" ]] ; then 
-  fortune | cowthink > /dev/shm/ascii
-  #fortune | pokemonthink > /dev/shm/ascii
-else 
-  fortune | cowsay > /dev/shm/ascii
-  #fortune | pokemonsay > /dev/shm/ascii
-fi
-fastfetch --file /dev/shm/ascii | lolcat --animate --duration=1 -t
-#macchina --theme cowthink | lolcat --animate --duration=2 -t
-rm /dev/shm/ascii
+
+## print info
+#if [[ "$(which cowsay)" == "cowsay not found" || "$(which fastfetch)" == "fastfetch not found" || "$(which fortune)" == "fortune not found" || "$(which cowthink)" == "cowthink not found" || "$(which lolcat)" == "lolcat not found" ]] ; then
+#  brew install cowthink fortune fastfetch lolcat
+#  clear
+#fi 
+##if [[ "$(which pacstall)" == "pacstall not found" ]] ; then
+##  bash -c "sudo bash -c \"\$(curl -fsSL https://pacstall.dev/q/install || wget -q https://pacstall.dev/q/install -O -)\""
+##fi
+#if [[ "$(( $RANDOM % 2 ))" == "1" ]] ; then 
+#  fortune | cowthink > /dev/shm/ascii
+#  #fortune | pokemonthink > /dev/shm/ascii
+#else 
+#  fortune | cowsay > /dev/shm/ascii
+#  #fortune | pokemonsay > /dev/shm/ascii
+#fi
+#fastfetch --file /dev/shm/ascii
+##macchina --theme cowthink | lolcat --animate --duration=2 -t
+#rm /dev/shm/ascii
+
+fastfetch
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -157,3 +169,11 @@ fi
 source /home/sanjay/dotfiles/scripts/apply.sh
 export PATH=$HOME/.local/bin:$PATH
 source /home/sanjay/dotfiles/alias
+
+#if [[ "$TMUX" -eq "" ]] ; then
+#  if [[ "$(tmux ls | grep "main-session" )" -eq "" ]] ; then 
+#    tmux new -s main-session
+#  else 
+#    tmux attach
+#  fi
+#fi 
