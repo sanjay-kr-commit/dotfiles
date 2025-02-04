@@ -1,11 +1,35 @@
-if [[ ! -v TMUX ]] ; then 
-  if [[ "$(tmux ls | grep "main-session")" == "" ]] ; then
-    tmux -u new -s main-session && exit
+notifySessionStatusAndExitTmux() {
+  if [[ "$(tmux ls | grep "session $sessionId" | wc -l)" == "0" ]] ; then
+    notify-send --app-name="Tmux" "session $sessionId exited"
   else 
-    notify-send --app-name="Tmux" "Session Restored"
-    tmux -u attach && exit
+    notify-send --app-name="Tmux" "session $sessionId detached"
+  fi 
+  exit
+}
+
+if [[ ! -v TMUX ]] ; then
+  sessionCount="$(tmux ls | wc -l)"
+  if [[ $sessionCount == "0" ]] ; then
+    sessionId=1
+    tmux -u new -s "session 1" && notifySessionStatusAndExitTmux
+  else
+    sessionId=$((sessionCount+1))
+    while [ $sessionId -gt 0 ] && [ "$(tmux ls | grep "session $sessionId" | wc -l)" != "0" ] ;
+    do 
+      sessionId=$((sessionId-1))
+    done
+    if [[ $sessionId == "0" ]] ; then
+      sessionId=$((sessionCount+1))
+      while [ "$(tmux ls | grep "session $sessionId" | wc -l)" != "0" ] ;
+      do 
+        sessionId=$((sessionId+1))
+      done
+    fi
+    notify-send --app-name="Tmux" "$sessionCount Sessions Found"
+    tmux -u new -s "session $sessionId" && notifySessionStatusAndExitTmux
   fi
 fi 
+
 # home brew path export
 if [[ ! -d "/home/linuxbrew" ]] ; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
