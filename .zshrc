@@ -9,12 +9,12 @@ notifySessionStatusAndExitTmux() {
 
 if [[ ! -v TMUX ]] ; then
   tmuxls="$(tmux ls)"
-  sessionCount="$(echo $tmuxls | wc -l)"
-  if [[ $sessionCount == "0" ]] ; then
+  if [ -z $tmuxls ] ; then
     sessionId=1
     tmux -u new -s "session 1" && notifySessionStatusAndExitTmux
   else
-    sessionId=$((sessionCount+1))
+    sessionId="$(echo $tmuxls | wc -l)"
+    sessionId=$((sessionId+1))
     detachedSessionCount="$(echo $tmuxls | grep "(attached)" | wc -l )"
     detachedSessionCount=$((sessionCount-$detachedSessionCount))
     detchedSessionFound=false
