@@ -13,8 +13,8 @@ if [[ ! -v TMUX ]] ; then
     sessionId=1
     tmux -u new -s "session 1" && notifySessionStatusAndExitTmux
   else
-    sessionId="$(echo $tmuxls | wc -l)"
-    sessionId=$((sessionId+1))
+    sessionCount="$(echo $tmuxls | wc -l)"
+    sessionId=$((sessionCount+1))
     detachedSessionCount="$(echo $tmuxls | grep "(attached)" | wc -l )"
     detachedSessionCount=$((sessionCount-$detachedSessionCount))
     detchedSessionFound=false
