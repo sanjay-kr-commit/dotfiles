@@ -30,11 +30,17 @@ if [[ ! -v TMUX ]] ; then
   fi
 fi 
 
+if [ ! -d "$HOME/.tmux/plugins/tpm" ] && [ ! -v TMUX ] ; then
+  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+  tmux source ~/.tmux.conf
+fi
+
 # home brew path export
 if [[ ! -d "/home/linuxbrew" ]] ; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   clear
 fi
+
 export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin
 export HOMEBREW_NO_ENV_HINTS=true
 
