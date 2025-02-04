@@ -1,31 +1,53 @@
 notifySessionStatusAndExitTmux() {
   if [[ "$(tmux ls | grep "session $sessionId" | wc -l)" == "0" ]] ; then
-    notify-send --app-name="Tmux" "session $sessionId exited"
+    notify-send -t 10000 --app-name="Tmux" "session $sessionId exited"
   else 
-    notify-send --app-name="Tmux" "session $sessionId detached"
+    notify-send -t 10000 --app-name="Tmux" "session $sessionId detached"
   fi 
   exit
 }
 
 if [[ ! -v TMUX ]] ; then
-  sessionCount="$(tmux ls | wc -l)"
+  tmuxls="$(tmux ls)"
+  sessionCount="$(echo $tmuxls | wc -l)"
   if [[ $sessionCount == "0" ]] ; then
     sessionId=1
     tmux -u new -s "session 1" && notifySessionStatusAndExitTmux
   else
     sessionId=$((sessionCount+1))
-    while [ $sessionId -gt 0 ] && [ "$(tmux ls | grep "session $sessionId" | wc -l)" != "0" ] ;
+    detachedSessionCount="$(echo $tmuxls | grep "(attached)" | wc -l )"
+    detachedSessionCount=$((sessionCount-$detachedSessionCount))
+    detchedSessionFound=false
+    # look for detached session 
+    if [[ $detachedSessionCount != "0" ]] ; then 
+      while read -r line; do
+        if [[ "$(echo $line | grep "attached" | wc -l )" == 0 ]] ; then 
+          # found detched session 
+          sessionId=$(echo $line|grep -o 'session [0-9a-zA-Z]*')
+          detchedSessionFound=true 
+        fi 
+      done <<< $tmuxls
+    fi 
+    if [[ $detchedSessionFound == true ]] ; then 
+      if [[ "$detachedSessionCount" != "0" ]] ; then
+        notify-send -t 10000 --app-name="Tmux" "$detachedSessionCount detached sessions found"
+      fi 
+      notify-send -t 10000 --app-name="Tmux" "Reattached $sessionId"
+      tmux -u attach -t $sessionId && notifySessionStatusAndExitTmux
+    fi 
+    # look lower number that might be available
+    while [ $sessionId -gt 0 ] && [ "$(echo $tmuxls | grep "session $sessionId" | wc -l)" != "0" ] ;
     do 
       sessionId=$((sessionId-1))
     done
+    # look for new session number
     if [[ $sessionId == "0" ]] ; then
       sessionId=$((sessionCount+1))
-      while [ "$(tmux ls | grep "session $sessionId" | wc -l)" != "0" ] ;
+      while [ "$(echo $tmuxls | grep "session $sessionId" | wc -l)" != "0" ] ;
       do 
         sessionId=$((sessionId+1))
       done
     fi
-    notify-send --app-name="Tmux" "$sessionCount Sessions Found"
     tmux -u new -s "session $sessionId" && notifySessionStatusAndExitTmux
   fi
 fi 
