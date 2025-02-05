@@ -83,3 +83,4 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
 
 -- calender keymap
 keymap.set( "n" , "<leader>cc" , ":Calendar<CR>" )
+keymap.set( "n" , "<leader>cd" , ":Calendar -day<CR>" )

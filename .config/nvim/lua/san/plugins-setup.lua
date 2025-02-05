@@ -25,6 +25,17 @@ end
 -- add list of plugins to install
 packer.startup(function(use)
 
+  -- dashboard
+  use {
+    'nvimdev/dashboard-nvim',
+    event = 'VimEnter',
+    config = function()
+      require('dashboard').setup {
+      }
+    end,
+    requires = {'nvim-tree/nvim-web-devicons'}
+  }
+
   -- packer can manage itself
   use("wbthomason/packer.nvim")
 
