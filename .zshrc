@@ -1,8 +1,8 @@
 notifySessionStatusAndExitTmux() {
-  if [[ "$(tmux ls | grep "session $sessionId" | wc -l)" == "0" ]] ; then
-    notify-send -t 10000 --app-name="Tmux" "session $sessionId exited"
+  if [[ "$(tmux ls | grep $sessionId | wc -l)" == "0" ]] ; then
+    notify-send -t 10000 --app-name="Tmux" "$sessionId exited"
   else 
-    notify-send -t 10000 --app-name="Tmux" "session $sessionId detached"
+    notify-send -t 10000 --app-name="Tmux" "$sessionId detached"
   fi 
   exit
 }
@@ -10,7 +10,7 @@ notifySessionStatusAndExitTmux() {
 if [[ ! -v TMUX ]] ; then
   tmuxls="$(tmux ls)"
   if [ -z $tmuxls ] ; then
-    sessionId=1
+    sessionId="session 1"
     tmux -u new -s "session 1" && notifySessionStatusAndExitTmux
   else
     sessionCount="$(echo $tmuxls | wc -l)"
@@ -48,7 +48,8 @@ if [[ ! -v TMUX ]] ; then
         sessionId=$((sessionId+1))
       done
     fi
-    tmux -u new -s "session $sessionId" && notifySessionStatusAndExitTmux
+    sessionId="session $sessionId"
+    tmux -u new -s $sessionId && notifySessionStatusAndExitTmux
   fi
 fi 
 
