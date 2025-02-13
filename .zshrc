@@ -85,8 +85,8 @@ export HOMEBREW_NO_ENV_HINTS=true
 #fastfetch --file /dev/shm/ascii
 ##macchina --theme cowthink | lolcat --animate --duration=2 -t
 #rm /dev/shm/ascii
-
-fastfetch
+#fastfetch
+pokemon-colorscripts-go --no-title | fastfetch --file -
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
