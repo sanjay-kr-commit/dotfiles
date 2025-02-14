@@ -220,3 +220,5 @@ fi
 source /home/sanjay/dotfiles/scripts/apply.sh
 export PATH=$HOME/.local/bin:$PATH
 source /home/sanjay/dotfiles/alias
+eval "$(zoxide init zsh)"
+alias cd='z'
