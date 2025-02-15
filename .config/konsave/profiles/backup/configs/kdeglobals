@@ -21,13 +21,13 @@ IntensityAmount=0
 IntensityEffect=0
 
 [Colors:Button]
-BackgroundAlternate=153,84,109
-BackgroundNormal=#3c3b3e
-DecorationFocus=193,96,130
-DecorationHover=193,96,130
-ForegroundActive=193,96,130
-ForegroundInactive=#918ea4
-ForegroundLink=229,195,204
+BackgroundAlternate=#69697a
+BackgroundNormal=#393b3e
+DecorationFocus=#ffffff
+DecorationHover=#ffffff
+ForegroundActive=#e5e1e7
+ForegroundInactive=#908fa3
+ForegroundLink=#ffffff
 ForegroundNegative=#ffffff
 ForegroundNeutral=#ffffff
 ForegroundNormal=#e5e1e7
@@ -37,28 +37,28 @@ ForegroundVisited=#ffffff
 [Colors:Complementary]
 BackgroundAlternate=#1a191c
 BackgroundNormal=#2c2831
-DecorationFocus=193,96,130
-DecorationHover=193,96,130
-ForegroundActive=193,96,130
-ForegroundInactive=#918ea4
-ForegroundLink=229,195,204
+DecorationFocus=#ffffff
+DecorationHover=#ffffff
+ForegroundActive=#e5e1e7
+ForegroundInactive=#908fa3
+ForegroundLink=#ffffff
 ForegroundNegative=#ffffff
 ForegroundNeutral=#ffffff
-ForegroundNormal=#c9c4da
+ForegroundNormal=#c6c4db
 ForegroundPositive=#ffffff
 ForegroundVisited=#ffffff
 
 [Colors:Header]
 BackgroundAlternate=#2c2831
 BackgroundNormal=#2c2831
-DecorationFocus=193,96,130
-DecorationHover=193,96,130
-ForegroundActive=193,96,130
-ForegroundInactive=#918ea4
-ForegroundLink=229,195,204
+DecorationFocus=#ffffff
+DecorationHover=#ffffff
+ForegroundActive=#e5e1e7
+ForegroundInactive=#908fa3
+ForegroundLink=#ffffff
 ForegroundNegative=#ffffff
 ForegroundNeutral=#ffffff
-ForegroundNormal=#c9c4da
+ForegroundNormal=#c6c4db
 ForegroundPositive=#ffffff
 ForegroundVisited=#ffffff
 
@@ -68,36 +68,36 @@ BackgroundNormal=#2c2831
 DecorationFocus=#ffffff
 DecorationHover=#ffffff
 ForegroundActive=#e5e1e7
-ForegroundInactive=#918ea4
+ForegroundInactive=#908fa3
 ForegroundLink=#ffffff
 ForegroundNegative=#ffffff
 ForegroundNeutral=#ffffff
-ForegroundNormal=#c9c4da
+ForegroundNormal=#c6c4db
 ForegroundPositive=#ffffff
 ForegroundVisited=#ffffff
 
 [Colors:Selection]
-BackgroundAlternate=142,74,99
-BackgroundNormal=142,74,99
-DecorationFocus=193,96,130
-DecorationHover=193,96,130
-ForegroundActive=193,96,130
-ForegroundInactive=255,255,255
-ForegroundLink=141,70,95
+BackgroundAlternate=#ffffff
+BackgroundNormal=#ffffff
+DecorationFocus=#ffffff
+DecorationHover=#ffffff
+ForegroundActive=#2a2b5f
+ForegroundInactive=#2a2b5f
+ForegroundLink=#004b73
 ForegroundNegative=#920023
 ForegroundNeutral=#753400
-ForegroundNormal=255,255,255
+ForegroundNormal=#2a2b5f
 ForegroundPositive=#005228
 ForegroundVisited=#74009f
 
 [Colors:Tooltip]
 BackgroundAlternate=#69697a
 BackgroundNormal=#2c2831
-DecorationFocus=193,96,130
-DecorationHover=193,96,130
-ForegroundActive=193,96,130
-ForegroundInactive=#918ea4
-ForegroundLink=229,195,204
+DecorationFocus=#ffffff
+DecorationHover=#ffffff
+ForegroundActive=#e5e1e7
+ForegroundInactive=#908fa3
+ForegroundLink=#ffffff
 ForegroundNegative=#ffffff
 ForegroundNeutral=#ffffff
 ForegroundNormal=#e5e1e7
@@ -107,11 +107,11 @@ ForegroundVisited=#ffffff
 [Colors:View]
 BackgroundAlternate=#2c2831
 BackgroundNormal=#1a191c
-DecorationFocus=193,96,130
-DecorationHover=193,96,130
-ForegroundActive=193,96,130
-ForegroundInactive=#918ea4
-ForegroundLink=229,195,204
+DecorationFocus=#ffffff
+DecorationHover=#585892
+ForegroundActive=#e5e1e7
+ForegroundInactive=#908fa3
+ForegroundLink=#ffffff
 ForegroundNegative=#ffffff
 ForegroundNeutral=#ffffff
 ForegroundNormal=#e5e1e7
@@ -121,25 +121,25 @@ ForegroundVisited=#ffffff
 [Colors:Window]
 BackgroundAlternate=#69697a
 BackgroundNormal=#2c2831
-DecorationFocus=193,96,130
-DecorationHover=193,96,130
-ForegroundActive=193,96,130
-ForegroundInactive=#918ea4
-ForegroundLink=229,195,204
+DecorationFocus=#ffffff
+DecorationHover=#ffffff
+ForegroundActive=#ffffff
+ForegroundInactive=#908fa3
+ForegroundLink=#ffffff
 ForegroundNegative=#ffffff
 ForegroundNeutral=#ffffff
-ForegroundNormal=#c9c4da
+ForegroundNormal=#c6c4db
 ForegroundPositive=#ffffff
 ForegroundVisited=#ffffff
 
 [DirSelect Dialog]
-DirSelectDialog Size=865,586
+DirSelectDialog Size=952,1032
 History Items[$e]=file:$HOME/Kvantum/Kora,file:$HOME/Windows11-Twilight,file:$HOME/Win12OS-dark,file:$HOME/kdeconnect,file:$HOME/Videos/popcorn-time
 
 [General]
-AccentColor=193,96,130
+AccentColor=0,0,0,0
 ColorScheme=MaterialYouDark
-ColorSchemeHash=7f77ee51473dd0824abf5cf83db5ebff01cbc03a
+ColorSchemeHash=58b01ec8e79daa0f5c566415fe1952a14550414e
 accentColorFromWallpaper=true
 
 [Icons]
@@ -165,7 +165,7 @@ Sort by=Name
 Sort directories first=true
 Sort hidden files last=false
 Sort reversed=false
-Speedbar Width=140
+Speedbar Width=183
 View Style=Simple
 
 [PreviewSettings]
@@ -175,9 +175,6 @@ MaximumRemoteSize=0
 [Shortcuts]
 Quit=Meta+Ctrl+Shift+Q
 
-[Sounds]
-Theme=freedesktop
-
 [WM]
 activeBackground=75,75,81
 activeBlend=252,252,252
@@ -185,4 +182,3 @@ activeForeground=229,225,231
 inactiveBackground=106,104,129
 inactiveBlend=161,169,177
 inactiveForeground=225,220,251
-

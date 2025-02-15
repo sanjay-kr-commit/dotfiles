@@ -1,0 +1,185 @@
+[ColorEffects:Disabled]
+ChangeSelectionColor=
+Color=#2b2a2d
+ColorAmount=0.5
+ColorEffect=3
+ContrastAmount=0
+ContrastEffect=0
+Enable=
+IntensityAmount=0
+IntensityEffect=0
+
+[ColorEffects:Inactive]
+ChangeSelectionColor=true
+Color=#101114
+ColorAmount=0.025
+ColorEffect=0
+ContrastAmount=0.1
+ContrastEffect=0
+Enable=true
+IntensityAmount=0
+IntensityEffect=0
+
+[Colors:Button]
+BackgroundAlternate=80,120,146
+BackgroundNormal=#393b3e
+DecorationFocus=91,147,182
+DecorationHover=91,147,182
+ForegroundActive=91,147,182
+ForegroundInactive=#8c90a1
+ForegroundLink=178,212,238
+ForegroundNegative=#ffffff
+ForegroundNeutral=#ffffff
+ForegroundNormal=#e4e2e6
+ForegroundPositive=#ffffff
+ForegroundVisited=#ffffff
+
+[Colors:Complementary]
+BackgroundAlternate=#18171a
+BackgroundNormal=#2b2a2d
+DecorationFocus=91,147,182
+DecorationHover=91,147,182
+ForegroundActive=91,147,182
+ForegroundInactive=#8c90a1
+ForegroundLink=178,212,238
+ForegroundNegative=#ffffff
+ForegroundNeutral=#ffffff
+ForegroundNormal=#c3c6d7
+ForegroundPositive=#ffffff
+ForegroundVisited=#ffffff
+
+[Colors:Header]
+BackgroundAlternate=#2b2a2d
+BackgroundNormal=#2b2a2d
+DecorationFocus=91,147,182
+DecorationHover=91,147,182
+ForegroundActive=91,147,182
+ForegroundInactive=#8c90a1
+ForegroundLink=178,212,238
+ForegroundNegative=#ffffff
+ForegroundNeutral=#ffffff
+ForegroundNormal=#c3c6d7
+ForegroundPositive=#ffffff
+ForegroundVisited=#ffffff
+
+[Colors:Header][Inactive]
+BackgroundAlternate=#2b2a2d
+BackgroundNormal=#2b2a2d
+DecorationFocus=#ffffff
+DecorationHover=#ffffff
+ForegroundActive=#e4e2e6
+ForegroundInactive=#8c90a1
+ForegroundLink=#ffffff
+ForegroundNegative=#ffffff
+ForegroundNeutral=#ffffff
+ForegroundNormal=#c3c6d7
+ForegroundPositive=#ffffff
+ForegroundVisited=#ffffff
+
+[Colors:Selection]
+BackgroundAlternate=70,109,135
+BackgroundNormal=70,109,135
+DecorationFocus=91,147,182
+DecorationHover=91,147,182
+ForegroundActive=91,147,182
+ForegroundInactive=255,255,255
+ForegroundLink=66,107,133
+ForegroundNegative=#920023
+ForegroundNeutral=#753400
+ForegroundNormal=255,255,255
+ForegroundPositive=#005228
+ForegroundVisited=#74009f
+
+[Colors:Tooltip]
+BackgroundAlternate=#66667a
+BackgroundNormal=#2b2a2d
+DecorationFocus=91,147,182
+DecorationHover=91,147,182
+ForegroundActive=91,147,182
+ForegroundInactive=#8c90a1
+ForegroundLink=178,212,238
+ForegroundNegative=#ffffff
+ForegroundNeutral=#ffffff
+ForegroundNormal=#e4e2e6
+ForegroundPositive=#ffffff
+ForegroundVisited=#ffffff
+
+[Colors:View]
+BackgroundAlternate=#2b2a2d
+BackgroundNormal=#18171a
+DecorationFocus=91,147,182
+DecorationHover=91,147,182
+ForegroundActive=91,147,182
+ForegroundInactive=#8c90a1
+ForegroundLink=91,147,182
+ForegroundNegative=#ffffff
+ForegroundNeutral=#ffffff
+ForegroundNormal=#e4e2e6
+ForegroundPositive=#ffffff
+ForegroundVisited=#ffffff
+
+[Colors:Window]
+BackgroundAlternate=#66667a
+BackgroundNormal=#2b2a2d
+DecorationFocus=91,147,182
+DecorationHover=91,147,182
+ForegroundActive=91,147,182
+ForegroundInactive=#8c90a1
+ForegroundLink=178,212,238
+ForegroundNegative=#ffffff
+ForegroundNeutral=#ffffff
+ForegroundNormal=#c3c6d7
+ForegroundPositive=#ffffff
+ForegroundVisited=#ffffff
+
+[DirSelect Dialog]
+DirSelectDialog Size=952,1032
+History Items[$e]=file:$HOME/Kvantum/Kora,file:$HOME/Windows11-Twilight,file:$HOME/Win12OS-dark,file:$HOME/kdeconnect,file:$HOME/Videos/popcorn-time
+
+[General]
+AccentColor=91,147,182
+ColorScheme=MaterialYouDark
+ColorSchemeHash=349516555bff969b6a5943b1d7f2b5f9a8e2b12f
+accentColorFromWallpaper=true
+
+[Icons]
+Theme=kora
+
+[KDE]
+widgetStyle=kvantum-dark
+
+[KFileDialog Settings]
+Allow Expansion=false
+Automatically select filename extension=true
+Breadcrumb Navigation=false
+Decoration position=2
+LocationCombo Completionmode=5
+PathCombo Completionmode=5
+Show Bookmarks=false
+Show Full Path=false
+Show Inline Previews=true
+Show Preview=false
+Show Speedbar=true
+Show hidden files=false
+Sort by=Name
+Sort directories first=true
+Sort hidden files last=false
+Sort reversed=false
+Speedbar Width=183
+View Style=Simple
+
+[PreviewSettings]
+EnableRemoteFolderThumbnail=false
+MaximumRemoteSize=0
+
+[Shortcuts]
+Quit=Meta+Ctrl+Shift+Q
+
+[WM]
+activeBackground=75,75,81
+activeBlend=252,252,252
+activeForeground=228,226,230
+inactiveBackground=98,104,124
+inactiveBlend=161,169,177
+inactiveForeground=219,223,246
+

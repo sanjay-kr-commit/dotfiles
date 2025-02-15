@@ -1,3 +1,6 @@
+[Activities][LastVirtualDesktop]
+22b82f82-d3fc-4e9a-b2e8-ba4c3c658527=42afb56e-733e-434b-b781-31e8d6557bd0
+
 [Desktops]
 Id_1=43e7f1b2-e6c5-4400-9c48-7e5034e2b508
 Id_2=bdd0a9db-3493-48ff-8225-7ff01c85c315
@@ -18,6 +21,9 @@ Name_8=Desktop 6
 Number=8
 Rows=1
 
+[Effect-blur]
+BlurStrength=7
+
 [Effect-hidecursor]
 InactivityDuration=15
 
@@ -34,7 +40,7 @@ kwin4_effect_geometry_changeEnabled=true
 kzonesEnabled=true
 macsimize6Enabled=false
 magiclampEnabled=true
-me.kroltan.quakewindowEnabled=false
+me.kroltan.quakewindowEnabled=true
 morphing_popupsEnabled=true
 mouseclickEnabled=true
 mousemarkEnabled=true
@@ -46,12 +52,21 @@ squashEnabled=false
 translucencyEnabled=true
 wobblywindowsEnabled=true
 
+[Round-Corners]
+DisableRoundMaximize=false
+DisableRoundTile=false
+InactiveOutlineColor=0,0,0
+InactiveOutlineThickness=0.75
+OutlineColor=0,0,0
+OutlineThickness=0.75
+
 [Script-krohnkite]
 enableBTreeLayout=true
 enableFloatingLayout=true
 enableQuarterLayout=true
 enableStackedLayout=true
 ignoreActivity=Main
+ignoreClass=krunner,yakuake,spectacle,kded5,xwaylandvideobridge,plasmashell,ksplashqml,org.kde.plasmashell,org.kde.polkit-kde-authentication-agent-1,org.kde.kruler,kruler,kvantummanager
 noTileBorder=true
 screenGapBottom=5
 screenGapLeft=5

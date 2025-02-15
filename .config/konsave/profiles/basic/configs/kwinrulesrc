@@ -1,0 +1,21 @@
+[2f94e5de-85a8-49ee-9989-0fc08b55229b]
+Description=Application settings for org.kde.konsole
+position=264,184
+positionrule=3
+size=1281,679
+sizerule=3
+wmclass=konsole org.kde.konsole
+wmclasscomplete=true
+wmclassmatch=1
+
+[General]
+count=2
+rules=c3b7fde3-7c0b-45eb-bbac-874c9a735b82,2f94e5de-85a8-49ee-9989-0fc08b55229b
+
+[c3b7fde3-7c0b-45eb-bbac-874c9a735b82]
+Description=Application settings for ferdium
+desktopfile=org.ferdium.Ferdium
+desktopfilerule=3
+wmclass=\sferdium
+wmclasscomplete=true
+wmclassmatch=1
