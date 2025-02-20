@@ -189,15 +189,15 @@ PreviewImage=/home/sanjay/Pictures/Wallpaper/010.jpg
 SlidePaths=/usr/share/wallpapers/
 
 [Containments][179]
-ItemGeometries-1920x1080=Applet-181:0,0,1920,160,0;Applet-169:96,656,624,240,0;Applet-119:1728,800,96,96,0;
-ItemGeometriesHorizontal=Applet-181:0,0,1920,160,0;Applet-169:96,656,624,240,0;Applet-119:1728,800,96,96,0;
+ItemGeometries-1920x1080=Applet-181:0,0,1920,160,0;Applet-169:112,656,624,240,0;Applet-119:1728,800,96,96,0;
+ItemGeometriesHorizontal=Applet-181:0,0,1920,160,0;Applet-169:112,656,624,240,0;Applet-119:1728,800,96,96,0;
 activityId=22b82f82-d3fc-4e9a-b2e8-ba4c3c658527
 formfactor=0
 immutability=1
 lastScreen=0
 location=0
 plugin=org.kde.desktopcontainment
-wallpaperplugin=luisbocanegra.smart.video.wallpaper.reborn
+wallpaperplugin=org.kde.image
 
 [Containments][179][Applets][119]
 immutability=1
@@ -247,7 +247,6 @@ VideoUrls=file:///home/sanjay/Pictures/video wallpaper/mylivewallpapers-com-Walk
 
 [Containments][179][Wallpaper][org.kde.image][General]
 Image=/home/sanjay/Pictures/Wallpaper/yohoho.jpg
-PreviewImage=/home/sanjay/Pictures/Wallpaper/vibrant-gate.png
 SlidePaths=/usr/share/wallpapers/
 
 [Containments][2]
@@ -299,6 +298,35 @@ color=translucent-light
 fontSize=10
 noteId=7e541779-9b1d-4627-a60d-7b868fd1b3
 
+[Containments][2][Applets][182]
+immutability=1
+plugin=io.github.vmkspv.kopypast
+
+[Containments][2][Applets][182][Configuration]
+PreloadWeight=55
+popupHeight=504
+popupWidth=360
+
+[Containments][2][Applets][182][Configuration][ConfigDialog]
+DialogHeight=540
+DialogWidth=720
+
+[Containments][2][Applets][182][Configuration][General]
+maxSnippets=100
+useKbdNavigation=true
+
+[Containments][2][Applets][183]
+immutability=1
+plugin=com.github.configurable_button
+
+[Containments][2][Applets][183][Configuration][ConfigDialog]
+DialogHeight=540
+DialogWidth=720
+
+[Containments][2][Applets][183][Configuration][General]
+offScript=/usr/bin/qdbus6 org.kde.kglobalaccel /component/kwin invokeShortcut "Toggle Night Color"
+onScript=/usr/bin/qdbus6 org.kde.kglobalaccel /component/kwin invokeShortcut "Toggle Night Color"
+
 [Containments][2][Applets][22]
 immutability=1
 plugin=org.kde.plasma.showdesktop
@@ -339,7 +367,7 @@ hideWidget=true
 lastPreset=/home/sanjay/.config/panel-colorizer/presets/Bottom Bar
 marginRules=adhe.menu.11,5,0|org.kde.plasma.pager,5,0|org.kde.plasma.icontasks,0,0|luisbocanegra.panel.colorizer,0,0|org.kde.plasma.marginsseparator,0,0|org.kde.plasma.systemtray,5,0|org.kde.plasma.digitalclock,5,0|org.kde.plasma.showdesktop,5,0
 opacity=0.58
-panelWidgets=[{"id":60,"name":"luisbocanegra.panel.colorizer","title":"Panel colorizer","icon":"desktop","inTray":false},{"id":173,"name":"org.kde.plasma.notes","title":"Sticky Note","icon":"knotes-symbolic","inTray":false},{"id":159,"name":"org.kde.plasma.notes","title":"Sticky Note","icon":"knotes-symbolic","inTray":false},{"id":6,"name":"org.kde.plasma.marginsseparator","title":"Margins Separator","icon":"filename-divider","inTray":false},{"id":7,"name":"org.kde.plasma.systemtray","title":"System Tray","icon":"preferences-desktop-notification","inTray":false},{"id":22,"name":"org.kde.plasma.showdesktop","title":"Peek at Desktop","icon":"user-desktop-symbolic","inTray":false}]
+panelWidgets=[{"id":60,"name":"luisbocanegra.panel.colorizer","title":"Panel colorizer","icon":"desktop","inTray":false},{"id":173,"name":"org.kde.plasma.notes","title":"Sticky Note","icon":"knotes-symbolic","inTray":false},{"id":159,"name":"org.kde.plasma.notes","title":"Sticky Note","icon":"knotes-symbolic","inTray":false},{"id":182,"name":"io.github.vmkspv.kopypast","title":"Kopypast","icon":"text-flow-into-frame","inTray":false},{"id":183,"name":"com.github.configurable_button","title":"Configurable Button","icon":"emblem-checked","inTray":false},{"id":6,"name":"org.kde.plasma.marginsseparator","title":"Margins Separator","icon":"filename-divider","inTray":false},{"id":7,"name":"org.kde.plasma.systemtray","title":"System Tray","icon":"preferences-desktop-notification","inTray":false},{"id":22,"name":"org.kde.plasma.showdesktop","title":"Peek at Desktop","icon":"user-desktop-symbolic","inTray":false}]
 panelWidgetsWithTray=adhe.menu.11,Menu 11,amarok|org.kde.plasma.pager,Pager,user-desktop|org.kde.plasma.icontasks,Icons-only Task Manager,preferences-system-windows|luisbocanegra.panel.colorizer,Panel colorizer,desktop|org.kde.plasma.marginsseparator,Margins Separator,filename-divider|tuxedo-control-center1,tuxedo-control-center,electron_app_indicator2_b83370512321120e142a831c30dbcfa1|org.kde.plasma.clipboard,Clipboard,klipper-symbolic|org.kde.plasma.volume,Audio Volume,audio-volume-medium-symbolic|org.kde.plasma.bluetooth,Bluetooth,network-bluetooth-symbolic|org.kde.plasma.brightness,Brightness and Color,brightness-high-symbolic|org.kde.plasma.keyboardlayout,Keyboard Layout,input-keyboard|org.kde.plasma.networkmanagement,Networks,network-wireless-100-symbolic|org.kde.plasma.digitalclock,Digital Clock,preferences-system-time|org.kde.plasma.showdesktop,Peek at Desktop,user-desktop-symbolic
 presetAutoloading={"enabled":true,"maximized":"/home/sanjay/.config/panel-colorizer/presets/Bottom Bar Maximised","maximizedFilterByActive":false,"touchingWindow":"/home/sanjay/.config/panel-colorizer/presets/Bottom Bar","floating":"/home/sanjay/.config/panel-colorizer/presets/Bottom Bar","normal":"/home/sanjay/.config/panel-colorizer/presets/Bottom Bar"}
 radius=10
@@ -359,7 +387,7 @@ SystrayContainmentId=8
 PreloadWeight=26
 
 [Containments][2][General]
-AppletOrder=60;173;159;6;7;22
+AppletOrder=60;173;159;182;183;6;7;22
 
 [Containments][27]
 activityId=
@@ -400,7 +428,7 @@ immutability=1
 plugin=org.kde.plasma.digitalclock
 
 [Containments][27][Applets][21][Configuration]
-PreloadWeight=94
+PreloadWeight=100
 popupHeight=450
 popupWidth=840
 
@@ -604,8 +632,8 @@ immutability=1
 lastScreen=0
 location=4
 plugin=org.kde.plasma.private.systemtray
-popupHeight=793
-popupWidth=576
+popupHeight=657
+popupWidth=569
 wallpaperplugin=org.kde.image
 
 [Containments][8][Applets][10]
@@ -687,7 +715,7 @@ widgets=true
 [Containments][8][Applets][158][Configuration][Miscellaneous]
 configMsg=false
 rulesMsg=false
-timestamp=1739511215404
+timestamp=1740058544304
 version=v2.9.1
 
 [Containments][8][Applets][158][Configuration][Upgrade]
@@ -766,14 +794,14 @@ immutability=1
 plugin=org.kde.plasma.battery
 
 [Containments][8][Applets][23][Configuration]
-PreloadWeight=5
+PreloadWeight=40
 
 [Containments][8][Applets][24]
 immutability=1
 plugin=org.kde.plasma.brightness
 
 [Containments][8][Applets][24][Configuration]
-PreloadWeight=5
+PreloadWeight=10
 
 [Containments][8][Applets][25]
 immutability=1
@@ -790,7 +818,7 @@ immutability=1
 plugin=org.kde.plasma.bluetooth
 
 [Containments][8][Applets][26][Configuration]
-PreloadWeight=5
+PreloadWeight=10
 
 [Containments][8][Applets][35][Configuration]
 PreloadWeight=42
@@ -800,14 +828,14 @@ immutability=1
 plugin=org.kde.plasma.mediacontroller
 
 [Containments][8][Applets][36][Configuration]
-PreloadWeight=5
+PreloadWeight=0
 
 [Containments][8][Applets][72]
 immutability=1
 plugin=org.kde.plasma.weather
 
 [Containments][8][Applets][72][Configuration]
-PreloadWeight=0
+PreloadWeight=10
 
 [Containments][8][Applets][72][Configuration][Appearance]
 showPressureInTooltip=true
@@ -832,7 +860,7 @@ immutability=1
 plugin=org.kde.kdeconnect
 
 [Containments][8][Applets][9][Configuration]
-PreloadWeight=99
+PreloadWeight=100
 
 [Containments][8][Applets][94]
 immutability=1
@@ -857,9 +885,9 @@ DialogWidth=720
 PreloadWeight=26
 
 [Containments][8][General]
-extraItems=org.kde.kdeconnect,org.kde.kscreen,org.kde.plasma.battery,org.kde.plasma.bluetooth,org.kde.plasma.brightness,org.kde.plasma.cameraindicator,org.kde.plasma.clipboard,org.kde.plasma.devicenotifier,org.kde.plasma.keyboardlayout,org.kde.plasma.manage-inputmethod,org.kde.plasma.mediacontroller,org.kde.plasma.networkmanagement,org.kde.plasma.notifications,org.kde.plasma.printmanager,org.kde.plasma.volume,org.kde.plasma.weather,optimus-gpu-switcher,com.github.exequtic.apdatifier,d4rkwzd.colorpicker-tray,luisbocanegra.kdematerialyou.colors
+extraItems=org.kde.kdeconnect,org.kde.kscreen,org.kde.plasma.battery,org.kde.plasma.bluetooth,org.kde.plasma.brightness,org.kde.plasma.cameraindicator,org.kde.plasma.clipboard,org.kde.plasma.devicenotifier,org.kde.plasma.keyboardlayout,org.kde.plasma.manage-inputmethod,org.kde.plasma.mediacontroller,org.kde.plasma.networkmanagement,org.kde.plasma.notifications,org.kde.plasma.printmanager,org.kde.plasma.volume,org.kde.plasma.weather,optimus-gpu-switcher,com.github.exequtic.apdatifier,d4rkwzd.colorpicker-tray,luisbocanegra.kdematerialyou.colors,org.kde.plasma.vault
 hiddenItems=luisbocanegra.kdematerialyou.colors
-knownItems=org.kde.kdeconnect,org.kde.kscreen,org.kde.plasma.battery,org.kde.plasma.bluetooth,org.kde.plasma.brightness,org.kde.plasma.cameraindicator,org.kde.plasma.clipboard,org.kde.plasma.devicenotifier,org.kde.plasma.keyboardindicator,org.kde.plasma.keyboardlayout,org.kde.plasma.manage-inputmethod,org.kde.plasma.mediacontroller,org.kde.plasma.networkmanagement,org.kde.plasma.notifications,org.kde.plasma.printmanager,org.kde.plasma.volume,org.kde.plasma.dockio,optimus-gpu-switcher,com.github.exequtic.apdatifier
+knownItems=org.kde.kdeconnect,org.kde.kscreen,org.kde.plasma.battery,org.kde.plasma.bluetooth,org.kde.plasma.brightness,org.kde.plasma.cameraindicator,org.kde.plasma.clipboard,org.kde.plasma.devicenotifier,org.kde.plasma.keyboardindicator,org.kde.plasma.keyboardlayout,org.kde.plasma.manage-inputmethod,org.kde.plasma.mediacontroller,org.kde.plasma.networkmanagement,org.kde.plasma.notifications,org.kde.plasma.printmanager,org.kde.plasma.volume,org.kde.plasma.dockio,optimus-gpu-switcher,com.github.exequtic.apdatifier,org.kde.plasma.vault
 shownItems=org.kde.plasma.notifications
 
 [Containments][99]
@@ -899,8 +927,8 @@ plugin=Concepto.menu.12
 
 [Containments][99][Applets][155][Configuration]
 PreloadWeight=100
-popupHeight=563
-popupWidth=957
+popupHeight=655
+popupWidth=989
 
 [Containments][99][Applets][155][Configuration][ConfigDialog]
 DialogHeight=540
@@ -912,6 +940,7 @@ customButtonImage=dev.suyu_emu.suyu
 favoritesPortedToKAstats=true
 icon=start-here-archlinux
 paneSwap=false
+placesFirst=false
 showActionButtonCaptions=true
 systemFavorites=suspend\\,hibernate\\,reboot\\,shutdown
 useCustomButtonImage=true

@@ -1,0 +1,12 @@
+[Greeter]
+WallpaperPlugin=luisbocanegra.smart.video.wallpaper.reborn
+
+[Greeter][Wallpaper][luisbocanegra.smart.video.wallpaper.reborn][General]
+ScreenLockedPausesVideo=false
+ScreenOffPausesVideo=true
+ScreenStateCmd=cat /sys/class/backlight/amdgpu_bl0/actual_brightness\n
+VideoUrls=file:///home/sanjay/Pictures/video wallpaper/mylivewallpapers-com-Knight-VS-Giant-4K.mp4\n
+
+[Greeter][Wallpaper][org.kde.image][General]
+Image=/home/sanjay/Pictures/Wallpaper/yohoho.jpg
+PreviewImage=/home/sanjay/Pictures/Wallpaper/yohoho.jpg
