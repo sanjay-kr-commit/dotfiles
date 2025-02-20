@@ -1,0 +1,2 @@
+#!/bin/bash
+/usr/bin/qdbus6 org.kde.kglobalaccel /component/kwin invokeShortcut "Toggle Night Color"
