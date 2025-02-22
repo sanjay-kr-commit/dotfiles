@@ -189,8 +189,8 @@ PreviewImage=/home/sanjay/Pictures/Wallpaper/010.jpg
 SlidePaths=/usr/share/wallpapers/
 
 [Containments][179]
-ItemGeometries-1920x1080=Applet-181:0,0,1920,160,0;Applet-169:112,656,624,240,0;Applet-119:1728,800,96,96,0;
-ItemGeometriesHorizontal=Applet-181:0,0,1920,160,0;Applet-169:112,656,624,240,0;Applet-119:1728,800,96,96,0;
+ItemGeometries-1920x1080=Applet-181:0,0,1920,160,0;Applet-184:16,160,272,336,0;Applet-169:112,656,624,240,0;Applet-119:1728,800,96,96,0;
+ItemGeometriesHorizontal=Applet-181:0,0,1920,160,0;Applet-184:16,160,272,336,0;Applet-169:112,656,624,240,0;Applet-119:1728,800,96,96,0;
 activityId=22b82f82-d3fc-4e9a-b2e8-ba4c3c658527
 formfactor=0
 immutability=1
@@ -230,6 +230,22 @@ DialogWidth=720
 
 [Containments][179][Applets][181][Configuration][General]
 barsWidth=24
+
+[Containments][179][Applets][184]
+immutability=1
+plugin=com.github.zren.commandoutput
+
+[Containments][179][Applets][184][Configuration][ConfigDialog]
+DialogHeight=540
+DialogWidth=800
+
+[Containments][179][Applets][184][Configuration][General]
+bold=true
+command=\secho $(wget -q -O - https://leetcode-stats-api.herokuapp.com/sanjay-kr-commit  2>&1) | sed 's/,/\\n/g'  | head -14  | tail -12\n
+interval=720000
+italic=true
+showOutline=true
+waitForCompletion=true
 
 [Containments][179][ConfigDialog]
 DialogHeight=540
@@ -992,4 +1008,4 @@ noteId=7e541779-9b1d-4627-a60d-7b868fd1b3
 
 [ScreenMapping]
 itemsOnDisabledScreens=
-screenMapping=desktop:/sample_c947a4fa50f8bf15897dcb4565a7eeee.jpg,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/playing,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/dsa_t,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/brave-nccldcgjjeeglpgcgebibmhmkakanigi-Profile_1.desktop,0,61bd5ba0-b36f-4044-963d-ca65941cce4a,desktop:/notes,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/New Folder,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/envy,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/JioAirFiberHomeGatewayUserManual_v1.pdf,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/ms,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/Mysta Rias.jpeg,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/brave-Canva_(sanjay).desktop,0,61bd5ba0-b36f-4044-963d-ca65941cce4a,desktop:/Window and linux installation steps.docx,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/d5f85a92-a44d-413e-8b42-cdc32ce4e402.pdf,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/temp,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/Mysta Rias.jpeg,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/Alarms,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/JioAirFiberHomeGatewayUserManual_v1.pdf,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/build initramfs,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/addr,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/printout for python file.pdf,0,61bd5ba0-b36f-4044-963d-ca65941cce4a,desktop:/backup-jio-2025-01-05_enc.tar.gz,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/brave-My_account_(sanjay).desktop,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/wine_breeze_colors.reg,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/backup-jio-2025-01-05_enc.tar.gz,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/New Folder,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/cn practical 1.doc,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/sanjay.html,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/phone.html,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/userAccountManagement,0,61bd5ba0-b36f-4044-963d-ca65941cce4a,desktop:/brave-My_account_(sanjay).desktop,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/calamares.desktop,0,61bd5ba0-b36f-4044-963d-ca65941cce4a
+screenMapping=desktop:/playing,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/sample_c947a4fa50f8bf15897dcb4565a7eeee.jpg,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/New Folder,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/dsa_t,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/notes,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/brave-nccldcgjjeeglpgcgebibmhmkakanigi-Profile_1.desktop,0,61bd5ba0-b36f-4044-963d-ca65941cce4a,desktop:/brave-Canva_(sanjay).desktop,0,61bd5ba0-b36f-4044-963d-ca65941cce4a,desktop:/Window and linux installation steps.docx,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/Mysta Rias.jpeg,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/ms,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/d5f85a92-a44d-413e-8b42-cdc32ce4e402.pdf,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/temp,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/envy,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/JioAirFiberHomeGatewayUserManual_v1.pdf,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/JioAirFiberHomeGatewayUserManual_v1.pdf,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/build initramfs,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/Mysta Rias.jpeg,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/Alarms,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/backup-jio-2025-01-05_enc.tar.gz,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/printout for python file.pdf,0,61bd5ba0-b36f-4044-963d-ca65941cce4a,desktop:/brave-My_account_(sanjay).desktop,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/addr,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/wine_breeze_colors.reg,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/calamares.desktop,0,61bd5ba0-b36f-4044-963d-ca65941cce4a,desktop:/phone.html,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/backup-jio-2025-01-05_enc.tar.gz,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/sanjay.html,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/New Folder,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/cn practical 1.doc,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/brave-My_account_(sanjay).desktop,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/userAccountManagement,0,61bd5ba0-b36f-4044-963d-ca65941cce4a

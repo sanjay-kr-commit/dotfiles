@@ -192,8 +192,8 @@ PreviewImage=/home/sanjay/Pictures/Wallpaper/010.jpg
 SlidePaths=/usr/share/wallpapers/
 
 [Containments][179]
-ItemGeometries-1920x1080=Applet-181:0,0,1920,160,0;Applet-169:112,656,624,240,0;Applet-119:1728,800,96,96,0;
-ItemGeometriesHorizontal=Applet-181:0,0,1920,160,0;Applet-169:112,656,624,240,0;Applet-119:1728,800,96,96,0;
+ItemGeometries-1920x1080=Applet-181:0,0,1920,160,0;Applet-185:16,160,336,288,0;Applet-169:112,656,624,240,0;Applet-119:1728,800,96,96,0;
+ItemGeometriesHorizontal=Applet-181:0,0,1920,160,0;Applet-185:16,160,336,288,0;Applet-169:112,656,624,240,0;Applet-119:1728,800,96,96,0;
 activityId=22b82f82-d3fc-4e9a-b2e8-ba4c3c658527
 formfactor=0
 immutability=1
@@ -234,6 +234,23 @@ DialogWidth=720
 [Containments][179][Applets][181][Configuration][General]
 barsWidth=24
 
+[Containments][179][Applets][185]
+immutability=1
+plugin=com.github.zren.commandoutput
+
+[Containments][179][Applets][185][Configuration][ConfigDialog]
+DialogHeight=540
+DialogWidth=800
+
+[Containments][179][Applets][185][Configuration][General]
+bold=true
+command=\secho $(wget -q -O - https://leetcode-stats-api.herokuapp.com/sanjay-kr-commit  2>&1) | sed 's/,/\\n/g'  | head -14  | tail -12\n
+fontFamily=Hack Nerd Font
+interval=720000
+italic=true
+showOutline=true
+waitForCompletion=true
+
 [Containments][179][ConfigDialog]
 DialogHeight=540
 DialogWidth=720
@@ -246,7 +263,7 @@ sortMode=-1
 BatteryDisablesBlur=true
 ScreenOffPausesVideo=true
 ScreenStateCmd=cat /sys/class/backlight/amdgpu_bl0/actual_brightness\n
-VideoUrls=file:///home/sanjay/Pictures/video wallpaper/mylivewallpapers-com-Walking-Warrior-FHD.mp4\n
+VideoUrls=file:///home/sanjay/Pictures/video wallpaper/guts-in-the-rain-manga-berserk-moewalls-com.mp4\n
 
 [Containments][179][Wallpaper][org.kde.image][General]
 Image=/home/sanjay/Pictures/Wallpaper/zero-two-anime-girl.jpg
@@ -307,7 +324,7 @@ immutability=1
 plugin=io.github.vmkspv.kopypast
 
 [Containments][2][Applets][182][Configuration]
-PreloadWeight=75
+PreloadWeight=80
 popupHeight=504
 popupWidth=360
 
@@ -374,7 +391,7 @@ hideWidget=true
 lastPreset=/home/sanjay/.config/panel-colorizer/presets/Bottom Bar
 marginRules=adhe.menu.11,5,0|org.kde.plasma.pager,5,0|org.kde.plasma.icontasks,0,0|luisbocanegra.panel.colorizer,0,0|org.kde.plasma.marginsseparator,0,0|org.kde.plasma.systemtray,5,0|org.kde.plasma.digitalclock,5,0|org.kde.plasma.showdesktop,5,0
 opacity=0.58
-panelWidgets=[{"id":60,"name":"luisbocanegra.panel.colorizer","title":"Panel colorizer","icon":"desktop","inTray":false},{"id":173,"name":"org.kde.plasma.notes","title":"Sticky Note","icon":"knotes-symbolic","inTray":false},{"id":159,"name":"org.kde.plasma.notes","title":"Sticky Note","icon":"knotes-symbolic","inTray":false},{"id":182,"name":"io.github.vmkspv.kopypast","title":"Kopypast","icon":"text-flow-into-frame","inTray":false},{"id":184,"name":"com.github.configurable_button","title":"Configurable Button","icon":"emblem-checked","inTray":false},{"id":6,"name":"org.kde.plasma.marginsseparator","title":"Margins Separator","icon":"filename-divider","inTray":false},{"id":7,"name":"org.kde.plasma.systemtray","title":"System Tray","icon":"preferences-desktop-notification","inTray":false},{"id":22,"name":"org.kde.plasma.showdesktop","title":"Peek at Desktop","icon":"user-desktop-symbolic","inTray":false},{"id":17,"name":"org.kde.plasma.notifications","title":"Notifications","icon":"notification-inactive-symbolic","inTray":true},{"id":-1,"name":"chrome_status_icon_1","title":"Ferdium","icon":"","inTray":true},{"id":-1,"name":"firewall-applet","title":"Default Zone: 'public'\\nZone 'trusted' active for connection '668527c7-f4ac-44c3-8446-a2bddd97e405' on interface 'wlan0'\\nZone 'trusted' active for connection 'aa7255b0-682c-4fae-ae99-3539f9408e11' on interface 'lo'","icon":"firewall-applet-symbolic","inTray":true},{"id":158,"name":"com.github.exequtic.apdatifier","title":"Apdatifier","icon":"apdatifier-plasmoid","inTray":true},{"id":12,"name":"org.kde.plasma.clipboard","title":"Clipboard","icon":"klipper-symbolic","inTray":true},{"id":170,"name":"d4rkwzd.colorpicker-tray","title":"Color Picker","icon":"color-picker","inTray":true},{"id":36,"name":"org.kde.plasma.mediacontroller","title":"Media Player","icon":"media-playback-playing-symbolic","inTray":true},{"id":72,"name":"org.kde.plasma.weather","title":"Weather Report","icon":"weather-none-available-symbolic","inTray":true},{"id":20,"name":"org.kde.plasma.volume","title":"Audio Volume","icon":"audio-volume-high-symbolic","inTray":true},{"id":24,"name":"org.kde.plasma.brightness","title":"Brightness and Color","icon":"redshift-status-off-symbolic","inTray":true},{"id":9,"name":"org.kde.kdeconnect","title":"KDE Connect","icon":"kdeconnect-tray-symbolic","inTray":true},{"id":25,"name":"org.kde.plasma.networkmanagement","title":"Networks","icon":"network-wireless-100-symbolic","inTray":true},{"id":94,"name":"optimus-gpu-switcher","title":"Optimus GPU Switcher","icon":"file:///usr/share/plasma/plasmoids/optimus-gpu-switcher/contents/ui/image/integrated-amd.png","inTray":true},{"id":23,"name":"org.kde.plasma.battery","title":"Power and Battery","icon":"battery-full-symbolic","inTray":true},{"id":-1,"name":"org.kde.plasma.systemtray.expand","title":"Show hidden icons","icon":"arrow-down","inTray":true}]
+panelWidgets=[{"id":60,"name":"luisbocanegra.panel.colorizer","title":"Panel colorizer","icon":"desktop","inTray":false},{"id":173,"name":"org.kde.plasma.notes","title":"Sticky Note","icon":"knotes-symbolic","inTray":false},{"id":159,"name":"org.kde.plasma.notes","title":"Sticky Note","icon":"knotes-symbolic","inTray":false},{"id":182,"name":"io.github.vmkspv.kopypast","title":"Kopypast","icon":"text-flow-into-frame","inTray":false},{"id":184,"name":"com.github.configurable_button","title":"Configurable Button","icon":"emblem-checked","inTray":false},{"id":6,"name":"org.kde.plasma.marginsseparator","title":"Margins Separator","icon":"filename-divider","inTray":false},{"id":7,"name":"org.kde.plasma.systemtray","title":"System Tray","icon":"preferences-desktop-notification","inTray":false},{"id":22,"name":"org.kde.plasma.showdesktop","title":"Peek at Desktop","icon":"user-desktop-symbolic","inTray":false}]
 panelWidgetsWithTray=adhe.menu.11,Menu 11,amarok|org.kde.plasma.pager,Pager,user-desktop|org.kde.plasma.icontasks,Icons-only Task Manager,preferences-system-windows|luisbocanegra.panel.colorizer,Panel colorizer,desktop|org.kde.plasma.marginsseparator,Margins Separator,filename-divider|tuxedo-control-center1,tuxedo-control-center,electron_app_indicator2_b83370512321120e142a831c30dbcfa1|org.kde.plasma.clipboard,Clipboard,klipper-symbolic|org.kde.plasma.volume,Audio Volume,audio-volume-medium-symbolic|org.kde.plasma.bluetooth,Bluetooth,network-bluetooth-symbolic|org.kde.plasma.brightness,Brightness and Color,brightness-high-symbolic|org.kde.plasma.keyboardlayout,Keyboard Layout,input-keyboard|org.kde.plasma.networkmanagement,Networks,network-wireless-100-symbolic|org.kde.plasma.digitalclock,Digital Clock,preferences-system-time|org.kde.plasma.showdesktop,Peek at Desktop,user-desktop-symbolic
 presetAutoloading={"enabled":true,"maximized":"/home/sanjay/.config/panel-colorizer/presets/Bottom Bar Maximised","maximizedFilterByActive":false,"touchingWindow":"/home/sanjay/.config/panel-colorizer/presets/Bottom Bar","floating":"/home/sanjay/.config/panel-colorizer/presets/Bottom Bar","normal":"/home/sanjay/.config/panel-colorizer/presets/Bottom Bar"}
 radius=10
@@ -591,7 +608,7 @@ immutability=1
 plugin=com.dv.uswitcher
 
 [Containments][27][Applets][59][Configuration]
-PreloadWeight=92
+PreloadWeight=97
 popupHeight=387
 popupWidth=216
 
@@ -759,7 +776,7 @@ DialogHeight=540
 DialogWidth=720
 
 [Containments][8][Applets][170][Configuration][General]
-history=#ffae5e,#1b2f3a,#e19f76,#485086,#ef9871
+history=#0f1117,#1d1e21,#ffae5e,#1b2f3a,#e19f76,#485086,#ef9871
 pickOnActivate=false
 
 [Containments][8][Applets][174]
@@ -785,7 +802,7 @@ immutability=1
 plugin=org.kde.plasma.vault
 
 [Containments][8][Applets][19][Configuration]
-PreloadWeight=85
+PreloadWeight=100
 
 [Containments][8][Applets][20]
 immutability=1
@@ -805,14 +822,14 @@ immutability=1
 plugin=org.kde.plasma.battery
 
 [Containments][8][Applets][23][Configuration]
-PreloadWeight=52
+PreloadWeight=71
 
 [Containments][8][Applets][24]
 immutability=1
 plugin=org.kde.plasma.brightness
 
 [Containments][8][Applets][24][Configuration]
-PreloadWeight=22
+PreloadWeight=26
 
 [Containments][8][Applets][25]
 immutability=1
@@ -829,7 +846,7 @@ immutability=1
 plugin=org.kde.plasma.bluetooth
 
 [Containments][8][Applets][26][Configuration]
-PreloadWeight=10
+PreloadWeight=24
 
 [Containments][8][Applets][35][Configuration]
 PreloadWeight=42
@@ -971,7 +988,7 @@ DialogHeight=540
 DialogWidth=720
 
 [Containments][99][Applets][67][Configuration][General]
-launchers=preferred://filemanager,applications:systemsettings.desktop,applications:org.kde.discover.desktop,applications:brave-browser.desktop,[22b82f82-d3fc-4e9a-b2e8-ba4c3c658527]\napplications:harmonoid.desktop,[22b82f82-d3fc-4e9a-b2e8-ba4c3c658527]\napplications:org.nongnu.lingot.desktop,[22b82f82-d3fc-4e9a-b2e8-ba4c3c658527]\napplications:com.obsproject.Studio.desktop,[22b82f82-d3fc-4e9a-b2e8-ba4c3c658527]\napplications:brave-agimnkijcaahngcdmfeangaknmldooml-Default.desktop,[22b82f82-d3fc-4e9a-b2e8-ba4c3c658527]\napplications:md.obsidian.Obsidian.desktop,[22b82f82-d3fc-4e9a-b2e8-ba4c3c658527]\napplications:net.ankiweb.Anki.desktop,applications:jetbrains-idea-2beee81e-7dd6-4b4a-a3db-3bc3f79d4696.desktop,[22b82f82-d3fc-4e9a-b2e8-ba4c3c658527]\napplications:org.kde.konsole.desktop,applications:net.lutris.packet-tracer-44.desktop,[22b82f82-d3fc-4e9a-b2e8-ba4c3c658527]\napplications:net.lutris.Lutris.desktop
+launchers=preferred://filemanager,applications:systemsettings.desktop,applications:org.kde.discover.desktop,applications:brave-browser.desktop,[22b82f82-d3fc-4e9a-b2e8-ba4c3c658527]\napplications:harmonoid.desktop,[22b82f82-d3fc-4e9a-b2e8-ba4c3c658527]\napplications:org.nongnu.lingot.desktop,[22b82f82-d3fc-4e9a-b2e8-ba4c3c658527]\napplications:com.obsproject.Studio.desktop,[22b82f82-d3fc-4e9a-b2e8-ba4c3c658527]\napplications:brave-agimnkijcaahngcdmfeangaknmldooml-Default.desktop,[22b82f82-d3fc-4e9a-b2e8-ba4c3c658527]\napplications:md.obsidian.Obsidian.desktop,[22b82f82-d3fc-4e9a-b2e8-ba4c3c658527]\napplications:net.ankiweb.Anki.desktop,applications:jetbrains-idea-2beee81e-7dd6-4b4a-a3db-3bc3f79d4696.desktop,[22b82f82-d3fc-4e9a-b2e8-ba4c3c658527]\napplications:org.kde.konsole.desktop,applications:net.lutris.packet-tracer-44.desktop,[22b82f82-d3fc-4e9a-b2e8-ba4c3c658527]\napplications:net.lutris.Lutris.desktop,applications:jetbrains-clion-d6453912-3b47-4bac-ab18-a9dd25de5143.desktop,[22b82f82-d3fc-4e9a-b2e8-ba4c3c658527]\napplications:org.kde.kdevelop.desktop
 
 [Containments][99][Configuration]
 PreloadWeight=34
@@ -1003,4 +1020,4 @@ noteId=7e541779-9b1d-4627-a60d-7b868fd1b3
 
 [ScreenMapping]
 itemsOnDisabledScreens=
-screenMapping=desktop:/critical-section-problem.png,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/brave-My_account_(sanjay).desktop,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/userAccountManagement,0,61bd5ba0-b36f-4044-963d-ca65941cce4a,desktop:/sanjay.pdf,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/main.c,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/Mutex.png,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/calamares.desktop,0,61bd5ba0-b36f-4044-963d-ca65941cce4a,desktop:/addr,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/brave-My_account_(sanjay).desktop,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/notes,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/printout for python file.pdf,0,61bd5ba0-b36f-4044-963d-ca65941cce4a,desktop:/mr campus,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/Window and linux installation steps.docx,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/New Folder,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/file_1675748212_5000686_unit-3c-synproblems.pptx,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/Process-Synchronization-Illustration.png,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/wine_breeze_colors.reg,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/sanjay.html,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/ashish.pdf,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/file_1675748175_5000686_unit-3a-racecondition.pptx,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/notes,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/Mysta Rias.jpeg,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/cn practical 1.doc,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/dsa_t,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/ms,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/d5f85a92-a44d-413e-8b42-cdc32ce4e402.pdf,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/temp,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/brave-Canva_(sanjay).desktop,0,61bd5ba0-b36f-4044-963d-ca65941cce4a,desktop:/black_background.jpg,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/New Folder,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/addr,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/literature_review_2025-02-17_09-26-37.doc,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/phone.html,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/Alarms,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/devender.pdf,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/playing,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/build initramfs,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/Window and linux installation steps.docx,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/Mysta Rias.jpeg,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/temooooo,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/JioAirFiberHomeGatewayUserManual_v1.pdf,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/0_rrij_Binv-H3YBdE.png,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/debug,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/wine_breeze_colors.reg,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/os quiz.txt,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/brave-nccldcgjjeeglpgcgebibmhmkakanigi-Profile_1.desktop,0,61bd5ba0-b36f-4044-963d-ca65941cce4a,desktop:/sample_c947a4fa50f8bf15897dcb4565a7eeee.jpg,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/cn practical 1.doc,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/normal,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/ms,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/backup-jio-2025-01-05_enc.tar.gz,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/d5f85a92-a44d-413e-8b42-cdc32ce4e402.pdf,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/temp,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/JioAirFiberHomeGatewayUserManual_v1.pdf,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/backup-jio-2025-01-05_enc.tar.gz,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/os ppt.pptx,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/devender.docx,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/dsa_t,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/ashish.docx,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/build initramfs,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/envy,0,fa875c82-ac4f-4478-ac44-40dc4e360c73
+screenMapping=desktop:/Mysta Rias.jpeg,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/main.c,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/wine_breeze_colors.reg,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/d5f85a92-a44d-413e-8b42-cdc32ce4e402.pdf,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/notes,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/ms,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/temp,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/addr,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/devender.docx,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/phone.html,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/Process-Synchronization-Illustration.png,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/JioAirFiberHomeGatewayUserManual_v1.pdf,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/ashish.docx,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/devender.pdf,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/build initramfs,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/file_1675748175_5000686_unit-3a-racecondition.pptx,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/ashish.pdf,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/Window and linux installation steps.docx,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/envy,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/temooooo,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/calamares.desktop,0,61bd5ba0-b36f-4044-963d-ca65941cce4a,desktop:/notes,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/0_rrij_Binv-H3YBdE.png,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/Alarms,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/Mutex.png,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/brave-nccldcgjjeeglpgcgebibmhmkakanigi-Profile_1.desktop,0,61bd5ba0-b36f-4044-963d-ca65941cce4a,desktop:/sample_c947a4fa50f8bf15897dcb4565a7eeee.jpg,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/normal,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/cn practical 1.doc,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/brave-Canva_(sanjay).desktop,0,61bd5ba0-b36f-4044-963d-ca65941cce4a,desktop:/wine_breeze_colors.reg,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/brave-My_account_(sanjay).desktop,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/addr,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/debug,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/black_background.jpg,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/os quiz.txt,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/literature_review_2025-02-17_09-26-37.doc,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/backup-jio-2025-01-05_enc.tar.gz,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/mr campus,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/file_1675748212_5000686_unit-3c-synproblems.pptx,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/os ppt.pptx,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/cn practical 1.doc,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/sanjay.html,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/brave-My_account_(sanjay).desktop,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/dsa_t,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/New Folder,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/backup-jio-2025-01-05_enc.tar.gz,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/Window and linux installation steps.docx,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/dsa_t,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/critical-section-problem.png,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/JioAirFiberHomeGatewayUserManual_v1.pdf,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/sanjay.pdf,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/Mysta Rias.jpeg,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/d5f85a92-a44d-413e-8b42-cdc32ce4e402.pdf,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/temp,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/ms,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527,desktop:/playing,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/New Folder,0,fa875c82-ac4f-4478-ac44-40dc4e360c73,desktop:/userAccountManagement,0,61bd5ba0-b36f-4044-963d-ca65941cce4a,desktop:/printout for python file.pdf,0,61bd5ba0-b36f-4044-963d-ca65941cce4a,desktop:/build initramfs,0,22b82f82-d3fc-4e9a-b2e8-ba4c3c658527

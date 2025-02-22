@@ -1,5 +1,5 @@
 [Activities][LastVirtualDesktop]
-22b82f82-d3fc-4e9a-b2e8-ba4c3c658527=bdd0a9db-3493-48ff-8225-7ff01c85c315
+22b82f82-d3fc-4e9a-b2e8-ba4c3c658527=43e7f1b2-e6c5-4400-9c48-7e5034e2b508
 fa875c82-ac4f-4478-ac44-40dc4e360c73=43e7f1b2-e6c5-4400-9c48-7e5034e2b508
 
 [Desktops]
@@ -31,6 +31,7 @@ InactivityDuration=15
 [NightColor]
 Active=true
 Mode=Constant
+NightTemperature=4600
 
 [Plugins]
 alt-f4-desktopEnabled=false
