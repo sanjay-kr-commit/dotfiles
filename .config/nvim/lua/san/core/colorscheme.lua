@@ -1,5 +1,5 @@
 -- colorscheme name
-local colors = "onedark"
+local colors = "catppuccin-mocha"
 
 -- secure call to apply colorscheme
 local status,_ = pcall( vim.cmd , "colorscheme " .. colors )

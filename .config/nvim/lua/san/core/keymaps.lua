@@ -7,6 +7,9 @@ local keymap = vim.keymap -- for conciseness
 -- General Keymaps
 ---------------------
 
+-- copy buffer to clipboard
+keymap.set("n", "<leader>zz", ":w !cat | xclip -selection c <CR>")
+
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
