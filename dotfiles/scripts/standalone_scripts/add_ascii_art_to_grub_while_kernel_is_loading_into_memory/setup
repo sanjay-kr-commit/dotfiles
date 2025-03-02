@@ -1,0 +1,53 @@
+#! /bin/env bash
+
+if [[ "$UID" != "0" ]] ; then 
+  echo "sudo access is required to modify grub.d folder"
+  exit
+fi 
+
+updateCommand="grub-mkconfig -o /etc/default/grub"
+
+if [[ "$(which update-grub)" != "update-grub not found" ]] ; then 
+  updateCommand="update-grub"
+fi 
+
+echo "This will make changes to grub configuration"
+echo "And it make end up breaking your bootloader"
+echo "This script was written for endeavour os"
+
+echo -n "Type 'yes' to continue : "
+read response 
+
+if [[ $response != "yes" ]] ; then 
+  echo "Aborted"
+  exit 
+fi 
+
+SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+
+cp /etc/grub.d/10_linux $SCRIPTPATH
+cp $SCRIPTPATH/ascii_art /etc/grub.d/ascii_art
+chmod -x /etc/grub.d/ascii_art
+cp $SCRIPTPATH/000_add_ascii_art /etc/grub.d/000_add_ascii_art 
+chmod +x /etc/grub.d/000_add_ascii_art
+
+echo "Rebuilding grub configuration"
+eval $updateCommand 
+
+echo -n "Did it said done at last 'yes' or 'no' : "
+
+read response
+
+if [[ $response == "no" ]] ; then
+  echo "Reverting changes"
+  rm /etc/grub.d/000_add_ascii_art
+  rm /etc/grub.d/10_linux
+  rm /etc/grub.d/10_linux_bak
+  mv $SCRIPTPATH/10_linux /etc/grub.d/10_linux
+  chmod +x /etc/grub.d/10_linux
+  eval $updateCommand
+  echo "Failed to install ascii_art script to grub"
+else 
+  rm $SCRIPTPATH/10_linux
+  echo "Successfully installed ascii_art script to grub"
+fi 

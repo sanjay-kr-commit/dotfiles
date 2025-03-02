@@ -1,0 +1,12 @@
+#! /usr/bin/env bash
+
+if [[ -f /etc/grub.d/10_linux ]] & [[ -f /etc/grub.d/ascii_art ]] ; then
+  buffer="$(cat /etc/grub.d/10_linux )"
+  if [[ "$(echo $buffer | grep "message" )" != "" ]] && [[ "$(echo $buffer | grep "ascii_art" )" == "" ]] ; then 
+    mv /etc/grub.d/10_linux /etc/grub.d/10_linux_bak
+    chmod -x /etc/grub.d/10_linux_bak
+    cat /etc/grub.d/10_linux_bak | sed -e '0,/message/{s/message=".*"/ascii_art="\$(cat \/etc\/grub.d\/ascii_art)"/g}' | sed -e '0,/\$message/{s/\$message/\$ascii_art/g}' | sed -e '0,/message/{s/message=".*"//g}' | sed -e '0,/\$message/{s/.*echo.*\$message.*//g}' > /etc/grub.d/10_linux 
+    chmod +x /etc/grub.d/10_linux
+  fi
+fi
+
