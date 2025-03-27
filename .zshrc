@@ -7,8 +7,8 @@ notifySessionStatusAndExitTmux() {
   exit
 }
 
-if [[ ! -v TMUX ]] ; then
-  tmuxls="$(tmux ls)"
+if [[ ! -v TMUX ]] && [[ ! -f /dev/shm/shutdowntmuxsession ]] ; then
+  echo "$(pwd)" >> /dev/shm/path
   if [ -z $tmuxls ] ; then
     sessionId="session 1"
     tmux -u new -s "session 1" && notifySessionStatusAndExitTmux
@@ -51,7 +51,17 @@ if [[ ! -v TMUX ]] ; then
     sessionId="session $sessionId"
     tmux -u new -s $sessionId && notifySessionStatusAndExitTmux
   fi
+else
+  # handle path 
+  if [[ -f /dev/shm/path ]] ; then
+    eval "cd $(cat /dev/shm/path)"
+    rm /dev/shm/path 
+  fi 
+  # add and environment variable to exit or restart tmux session 
+  
 fi 
+
+  
 
 if [ ! -d "$HOME/.tmux/plugins/tpm" ] && [ ! -v TMUX ] ; then
   git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
