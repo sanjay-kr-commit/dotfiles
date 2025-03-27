@@ -7,7 +7,7 @@ notifySessionStatusAndExitTmux() {
   exit
 }
 
-if [[ ! -v TMUX ]] ; then
+if [[ ! -v TMUX ]] && [[ ! -f /dev/shm/shutdowntmuxsession ]] ; then
   tmuxls="$(tmux ls)"
   if [ -z $tmuxls ] ; then
     sessionId="session 1"
@@ -51,6 +51,9 @@ if [[ ! -v TMUX ]] ; then
     sessionId="session $sessionId"
     tmux -u new -s $sessionId && notifySessionStatusAndExitTmux
   fi
+else
+  # add and environment variable to exit or restart tmux session
+  
 fi 
 
 if [ ! -d "$HOME/.tmux/plugins/tpm" ] && [ ! -v TMUX ] ; then
