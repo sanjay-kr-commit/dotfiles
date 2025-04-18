@@ -1,9 +1,18 @@
+autoreload:
+  true
 touchpad:
   speed:
     swipe_threshold: 15
 
   gestures:
 
+    - type: rotate
+      fingers: 4
+      direction: clockwise
+    
+      actions:
+        - plasma_shortcut: kwin,Window Close
+    
     - type: rotate
       fingers: 2
       direction: any
@@ -24,6 +33,17 @@ touchpad:
       actions:
         - on: begin
           plasma_shortcut: org_kde_krunner_desktop,_launch
+    
+    # Launch zen
+    - type: hold
+      fingers: 3
+    
+      actions:
+        - on: begin
+          input:
+            - keyboard: [ leftctrl+r ]
+          conditions:
+            - window_class: zen
 
     # Unmaximize/minimize
     - type: swipe
@@ -61,28 +81,12 @@ touchpad:
             - negate: [ window_state ]
               window_state: [ maximized ]
     
-    # Close window
-    #- type: pinch
-    #  fingers: 2
-    #  direction: in
-    #
-    #  actions:
-    #    - on: begin
-    #      plasma_shortcut: kwin,Window Close
     # Go back
     - type: swipe
       fingers: 2
       direction: left
     
       actions:
-        # Firefox
-        #- on: begin
-        #  input:
-        #    - keyboard: [ leftctrl+leftbrace ]
-    
-        #  conditions:
-        #    - window_class: firefox
-    
         # Dolphin
         - on: begin
           input:
@@ -92,21 +96,13 @@ touchpad:
             - window_class: dolphin
     
     # Go forward
-    - type: swipe
+    - type: swipe 
       fingers: 2
       direction: right
     
       actions:
-        # Firefox
-        #- on: begin
-        #  input:
-        #    - keyboard: [ leftctrl+rightbrace ]
-    
-        #  conditions:
-        #    - window_class: firefox
-    
         # Dolphin
-        - on: begin
+        - on: begin 
           input:
             - keyboard: [ leftalt+right ]
     
