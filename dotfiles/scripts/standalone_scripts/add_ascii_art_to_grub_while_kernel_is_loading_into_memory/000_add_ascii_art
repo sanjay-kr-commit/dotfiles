@@ -34,7 +34,7 @@ firstChange() {
 
 if
   [[ -f $grubFile ]] &
-  [[ -f /etc/grub.d/ascii_art ]]
+  [[ -f $asciiFile ]]
 then
   buffer="$(cat $grubFile)"
   ascii_art_hash=$(sha256sum $asciiFile | grep -o ".*\s")
