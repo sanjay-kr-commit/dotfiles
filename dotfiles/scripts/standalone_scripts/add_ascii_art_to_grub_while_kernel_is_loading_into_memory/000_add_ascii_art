@@ -48,15 +48,19 @@ then
     exit
   fi
 
+  echo "from ascii art script" >&2
+  echo "ascii hash  : \"$ascii_art_hash\"" >&2
+  echo "buffer hash : \"$buffer_ascii_art_hash\"" >&2
+
   if [[ $buffer_ascii_art_hash == "" ]]; then
-    echo "Unmodified"
+    echo "Unmodified" >&2
     firstChange $ascii_art_hash
   elif [[ $buffer_ascii_art_hash != $ascii_art_hash ]]; then
-    echo "Changes Detected"
+    echo "Changes Detected" >&2
     cp "$grubFile.bak" $grubFile
     firstChange $ascii_art_hash
   else
-    echo "No Changes"
+    echo "No Changes" >&2
   fi
 
 fi
