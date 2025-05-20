@@ -20,6 +20,9 @@ keymap.set({ "n", "v", "i" }, "<leader>lr", ":luafile %")
 -- copy buffer to clipboard
 keymap.set("n", "<leader>zz", ":w !cat | xclip -selection c <CR>")
 
+-- show notification history
+keymap.set("n", "<leader>snh", ":lua Snacks.notifier.show_history()<CR>")
+
 -- use jk to exit insert mode
 keymap.set("i", "jk", "<ESC>")
 
@@ -31,6 +34,10 @@ keymap.set("n", "<leader>t", ":terminal<CR>")
 
 -- delete single character without copying into register
 keymap.set("n", "x", '"_x')
+
+-- set filetype
+keymap.set("n", "ft", ":set filetype=")
+keymap.set("n", "jft", ":set filetype=java<CR>")
 
 -- window management
 keymap.set("n", "<leader>sv", "<C-w>v") -- split window vertically
