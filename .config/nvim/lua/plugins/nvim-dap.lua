@@ -6,41 +6,8 @@ return {
   config = function()
     local dap, dapui = require("dap"), require("dapui")
 
-    dap.adapters.codelldb = {
-      type = "executable",
-      command = require("lib.std").mason_packages .. "/codelldb/codelldb",
-    }
-
-    dap.configurations.c = {
-      {
-        name = "Launch file",
-        type = "codelldb",
-        request = "launch",
-        program = function()
-          local file_name = vim.fn.expand("%:p")
-          os.execute("gcc -g -o " .. file_name .. ".debug " .. file_name)
-          return (file_name .. ".debug")
-          --return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
-        end,
-        cwd = "${workspaceFolder}",
-        stopOnEntry = false,
-      },
-    }
-
-    dap.configurations.cpp = {
-      {
-        name = "Launch file",
-        type = "codelldb",
-        request = "launch",
-        program = function()
-          local file_name = vim.fn.expand("%:p")
-          os.execute("gcc -g -lstdc++ -o " .. file_name .. ".debug " .. file_name)
-          return (file_name .. ".debug")
-        end,
-        cwd = "${workspaceFolder}",
-        stopOnEntry = false,
-      },
-    }
+    require("dapconfig.java")(dap)
+    require("dapconfig.ccxx")(dap)
 
     dapui.setup()
 
@@ -56,13 +23,6 @@ return {
     dap.listeners.before.event_exited.dapui_config = function()
       dapui.close()
     end
-
-    --vim.keymap.set("n", "<Leader>dt", function()
-    --  dap.toggle_breakpoint()
-    --end)
-    --vim.keymap.set("n", "<Leader>dc", function()
-    --  dap.continue()
-    --end)
   end,
 
   keys = {
@@ -102,7 +62,6 @@ return {
       desc = "Debugger Set Breakpoint",
     },
 
-    --
     -- vim.keymap.set('n', '<Leader>dr', function() require('dap').repl.open() end)
     -- vim.keymap.set('n', '<Leader>dl', function() require('dap').run_last() end)
     -- vim.keymap.set({'n', 'v'}, '<Leader>dh', function()
@@ -119,8 +78,5 @@ return {
     --   local widgets = require('dap.ui.widgets')
     --   widgets.centered_float(widgets.scopes)
     -- end)
-
-    --
-    --
   },
 }
