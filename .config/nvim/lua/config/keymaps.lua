@@ -14,6 +14,15 @@ local keymap = vim.keymap -- for conciseness
 -- See `:help vim.keymap.set()`
 -- vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
 
+-- open leetcode console
+keymap.set("n", "<leader>lc", ":Leet console<CR>")
+keymap.set("n", "<leader>ll", ":Leet lang<CR>")
+keymap.set("n", "<leader>lc", ":Leet run<CR>")
+keymap.set("n", "<leader>ls", ":Leet submit<CR>")
+
+-- reload current file
+keymap.set({ "n", "v" }, "<C-r>", ":set relativenumber<CR>")
+
 -- reload current file
 keymap.set({ "n", "v", "i" }, "<leader>lr", ":luafile %")
 
