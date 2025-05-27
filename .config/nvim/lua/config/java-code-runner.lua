@@ -114,9 +114,6 @@ return function()
               --end
             end
             --print(buffer)
-            for arg in string.gmatch(buffer, "args *.*") do
-              vim.notify(arg, vim.log.levels.INFO)
-            end
             buffer = ""
             classFound = false
             className = ""
