@@ -32,6 +32,20 @@ local args = function(str)
       else
         buffer = buffer .. char
       end
+      if collect_args == false and string.match(buffer, " *ask*%( *%)") ~= nil then
+        table.insert(args, {
+          prefix = "",
+          name = "--ask",
+          execute = function(execution_function)
+            vim.ui.input({
+              prompt = "arguments",
+            }, function(input)
+              execution_function(input)
+            end)
+          end,
+        })
+        buffer = ""
+      end
       if collect_args == false and string.match(buffer, " *args *%(") ~= nil then
         --print("args")
         buffer = ""
@@ -107,7 +121,12 @@ return function()
             if string.match(buffer, "public *static *void *main *%( *String *%[ *%].*%)") ~= nil then
               table.insert(mainClass, className)
               for _, arg in ipairs(args(buffer)) do
-                table.insert(mainClass, className .. " " .. arg)
+                if type(arg) == "table" then
+                  arg.prefix = className .. " "
+                  table.insert(mainClass, arg)
+                else
+                  table.insert(mainClass, className .. " " .. arg)
+                end
               end
               --for arg in string.gmatch(buffer, "args *%(.*%)") do
               --  table.insert(mainClass, className .. " " .. arg:gsub("^" .. "args%(", ""):gsub("%)$", ""))
@@ -131,9 +150,22 @@ return function()
   else
     vim.ui.select(mainClass, {
       prompt = "Choose class : ",
+      format_item = function(item)
+        if type(item) == "string" then
+          return item
+        else
+          return item.prefix .. item.name
+        end
+      end,
     }, function(choice)
-      if choice then
+      if type(choice) == "string" then
         vim.cmd("split | terminal cd " .. dir .. " && javac " .. filepath .. " && java " .. choice)
+      elseif type(choice) == "table" then
+        choice.execute(function(arg)
+          vim.cmd(
+            "split | terminal cd " .. dir .. " && javac " .. filepath .. " && java " .. choice.prefix .. " " .. arg
+          )
+        end)
       end
     end)
   end
