@@ -1,3 +1,59 @@
+local args = function(str)
+  local stack = {}
+  local args = {}
+  local buffer = ""
+  local collect_args = false
+
+  for char in str:gmatch(".") do
+    --print("char " .. char)
+    if #stack > 0 then
+      if char == "(" then
+        --print("stack push : " .. char)
+        table.insert(stack, char)
+      elseif char == ")" then
+        --print("stack pop : " .. char)
+        table.remove(stack)
+      end
+
+      --print("stack : " .. table.concat(stack, " , "))
+
+      if #stack == 0 then
+        --print("stack : 0 ")
+        table.insert(args, buffer)
+        collect_args = false
+      else
+        buffer = buffer .. char
+      end
+      --print("args : " .. table.concat(args, " , "))
+      --print("buffer : " .. buffer)
+    else
+      if char == " " then
+        buffer = ""
+      else
+        buffer = buffer .. char
+      end
+      if collect_args == false and string.match(buffer, " *args *%(") ~= nil then
+        --print("args")
+        buffer = ""
+        table.insert(stack, char)
+        collect_args = true
+      end
+      --print("args : " .. table.concat(args, " , "))
+      --print("buffer : " .. buffer)
+    end
+    --print()
+  end
+  return args
+end
+
+--print("hello world")
+--
+--for i, j in ipairs(args("args( hello ( world)) args( hi world)")) do
+--  print(i, j)
+--end
+--
+--print("hello world")
+
 return function()
   local is_blank = function(str)
     return str == nil or str:match("^%s*$") ~= nil
@@ -50,6 +106,16 @@ return function()
           if #stack == 0 then
             if string.match(buffer, "public *static *void *main *%( *String *%[ *%].*%)") ~= nil then
               table.insert(mainClass, className)
+              for _, arg in ipairs(args(buffer)) do
+                table.insert(mainClass, className .. " " .. arg)
+              end
+              --for arg in string.gmatch(buffer, "args *%(.*%)") do
+              --  table.insert(mainClass, className .. " " .. arg:gsub("^" .. "args%(", ""):gsub("%)$", ""))
+              --end
+            end
+            --print(buffer)
+            for arg in string.gmatch(buffer, "args *.*") do
+              vim.notify(arg, vim.log.levels.INFO)
             end
             buffer = ""
             classFound = false
