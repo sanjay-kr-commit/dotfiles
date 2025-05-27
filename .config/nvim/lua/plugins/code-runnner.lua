@@ -9,12 +9,17 @@ return {
   },
   config = function()
     require("code_runner").setup({
-
+      mode = "better_term",
+      better_term = {
+        number = 1,
+      },
       filetype = {
-        java = {
+        java = function()
+          require("config.java-code-runner")()
+        end,
+        lua = {
           "cd $dir &&",
-          "javac $fileName &&",
-          "java $fileNameWithoutExt",
+          "lua $fileName",
         },
         kotlin = {
           "cd $dir &&",

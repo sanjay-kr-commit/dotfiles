@@ -1,6 +1,5 @@
 return function()
   local dap, dapui = require("dap"), require("dapui")
-  require("dapconfig.java")(dap)
   require("dapconfig.ccxx")(dap)
   dapui.setup()
   dap.listeners.before.attach.dapui_config = function()

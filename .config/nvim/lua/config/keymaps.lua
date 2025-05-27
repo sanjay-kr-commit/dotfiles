@@ -14,6 +14,13 @@ local keymap = vim.keymap -- for conciseness
 -- See `:help vim.keymap.set()`
 -- vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
 
+-- keymap to open link under cursor under qutebrowser
+vim.keymap.set("n", "qx", function()
+  local url = vim.fn.expand("<cfile>")
+  vim.cmd("qutebrowser " .. url)
+  vim.notify("Openned " .. url, vim.log.levels.INFO)
+end)
+
 -- open leetcode console
 keymap.set("n", "<leader>lc", ":Leet console<CR>")
 keymap.set("n", "<leader>ll", ":Leet lang<CR>")
