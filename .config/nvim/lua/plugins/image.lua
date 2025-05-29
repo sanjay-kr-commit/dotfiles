@@ -6,7 +6,7 @@ return {
   },
   config = function()
     require("image").setup({
-      backend = "ueberzug",
+      backend = "kitty",
       processor = "magick_cli", -- or "magick_rock"
       integrations = {
         markdown = {

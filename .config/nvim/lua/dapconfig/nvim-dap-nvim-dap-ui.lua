@@ -1,6 +1,7 @@
 return function()
   local dap, dapui = require("dap"), require("dapui")
   require("dapconfig.ccxx")(dap)
+  require("dapconfig.lua")(dap)
   --  require("dapconfig.nvim-lua-dap")(dap)
   dapui.setup()
   dap.listeners.before.attach.dapui_config = function()

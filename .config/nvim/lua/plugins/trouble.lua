@@ -3,7 +3,7 @@ return {
   dependencies = { "nvim-tree/nvim-web-devicons" },
   keys = {
     {
-      "<leader>d",
+      "<leader>dt",
       ":Trouble<CR>",
       desc = "Opens Diagnosis",
     },

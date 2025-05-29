@@ -9,26 +9,20 @@ return {
   },
   config = function()
     require("code_runner").setup({
-      mode = "better_term",
-      better_term = {
-        number = 1,
-      },
+      --mode = "better_term",
+      --better_term = {
+      --  number = 1,
+      --},
       filetype = {
         java = function()
           require("config.java-code-runner")()
         end,
+        kotlin = function()
+          require("config.kotlin-code-runner")()
+        end,
         lua = {
           "cd $dir &&",
           "lua $fileName",
-        },
-        kotlin = {
-          "cd $dir &&",
-          "echo compiling code &&",
-          "kotlinc $fileName &&",
-          "clear && echo cleaning up &&",
-          "rm -r META-INF &&",
-          "clear &&",
-          "kotlin \"$(echo $fileName | sed 's/.*/\\u&/' | sed 's/\\.\\s*\\([a-z]\\)/\\.\\u\\1/g' | sed 's/\\.//g' )\"",
         },
         python = "python3 -u",
         typescript = "deno run",

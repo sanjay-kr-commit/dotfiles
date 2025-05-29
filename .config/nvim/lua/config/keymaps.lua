@@ -14,13 +14,27 @@ local keymap = vim.keymap -- for conciseness
 -- See `:help vim.keymap.set()`
 -- vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
 
+-- softwrap button
+--vim.keymap.set("n", "sw", function()
+--  vim.opt.wrap = true
+--  print(vim.opt.wrap)
+--  vim.opt.wrap = false
+--  print(vim.opt.wrap)
+--end)
+
 -- keymap to open link under cursor under qutebrowser
-vim.keymap.set("n", "qx", function()
+vim.keymap.set("n", "gxx", function()
   local url = vim.fn.expand("<cfile>")
-  vim.cmd("qutebrowser " .. url)
+  vim.cmd("!qutebrowser " .. url)
   vim.notify("Openned " .. url, vim.log.levels.INFO)
 end)
 
+-- keymap to open link under cursor under qwenview
+vim.keymap.set("n", "gxxx", function()
+  local url = vim.fn.expand("<cfile>")
+  vim.cmd("!gwenview " .. url)
+  vim.notify("Openned " .. url, vim.log.levels.INFO)
+end)
 -- open leetcode console
 keymap.set("n", "<leader>lc", ":Leet console<CR>")
 keymap.set("n", "<leader>ll", ":Leet lang<CR>")
