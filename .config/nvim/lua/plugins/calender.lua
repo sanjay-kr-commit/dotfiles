@@ -2,12 +2,12 @@ return {
   "itchyny/calendar.vim",
   keys = {
     {
-      "<leader>ccc",
+      "<leader>Cc",
       ":Calendar<CR>",
       desc = "Opens Calendar",
     },
     {
-      "<leader>ccd",
+      "<leader>Cd",
       ":Calendar -day<CR>",
       desc = "Show Day Calendar",
     },

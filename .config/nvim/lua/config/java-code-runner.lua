@@ -118,7 +118,10 @@ return function()
             table.remove(stack)
           end
           if #stack == 0 then
-            if string.match(buffer, "public *static *void *main *%( *String *%[ *%].*%)") ~= nil then
+            if
+              string.match(buffer, "// *public *static *void *main *%( *String *%[ *%].*%)") == nil
+              and string.match(buffer, "public *static *void *main *%( *String *%[ *%].*%)") ~= nil
+            then
               table.insert(mainClass, className)
               for _, arg in ipairs(args(buffer)) do
                 if type(arg) == "table" then
@@ -147,6 +150,18 @@ return function()
   end
   if #mainClass == 0 then
     vim.notify("No class with main entry found", vim.log.levels.ERROR)
+  elseif #mainClass == 1 then
+    if type(mainClass[1]) == "string" then
+      vim.cmd("split | terminal cd " .. dir .. " && javac " .. filepath .. " && java " .. mainClass[1])
+    elseif type(mainClass[1]) == "table" then
+      mainClass[1].execute(function(arg)
+        vim.cmd(
+          "split | terminal cd " .. dir .. " && javac " .. filepath .. " && java " .. mainClass[1].prefix .. " " .. arg
+        )
+      end)
+    else
+      vim.notify("Something went wrong", vim.log.levels.ERROR)
+    end
   else
     vim.ui.select(mainClass, {
       prompt = "Choose class : ",
