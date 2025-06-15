@@ -152,11 +152,27 @@ return function()
     vim.notify("No class with main entry found", vim.log.levels.ERROR)
   elseif #mainClass == 1 then
     if type(mainClass[1]) == "string" then
-      vim.cmd("split | terminal cd " .. dir .. " && javac " .. filepath .. " && java " .. mainClass[1])
+      vim.cmd(
+        "split | terminal cd "
+          .. dir
+          .. " && c=$(which javac) && r=$(echo $c | sed -e 's/javac/java/g')"
+          .. " && $c "
+          .. filepath
+          .. " && $r "
+          .. mainClass[1]
+      )
     elseif type(mainClass[1]) == "table" then
       mainClass[1].execute(function(arg)
         vim.cmd(
-          "split | terminal cd " .. dir .. " && javac " .. filepath .. " && java " .. mainClass[1].prefix .. " " .. arg
+          "split | terminal cd "
+            .. dir
+            .. " && c=$(which javac) && r=$(echo $c | sed -e 's/javac/java/g')"
+            .. " && $c "
+            .. filepath
+            .. " && $r "
+            .. mainClass[1].prefix
+            .. " "
+            .. arg
         )
       end)
     else
@@ -174,11 +190,27 @@ return function()
       end,
     }, function(choice)
       if type(choice) == "string" then
-        vim.cmd("split | terminal cd " .. dir .. " && javac " .. filepath .. " && java " .. choice)
+        vim.cmd(
+          "split | terminal cd "
+            .. dir
+            .. " && c=$(which javac) && r=$(echo $c | sed -e 's/javac/java/g')"
+            .. " && $c "
+            .. filepath
+            .. " && $r "
+            .. choice
+        )
       elseif type(choice) == "table" then
         choice.execute(function(arg)
           vim.cmd(
-            "split | terminal cd " .. dir .. " && javac " .. filepath .. " && java " .. choice.prefix .. " " .. arg
+            "split | terminal cd "
+              .. dir
+              .. " && c=$(which javac) && r=$(echo $c | sed -e 's/javac/java/g')"
+              .. " && $c "
+              .. filepath
+              .. " && $r "
+              .. choice.prefix
+              .. " "
+              .. arg
           )
         end)
       end
