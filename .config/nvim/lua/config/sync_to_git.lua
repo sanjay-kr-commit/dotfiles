@@ -63,7 +63,7 @@ return function(sync)
   end
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-w>h", true, false, true), "n", false)
 
-  vim.cmd("w " .. gitrepo .. filename .. "/" .. "README.md")
+  vim.cmd("w! " .. gitrepo .. filename .. "/" .. "README.md")
 
   if left_split_exists == false then
     vim.cmd("Leet desc toggle")
