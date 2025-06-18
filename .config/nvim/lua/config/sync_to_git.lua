@@ -1,5 +1,4 @@
---local gitrepo = "~/projects/problem-solving/"
-local gitrepo = "~/test/"
+local gitrepo = "~/projects/problem-solving/"
 
 return function(sync)
   if sync == nil then
