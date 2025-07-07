@@ -1,0 +1,65 @@
+#!/bin/env bash
+
+# add these at the start of the config
+#import os
+#
+#container_running = "/dev/shm/startInContainer"
+#
+## Check if file exists, then delete
+#if os.path.exists(container_running):
+#    os.remove(container_running)
+#else:
+#    with open(container_running, 'w'):
+#        pass
+#    subprocess.run("bash $HOME/.config/qutebrowser/userscripts/startInContainer", shell=True, executable="/bin/bash")
+#    quit()
+#
+#def read_xresources(prefix):
+#    props = {}
+#    x = subprocess.run(['xrdb', '-query'],
+#                       capture_output=True, check=True, text=True)
+#    lines = x.stdout.split('\n')
+#    for line in filter(lambda l: l.startswith(prefix), lines):
+#        prop, _, value = line.partition(':\t')
+#        props[prop] = value
+#    return props
+#
+
+createContainer() {
+
+  newContainer="$(zenity --entry \
+    --title="Create a new container" \
+    --text="Enter name of new container:" \
+    --entry-text "default")"
+
+  $HOME/.config/qutebrowser/userscripts/container-add "$newContainer"
+
+  selectAContainer
+
+}
+
+selectAContainer() {
+
+  title="qutebrowser"
+  prompt="Select A container to start"
+  items=($(cat $HOME/.config/qutebrowser/containers))
+
+  if [[ "${#items}" == 0 ]]; then
+    echo "No Conatiner Found"
+    createContainer
+    return -1
+  fi
+
+  items+=("new container")
+
+  item=$(zenity --title="$title" --text="$prompt" --list --column="containers" "${items[@]}")
+
+  if [[ $item == "new container" ]]; then
+    createContainer
+    return 0
+  fi
+
+  $HOME/.config/qutebrowser/userscripts/container-open $item
+}
+
+selectAContainer
