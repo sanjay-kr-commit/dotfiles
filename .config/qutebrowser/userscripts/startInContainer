@@ -32,7 +32,7 @@ createContainer() {
     --text="Enter name of new container:" \
     --entry-text "default")"
 
-  $HOME/.config/qutebrowser/userscripts/container-add "$newContainer"
+  . $(dirname $0)/container-add "$newContainer"
 
   selectAContainer
 
@@ -42,7 +42,8 @@ selectAContainer() {
 
   title="qutebrowser"
   prompt="Select A container to start"
-  items=($(cat $HOME/.config/qutebrowser/containers))
+  items=($(cd "$(dirname $0)" && cd .. && cat containers))
+  #items=($(cat $HOME/.config/qutebrowser/containers))
 
   if [[ "${#items}" == 0 ]]; then
     echo "No Conatiner Found"
@@ -50,7 +51,7 @@ selectAContainer() {
     return -1
   fi
 
-  items+=("new container")
+  items+=(anonymous "new container")
 
   item=$(zenity --title="$title" --text="$prompt" --list --column="containers" "${items[@]}")
 
@@ -59,7 +60,23 @@ selectAContainer() {
     return 0
   fi
 
-  $HOME/.config/qutebrowser/userscripts/container-open $item
+  if [[ $item == "anonymous" ]]; then
+    if [[ -f "/dev/shm/qbcco" ]]; then
+      rm /dev/shm/qbcco
+    fi
+    echo 'CONTAINER_BASE="/dev/shm/qutebrowser"' >>/dev/shm/qbcco
+    echo 'CONTAINER_LIST="/dev/shm/qc"' >>/dev/shm/qbcco
+    touch /dev/shm/qc
+    . $(dirname $0)/container-add anonymous
+    . $(dirname $0)/container-open anonymous
+    . $(dirname $0)/container-rm anonymous
+    rm /dev/shm/qbcco
+    rm /dev/shm/qc
+    rm -r /dev/shm/qutebrowser/
+    return 0
+  fi
+
+  . $(dirname $0)/container-open $item
 }
 
 selectAContainer
