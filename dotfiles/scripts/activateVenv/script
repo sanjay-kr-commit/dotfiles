@@ -8,7 +8,7 @@ local processVenvpath() {
   local activationPath="$( echo $1 | sed -e 's/\/pyvenv\.cfg//g' )/bin/activate"
   echo "${RED}> Activating : $(simpleName $1)$RESET"
   if ! [[ -f $activationPath  ]] ; then
-    echo -e "${RED}activation path not found$RESET"
+    echo -e "${RED}Activation path not found$RESET"
   else 
     source "$activationPath"
   fi
@@ -47,4 +47,16 @@ activateVenv() {
     selectPathToActivate
   fi
 
+}
+
+venvrun() {
+  activateVenv
+  if  [[ "$(type deactivate)" != "deactivate not found" ]] ; then 
+    echo -e "${GREEN}> Executing : $* $RESET"
+    eval $*
+    echo -e "${GREEN}> Deactivating venv $RESET"
+    deactivate
+  else 
+    echo -e "${RED}> venv activation failed $RESET"
+  fi 
 }
