@@ -1,0 +1,102 @@
+#!/bin/bash
+
+monitoringJob() {
+
+  local bPid="$1"
+  local jobHash="$2"
+  local out="$(ps --ppid $bPid --no-headers -o pid)"
+
+  local select="$(echo $out | wc -w)"
+  local childProcess=$(echo $out | grep -o "[0-9]*" | awk "NR==$select")
+
+  local min=0
+  local max=0
+  local sum=0
+  local count=1
+  local delay=0.01
+  local pidConfirmation="$(
+    ps -p $childProcess -o pid,ppid,user,%cpu,%mem,etime,cmd
+  )"
+
+  if [[ -d "/proc/$childProcess" ]]; then
+    local temp="$(cat /proc/$childProcess/smaps 2>/dev/null | grep -E 'Private_Dirty|Private_Clean' | awk '{sum += $2} END {print sum/1024}')"
+    min=$temp
+    max=$temp
+    sum=$temp
+  fi
+
+  while [[ -d "/proc/$childProcess" ]]; do
+    temp="$(cat /proc/$childProcess/smaps 2>/dev/null | grep -E 'Private_Dirty|Private_Clean' | awk '{sum += $2} END {print sum/1024}')"
+    sum=$(($sum + $temp))
+    count=$((count + 1))
+    if [[ $temp -gt $max ]]; then
+      max=$temp
+    fi
+    if [[ $temp -lt $min ]]; then
+      min=$temp
+    fi
+    sleep $delay
+  done
+
+  shift 2
+  # Colors
+  label_color="\e[1;34m" # Bold blue
+  value_color="\e[1;32m" # Bold green
+  reset_color="\e[0m"
+
+  printf "${label_color}%-18s${reset_color} : ${value_color}%s${reset_color}\n" "PID" "$childProcess"
+  printf "${label_color}%-18s${reset_color} : ${value_color}%s${reset_color}\n" "Command" "$*"
+  printf "${label_color}%-18s${reset_color} : ${value_color}%s MB${reset_color}\n" "Min memory used" "$min"
+  printf "${label_color}%-18s${reset_color} : ${value_color}%s MB${reset_color}\n" "Max memory used" "$max"
+  printf "${label_color}%-18s${reset_color} : ${value_color}%s MB${reset_color}\n" "Avg memory used" "$((sum / count))"
+  echo "${label_color}$pidConfirmation${reset_color}"
+
+  # inform forground job about monitoring process exit
+  local exitPath=/dev/shm/
+  if [[ ! -d "$exitPath" ]]; then
+    exitPath="$(pwd)"
+  fi
+  local exitPath="$(echo $exitPath | sed 's:/*$::')"
+  touch "$exitPath/$jobHash"
+
+  echo "${label_color}> monitoring process finished${reset_color}"
+}
+
+monitor() {
+
+  set +m
+  # has unique for each monitoring job for background and forground process communication
+  local jobHash="$(uuidgen)"
+  local bPid="$$"
+
+  monitoringJob $bPid $jobHash $* &
+
+  # process you want to monitor
+  $*
+  echo ""
+
+  # wait for monitoring process to finish
+  label_color="\e[1;34m" # Bold blue
+  value_color="\e[1;32m" # Bold green
+  reset_color="\e[0m"
+  local exitPath="/dev/shm/"
+  if [[ ! -d "$exitPath" ]]; then
+    exitPath="$(pwd)"
+  fi
+  exitPath="$(echo $exitPath | sed 's:/*$::')"
+  exitPath="$exitPath/$jobHash"
+
+  if [[ -f "$exitPath" ]]; then
+    rm $exitPath
+  else
+    echo
+    echo "${label_color}> Waiting for monitoring process to exit${reset_color}"
+    while [[ ! -f "$exitPath" ]]; do
+      sleep 0.01
+    done
+    rm $exitPath
+  fi
+
+  set -m
+
+}

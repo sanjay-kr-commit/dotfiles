@@ -28,6 +28,8 @@ eval "source $SCRIPTPATH/saveAlias/script"
 
 eval "source $SCRIPTPATH/activateVenv/script"
 
+eval "source $SCRIPTPATH/memoryStats/script"
+
 if [[ "$2" != "persist" ]]; then
   destructDebugger
 fi
