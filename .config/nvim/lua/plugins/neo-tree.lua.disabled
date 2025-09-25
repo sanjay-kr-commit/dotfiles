@@ -1,0 +1,9 @@
+return {
+  "nvim-neo-tree/neo-tree.nvim",
+  opts = {
+    window = {
+      position = "left", -- "left", "right", "top", "bottom"
+      width = 30, -- adjust sidebar width
+    },
+  },
+}
