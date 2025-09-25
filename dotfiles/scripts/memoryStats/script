@@ -49,6 +49,8 @@ monitoringJob() {
   printf "${label_color}%-18s${reset_color} : ${value_color}%s MB${reset_color}\n" "Min memory used" "$min"
   printf "${label_color}%-18s${reset_color} : ${value_color}%s MB${reset_color}\n" "Max memory used" "$max"
   printf "${label_color}%-18s${reset_color} : ${value_color}%s MB${reset_color}\n" "Avg memory used" "$((sum / count))"
+  printf "${label_color}%-18s${reset_color} : ${value_color}%s nanosecond${reset_color}\n" "Time Used" "$(($endTime - $startTime))"
+
   echo "${label_color}$pidConfirmation${reset_color}"
 
   # inform forground job about monitoring process exit
@@ -57,9 +59,8 @@ monitoringJob() {
     exitPath="$(pwd)"
   fi
   local exitPath="$(echo $exitPath | sed 's:/*$::')"
-  touch "$exitPath/$jobHash"
-
   echo "${label_color}> monitoring process finished${reset_color}"
+  touch "$exitPath/$jobHash"
 }
 
 monitor() {
@@ -72,7 +73,9 @@ monitor() {
   monitoringJob $bPid $jobHash $* &
 
   # process you want to monitor
+  startTime="$(date +%s%3N)"
   $*
+  endTime="$(date +%s%3N)"
   echo ""
 
   # wait for monitoring process to finish
