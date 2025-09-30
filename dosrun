@@ -1,0 +1,31 @@
+#!/bin/bash
+
+local programName="flatpak run com.dosbox_x.DOSBox-X"
+local tc="~/tc"
+local tcc="tcc -IC:\INCLUDE -LC:\LIB C:\LIB\GRAPHICS.LIB "
+
+dosc() {
+  uuid="$(uuidgen | grep -o "^[a-zA-Z0-9]*")"
+  uuid="${uuid:u}"
+  dir="$(pwd)"
+  eval "$programName -nogui -noconsole -c \"mount c $tc\" -c \"set PATH=C:\BIN;C:\DOS;%PATH%\" -c \"mount r $dir\" -c \"r:\" -c \"$tcc $* > $uuid\" -exit >/dev/null 2>&1"
+  if [[ -f $uuid ]]; then
+    cat $uuid
+    rm $uuid
+  fi
+}
+
+doscw() {
+  dir="$(pwd)"
+  eval "$programName -nogui -noconsole  -c \"mount c $tc\" -c \"set PATH=C:\BIN;C:\DOS;%PATH%\"  -c \"mount r $dir\" -c \"r:\" -c \"$tcc $* \" >/dev/null 2>&1"
+}
+
+dosr() {
+  dir="$(pwd)"
+  eval "$programName -nogui -noconsole -c \"mount c $tc\" -c \"set PATH=C:\BIN;C:\DOS;%PATH%\"  -c \"mount r $dir\" -c \"r:\" -c \"$*\" -exit >/dev/null 2>&1"
+}
+
+dosrw() {
+  dir="$(pwd)"
+  eval "$programName -nogui -noconsole -c \"mount c $tc\" -c \"set PATH=C:\BIN;C:\DOS;%PATH%\"  -c \"mount r $dir\" -c \"r:\" -c \"$*\" >/dev/null 2>&1"
+}
