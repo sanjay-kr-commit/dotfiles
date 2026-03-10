@@ -1,0 +1,14 @@
+#!/bin/zsh
+fzf-history-widget() {
+  
+  local cmd
+  cmd=$(fc -rl 1 | sed 's/^[ ]*[0-9]*[ ]*//' | fzf --preview-window=wrap --preview 'echo {} | bat --language=zsh --wrap=auto --color=always')
+
+  if [[ -n $cmd ]]; then
+    BUFFER="$cmd"
+    CURSOR=${#BUFFER}
+  fi
+}
+
+zle -N fzf-history-widget
+bindkey '^R' fzf-history-widget

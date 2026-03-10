@@ -12,7 +12,7 @@ if [[ "$1" == "log" ]]; then
 fi
 
 # commment below line to stop sudo override
-eval "source $SCRIPTPATH/runUserBinariesWithSudo/script"
+#eval "source $SCRIPTPATH/runUserBinariesWithSudo/script"
 
 # comment below line to disable push command
 eval "source $SCRIPTPATH/gitPass/script"
@@ -29,6 +29,8 @@ eval "source $SCRIPTPATH/saveAlias/script"
 eval "source $SCRIPTPATH/activateVenv/script"
 
 eval "source $SCRIPTPATH/memoryStats/script"
+
+eval "source $SCRIPTPATH/fzfForPreviousCmd/script"
 
 if [[ "$2" != "persist" ]]; then
   destructDebugger
