@@ -2,7 +2,7 @@
 fzf-history-widget() {
   
   local cmd
-  cmd=$(fc -rl 1 | sed 's/^[ ]*[0-9]*[ ]*//' | fzf --preview-window=wrap --preview 'echo {} | bat --language=zsh --wrap=auto --color=always')
+  cmd=$( fc -l 1 | sed 's/^[ ]*[0-9]*[ ]*//' | awk '{ if ( seen[$0]++ == 0 ) { print }}' | tac | fzf --preview-window=wrap --preview 'echo {} | bat --decorations=never --language=zsh --wrap=auto --color=always')
 
   if [[ -n $cmd ]]; then
     BUFFER="$cmd"
