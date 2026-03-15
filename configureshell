@@ -1,16 +1,13 @@
 #!/bin/zsh
 
 local pathprefix_path=""
-activeShell=unknown
+export activeShell=$(ps -p $$ -o comm=)
 
-if [[ -n $ZSH_VERSION ]]; then
+if [[ $activeShell == "zsh" ]]; then
   pathprefix_path="${(%):-%N}"
-  activeShell=zsh
-elif [[ -n $BASH_VERSION ]]; then
-  pathprefix_path="${BASH_SOURCE[0]}"
-  activeShell=bash
 else
-  activeShell=$(ps -p $$ -o comm=)
+  echo "ZSH is the only shell that this works with"
+  return
 fi
 
 local temp="${pathprefix_path%/*}" 
@@ -72,13 +69,3 @@ fi
 
 processRelativePath helper debug shell type $activeShell
 processRelativePath helper debug $pathprefix_path
-
-if [[ $activeShell != "zsh" ]] && [[ ! -v  ENCFORCE_BASH_ENV ]]; then
-  processRelativePath helper error "These dots are made for zsh not bash"
-  processRelativePath helper error "please use flag ENCFORCE_BASH_ENV for"
-  processRelativePath helper error "for force sourcing this script all script"
-  processRelativePath helper error "might not work"
-  return
-fi
-
-processRelativePath helper debug it worked
