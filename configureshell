@@ -1,0 +1,84 @@
+#!/bin/zsh
+
+local pathprefix_path=""
+activeShell=unknown
+
+if [[ -n $ZSH_VERSION ]]; then
+  pathprefix_path="${(%):-%N}"
+  activeShell=zsh
+elif [[ -n $BASH_VERSION ]]; then
+  pathprefix_path="${BASH_SOURCE[0]}"
+  activeShell=bash
+else
+  activeShell=$(ps -p $$ -o comm=)
+fi
+
+local temp="${pathprefix_path%/*}" 
+
+if [[ "$temp" == "." ]] || [[ "$temp" == $pathprefix_path ]] ; then
+  local pathprefix_path="."
+else 
+  local pathprefix_path=$temp
+fi
+
+export _path_stack=( "$pathprefix_path" )
+export _path_stack_top=1
+
+export processRelativePath() {
+
+  p="${_path_stack[$_path_stack_top]}"
+  s="$1"
+
+  if [[ "${p:$((${#p}-1)):1}" == "/" ]] ; then 
+    p=${p%/*}
+  fi
+
+  buffer=""
+  buff="${s:0:1}" 
+  for ((i=1; i<${#s}; i++)); do
+      buff="$buff${s:$i:1}"
+      if [[ "$buff" == ".." ]] ; then 
+        buff=""
+        p="${p%/*}"
+        ((i++))
+      fi
+      if [[ "${#buff}" -eq 2 ]] ; then 
+        buffer="$buffer${buff:0:1}"
+        buff="${buff:1:1}"
+      fi
+  done
+
+  buffer="$p/$buffer$buff"
+  newtop=$buffer
+  if [[ "${newtop:$((${#newtop}-1)):1}" != "/" ]] ; then 
+    newtop=${newtop%/*}
+  fi
+
+  _path_stack+=("$newtop")
+  ((_path_stack_top++))
+
+  shift
+
+  source "$buffer" $*
+
+  unset "_path_stack[-1]"
+  ((_path_stack_top--))
+}
+
+if [[ $1 == '--init' ]] ; then
+  processRelativePath initscript
+  return
+fi
+
+processRelativePath helper debug shell type $activeShell
+processRelativePath helper debug $pathprefix_path
+
+if [[ $activeShell != "zsh" ]] && [[ ! -v  ENCFORCE_BASH_ENV ]]; then
+  processRelativePath helper error "These dots are made for zsh not bash"
+  processRelativePath helper error "please use flag ENCFORCE_BASH_ENV for"
+  processRelativePath helper error "for force sourcing this script all script"
+  processRelativePath helper error "might not work"
+  return
+fi
+
+processRelativePath helper debug it worked

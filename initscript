@@ -1,0 +1,3 @@
+#!/bin/zsh
+
+processRelativePath helper debug "init called"
