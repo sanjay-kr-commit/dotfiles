@@ -1,12 +1,21 @@
-#!/bin/zsh
+#!/bin/env zsh
 
+#boot strapping creating base environment
+local script_path="$(realpath ${(%):-%N})"
 local pathprefix_path=""
 export activeShell=$(ps -p $$ -o comm=)
+local parentShell=$(ps -p $PPID -o comm=)
 
 if [[ $activeShell == "zsh" ]]; then
-  pathprefix_path="${(%):-%N}"
+  pathprefix_path="$script_path"
 else
-  echo "ZSH is the only shell that this works with"
+  echo "These dotfiles should only be sourced from zsh not \"$activeShell\""
+  return
+fi
+
+local knowshells=("bash","fish","sh")
+if [[ "$(echo "${knowshells[@]}" | grep -o "$parentShell")" == $parentShell ]] ; then
+  echo "These dotfiles are only compatible with ZSH not \"$parentShell\""
   return
 fi
 
@@ -21,7 +30,7 @@ fi
 export _path_stack=( "$pathprefix_path" )
 export _path_stack_top=1
 
-export processRelativePath() {
+processRelativePath() {
 
   p="${_path_stack[$_path_stack_top]}"
   s="$1"
@@ -51,8 +60,8 @@ export processRelativePath() {
     newtop=${newtop%/*}
   fi
 
-  _path_stack+=("$newtop")
   ((_path_stack_top++))
+  _path_stack[_path_stack_top]="$newtop"
 
   shift
 
@@ -62,10 +71,9 @@ export processRelativePath() {
   ((_path_stack_top--))
 }
 
-if [[ $1 == '--init' ]] ; then
-  processRelativePath initscript
-  return
-fi
-
 processRelativePath helper debug shell type $activeShell
 processRelativePath helper debug $pathprefix_path
+
+# further processing
+# the first argument should always be --init
+processRelativePath initscript $1 "--p=$script_path"

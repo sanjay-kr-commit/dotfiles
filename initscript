@@ -1,3 +1,10 @@
 #!/bin/zsh
+local script_path="$(realpath ${(%):-%N})"
+local sourceScriptPath="$( echo $* | grep -o -- "--p=.*" | sed -e 's#--p=##g' )"
 
-processRelativePath helper debug "init called"
+if [[ "$1" == "--init" ]] ; then
+  export LOGERROR=0
+  processRelativePath helper debug setting up the environment
+else 
+  processRelativePath helper debug initializing the environment
+fi
