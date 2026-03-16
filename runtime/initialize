@@ -5,3 +5,5 @@ processRelativePath logger debug calling module loader
 processRelativePath moduleloader
 processRelativePath logger debug calling flag fucniton
 processRelativePath flagFunctions
+processRelativePath logger debug calling module fucniton
+processRelativePath moduleFunction

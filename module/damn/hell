@@ -3,3 +3,5 @@ echo "entered " ./damn/hell
 
 #-> hello/hi , damn/hi
 #-> hi/hello/he
+
+echo "error" >&2

@@ -1,0 +1,69 @@
+#!/bin/zsh
+
+dotListModule() {
+  local RED="\e[1;31m"
+  local GREEN=$'\e[1;32m'
+  local RESET="\e[0m"
+  local TICK="✓"
+  local CROSS="✗"
+
+  local output="$(find ${_dot_files_root_dir}module -type f | \
+  while read -r line; do 
+    if ! [[ "$(cat $line | head -n1 | grep -o "#!/bin/.*")" =~ "#!/bin/.*" ]] ; then 
+      continue
+    fi
+    line=${line#"${_dot_files_root_dir}module/"}
+    if [[ "$(grep -o "$line" $_dot_files_root_dir/config/LOAD_MODULE)" == $line ]] ; then
+      printf "${GREEN}${TICK}${RESET} "
+    else
+      printf "${RED}${CROSS}${RESET} "
+    fi
+    echo "$line"
+  done)"
+
+  if [[ -v DISABLE_DOT_LIST_PAGER ]] ; then
+    echo $output
+  else 
+    echo $output | less 
+  fi
+}
+
+local _dot_module_enable() {
+  $_dot_files_root_dir/runtime/logger debug "Enable module : $1"
+  echo "$1" >> $_dot_files_root_dir/config/LOAD_MODULE
+}
+
+local _dot_module_disable() {
+  suffix="$( echo $1 | sed -e "s/\//#/g" )"
+  $_dot_files_root_dir/runtime/logger debug "Disable Module : $1"
+  if [[ -f $_dot_files_root_dir/config/LOAD_MODULE_$suffix ]] ; then
+    rm $_dot_files_root_dir/config/LOAD_MODULE_$suffix
+  fi
+  touch $_dot_files_root_dir/config/LOAD_MODULE_$suffix
+  while read -r line; do
+    if [[ $line != $1 ]] ; then
+      echo "$line" >> $_dot_files_root_dir/config/LOAD_MODULE_$suffix
+    fi
+  done < $_dot_files_root_dir/config/LOAD_MODULE
+  mv $_dot_files_root_dir/config/LOAD_MODULE_$suffix $_dot_files_root_dir/config/LOAD_MODULE
+}
+
+dotToggleModule() {
+  if [[ -v _DOT_TOGGLE_MODULES_IN_USE ]] ; then
+    return 
+  fi
+  export _DOT_TOGGLE_MODULES_IN_USE=1
+  local CROSS="✗"
+  DISABLE_DOT_LIST_PAGER=1
+  local output="$(dotListModule | fzf --ansi)"
+  if [[ $output == "" ]] ; then
+    return
+  fi
+  if [[ "$(echo $output| awk '{ print $1 }')" == $CROSS ]] ; then
+    _dot_module_enable "$(echo $output | awk '{ print $2 }')"
+  else
+    _dot_module_disable "$(echo $output | awk '{ print $2 }')"
+  fi
+  unset DISABLE_DOT_LIST_PAGER
+  unset _DOT_TOGGLE_MODULES_IN_USE
+}
