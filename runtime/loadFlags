@@ -1,0 +1,7 @@
+#!/bin/zsh
+
+while IFS= read -r line; do
+  export $line=0
+done < $1
+
+processRelativePath helper debug loaded flags at : $1

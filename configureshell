@@ -31,6 +31,27 @@ export _path_stack=( "$pathprefix_path" )
 export _path_stack_top=1
 
 processRelativePath() {
+  if [[ $1 == "--skip" ]] ; then
+    shift
+    source $*
+  else
+     processRelativePathCore processRelativePath $*
+  fi
+}
+
+printRelativePath() {
+  if [[ $1 == "--skip" ]] ; then
+    shift
+    echo $*
+  else
+     processRelativePathCore printRelativePath $*
+  fi
+}
+
+local processRelativePathCore() {
+
+  caller=$1
+  shift
 
   p="${_path_stack[$_path_stack_top]}"
   s="$1"
@@ -65,11 +86,24 @@ processRelativePath() {
 
   shift
 
-  source "$buffer" $*
+  "$caller" "--skip" "$buffer" $*
 
   unset "_path_stack[-1]"
   ((_path_stack_top--))
 }
+
+local config="$(printRelativePath config)"
+if [[ ! -d $config ]] ; then
+  mkdir $config
+  mkdir $config/public
+  mkdir $config/private
+fi
+if [[ ! -f "$config/FLAGS" ]] ; then
+  touch $config/FLAGS
+else
+  processRelativePath runtime/helper debug calling loadFlags
+  processRelativePath runtime/loadFlags $config/FLAGS
+fi
 
 processRelativePath runtime/helper debug shell type $activeShell
 processRelativePath runtime/helper debug $pathprefix_path
