@@ -27,6 +27,7 @@ else
   local pathprefix_path=$temp
 fi
 
+export _dot_files_root_dir="$pathprefix_path/"
 export _path_stack=( "$pathprefix_path" )
 export _path_stack_top=1
 
