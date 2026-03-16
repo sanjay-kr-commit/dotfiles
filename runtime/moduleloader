@@ -2,5 +2,21 @@
 
 processRelativePath logger debug entered module loader
 
+local modules="$(printRelativePath ../module)"
+local modulePrefix="$( printRelativePath ../module/ )"
+local enaledModules=$(cat $(printRelativePath ../config/LOAD_MODULE ) | tr '\n' ' ' )
 
+echo ${enaledModules[@]}
 
+for file in $(find $modules -type f) ; do 
+  local header=$( grep " *#.*" $file )
+  if [[ $header == "#!/bin/bash" ]] || [[ $header == "#!/bin/zsh" ]] ||  [[ $header == "#!/bin/sh" ]] ||  \
+    [[ $header == "#!/bin/env bash" ]] || [[ $header == "#!/bin/env zsh" ]] ||  [[ $header == "#!/bin/env sh" ]] ; then
+    if [[ "${enaledModules[@]}" =~ ".*${file#$modulePrefix}.*" ]] ; then
+      processRelativePath logger debug "loading module : ${file#$modulePrefix}"
+      source $file
+    else 
+      processRelativePath logger warn "enable module to load it : ${file#$modulePrefix}"
+    fi
+  fi
+done

@@ -93,16 +93,22 @@ local processRelativePathCore() {
 }
 
 local config="$(printRelativePath config)"
+
 if [[ ! -d $config ]] ; then
   mkdir $config
   mkdir $config/public
   mkdir $config/private
 fi
+
 if [[ ! -f "$config/FLAGS" ]] ; then
   touch $config/FLAGS
 else
   processRelativePath runtime/logger debug calling loadFlags
   processRelativePath runtime/loadFlags $config/FLAGS
+fi
+
+if [[ ! -f "$config/LOAD_MODULE" ]] ; then
+  touch $config/LOAD_MODULE
 fi
 
 processRelativePath runtime/logger debug shell type $activeShell
