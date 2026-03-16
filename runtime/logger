@@ -5,23 +5,44 @@ YELLOW="\e[1;33m"
 BLUE="\e[1;34m"
 RESET="\e[0m"
 
+if [[ -v SILENT_LOG ]] && [[ ! -v SILENT_LOG_ARR ]] ; then
+  export SILENT_LOG_ARR=""
+fi
+
+listLog() {
+  echo $SILENT_LOG_ARR | less
+}
+
 error() {
   if [[ -v LOGERROR ]] ; then
-    printf "${RED}[ERROR]${RESET} %s\n" "$*" >&2
+    if [[ -v SILENT_LOG ]] ; then
+      SILENT_LOG_ARR+=$'\n'"${RED}[ERROR]${RESET} $*"
+    else
+      printf "${RED}[ERROR]${RESET} %s\n" "$*" >&2
+    fi
   fi
 }
 
 warn() {
   if [[ -v LOGERROR ]] || [[ -v LOGWARN ]] ; then
-    printf "${YELLOW}[WARN]${RESET} %s\n" "$*" >&2
+    if [[ -v SILENT_LOG ]] ; then
+      SILENT_LOG_ARR+=$'\n'"${YELLOW}[WARN]${RESET} $*"
+    else
+      printf "${YELLOW}[WARN]${RESET} %s\n" "$*" >&2
+    fi
   fi
 }
 
 debug() {
   if [[ -v LOGERROR ]] || [[ -v LOGWARN ]] || [[ -v LOGDEBUG ]] ; then
-    printf "${BLUE}[DEBUG]${RESET} %s\n" "$*"
+    if [[ -v SILENT_LOG ]] ; then
+      SILENT_LOG_ARR+=$'\n'"${BLUE}[DEBUG]${RESET} $*"
+    else
+      printf "${BLUE}[DEBUG]${RESET} %s\n" "$*"
+    fi
   fi
 }
+
 
 # call logger function
 $@

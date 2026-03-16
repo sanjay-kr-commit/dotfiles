@@ -3,6 +3,7 @@
 local flagConfigFile=$1
 local validFlags=$( cat $(printRelativePath LIST_OF_FLAGS) | tr '\n' ' ' )
 
+processRelativePath logger debug ------------------ new session --------------------
 processRelativePath logger debug valid flags : ${validFlags[@]}
 
 #load silent flag first
