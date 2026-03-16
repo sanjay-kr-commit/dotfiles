@@ -1,2 +1,2 @@
 #!/bin/bash
-echo ./hi/hello/he
+echo "entered" ./hi/hello/he

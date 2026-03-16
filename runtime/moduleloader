@@ -5,18 +5,52 @@ processRelativePath logger debug entered module loader
 local modules="$(printRelativePath ../module)"
 local modulePrefix="$( printRelativePath ../module/ )"
 local enaledModules=$(cat $(printRelativePath ../config/LOAD_MODULE ) | tr '\n' ' ' )
+local loadedModule=()
 
-echo ${enaledModules[@]}
+processRelativePath logger debug enabled modules ${enaledModules[@]}
 
-for file in $(find $modules -type f) ; do 
-  local header=$( grep " *#.*" $file )
+local loadModule() {
+  _failedStatus=0
+  local file=$1
+  if [[ ! -f $modulePrefix$file ]] ; then 
+    _failedStatus=1
+    processRelativePath logger error "Module is mentions but doesn't exist : $file"
+    return
+  fi
+  local header=$( grep " *#!.*" $modulePrefix$file )
   if [[ $header == "#!/bin/bash" ]] || [[ $header == "#!/bin/zsh" ]] ||  [[ $header == "#!/bin/sh" ]] ||  \
     [[ $header == "#!/bin/env bash" ]] || [[ $header == "#!/bin/env zsh" ]] ||  [[ $header == "#!/bin/env sh" ]] ; then
-    if [[ "${enaledModules[@]}" =~ ".*${file#$modulePrefix}.*" ]] ; then
-      processRelativePath logger debug "loading module : ${file#$modulePrefix}"
-      source $file
-    else 
-      processRelativePath logger warn "enable module to load it : ${file#$modulePrefix}"
-    fi
+    processRelativePath logger debug "Loading module : $file"
+    resolveDependency $modulePrefix$file
+  else 
+    _failedStatus=1
+    processRelativePath logger error "Module doesn't have script header ( i.e. #! ) : $file"
   fi
-done
+}
+
+local resolveDependency() {
+  local script=$1
+  if [[ "${loadedModule[@]}" =~ ".*$script.*" ]] ; then 
+    processRelativePath logger debug "Duplicate module entry or requested by other module ${script#$modulePrefix}" 
+    return
+  fi
+  loadedModule+=($script)
+  grep " *#->.*" $script | tr '\n' ',' | xargs echo | sed -e 's/#->//g' \
+    | while read -r -d ',' module; do
+    module="${module// /}"
+    processRelativePath logger debug "Loading module as dependency $module" 
+    loadModule $module
+    if [[ $_failedStatus == 1 ]] ; then
+      unset _failedStatus
+      processRelativePath logger error "Failed to load module ${script#$modulePrefix} depends on $module"
+      return
+    fi
+    unset _failedStatus
+  done
+  processRelativePath logger debug "Loaded module ${script#$modulePrefix}" 
+  source $script
+}
+
+while IFS= read -r file; do
+  loadModule $file 
+done < $(printRelativePath ../config/LOAD_MODULE )

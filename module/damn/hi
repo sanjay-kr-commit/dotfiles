@@ -1,2 +1,4 @@
 #!/bin/bash
-echo ./damn/hi
+echo "entered  ./damn/hi"
+
+#-> hi/sljnoj

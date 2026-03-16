@@ -1,2 +1,2 @@
 #!/bin/bash
-echo ./damn/how
+echo "entered" ./damn/how
