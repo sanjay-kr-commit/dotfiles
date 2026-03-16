@@ -54,21 +54,20 @@ local resolveDependency() {
     else
       source $script > /dev/null
     fi
-  elif [[ -v LOG_MODULE_LOAD ]] ; then 
-    #if [[ -d /dev/shm/logs ]] ; then 
-    #  mkdir /dev/shm/logs
-    #fi
-    #if [[ -v REDIRECT_ERROR_TO_OUTPUT_MODULE_LOAD ]] ; then 
-    #  source $script > /dev/shm/logs/$1_log 2>&1 
-    #else
-    #  source $script > /dev/shm/logs/$1_log 
-    #fi
-    if [[ -v REDIRECT_ERROR_TO_OUTPUT_MODULE_LOAD ]] ; then 
-      local output="$(source $script 2>&1 )"
-    else
-      local output="$(source $script )"
-    fi
-    processRelativePath logger debug $output
+  #elif [[ -v LOG_MODULE_LOAD ]] ; then 
+  #  #if [[ -d /dev/shm/logs ]] ; then 
+  #  #  mkdir /dev/shm/logs
+  #  #fi
+  #  #if [[ -v REDIRECT_ERROR_TO_OUTPUT_MODULE_LOAD ]] ; then 
+  #  #  source $script > /dev/shm/logs/$1_log 2>&1 
+  #  #else
+  #  #  source $script > /dev/shm/logs/$1_log 
+  #  #fi
+  #  if [[ -v REDIRECT_ERROR_TO_OUTPUT_MODULE_LOAD ]] ; then 
+  #    source $script 2>&1 | xargs ${_dot_files_root_dir}runtime/logger debug 
+  #  else
+  #    source $script | xargs ${_dot_files_root_dir}runtime/logger debug 
+  #  fi
   else
     if [[ -v REDIRECT_ERROR_TO_OUTPUT_MODULE_LOAD ]] ; then 
       source $script 2>&1
