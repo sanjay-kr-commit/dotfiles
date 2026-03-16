@@ -101,12 +101,12 @@ fi
 if [[ ! -f "$config/FLAGS" ]] ; then
   touch $config/FLAGS
 else
-  processRelativePath runtime/helper debug calling loadFlags
+  processRelativePath runtime/logger debug calling loadFlags
   processRelativePath runtime/loadFlags $config/FLAGS
 fi
 
-processRelativePath runtime/helper debug shell type $activeShell
-processRelativePath runtime/helper debug $pathprefix_path
+processRelativePath runtime/logger debug shell type $activeShell
+processRelativePath runtime/logger debug $pathprefix_path
 
 # further processing
 # the first argument should always be --init

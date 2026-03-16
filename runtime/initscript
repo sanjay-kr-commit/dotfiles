@@ -4,10 +4,10 @@ local mainSourceScriptPath="$( echo $* | grep -o -- "--p=.*" | sed -e 's#--p=##g
 
 if [[ "$1" == "--init" ]] ; then
   export LOGERROR=0
-  processRelativePath helper debug setting up the environment
+  processRelativePath logger debug setting up the environment
   processRelativePath setup
 else 
   hi="setup"
-  processRelativePath helper debug initializing the environment
+  processRelativePath logger debug initializing the environment
   processRelativePath initialize
 fi

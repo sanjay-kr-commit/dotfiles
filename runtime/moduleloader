@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-processRelativePath helper debug entered module loader
+processRelativePath logger debug entered module loader
 
 
 

@@ -23,5 +23,5 @@ debug() {
   fi
 }
 
-# call helper function
+# call logger function
 $@
