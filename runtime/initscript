@@ -1,0 +1,16 @@
+#!/bin/zsh
+local script_path="${_path_stack[$_path_stack_top]}"
+local mainSourceScriptPath="$( echo $* | grep -o -- "--p=.*" | sed -e 's#--p=##g' )"
+
+if [[ "$1" == "--init" ]] ; then
+  export LOGERROR=0
+  hi="init"
+  processRelativePath helper debug setting up the environment
+  processRelativePath setup
+  processRelativePath ../hi
+else 
+  hi="setup"
+  processRelativePath helper debug initializing the environment
+  processRelativePath initialize
+  processRelativePath ../hi
+fi

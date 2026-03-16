@@ -71,9 +71,9 @@ processRelativePath() {
   ((_path_stack_top--))
 }
 
-processRelativePath helper debug shell type $activeShell
-processRelativePath helper debug $pathprefix_path
+processRelativePath runtime/helper debug shell type $activeShell
+processRelativePath runtime/helper debug $pathprefix_path
 
 # further processing
 # the first argument should always be --init
-processRelativePath initscript $1 "--p=$script_path"
+processRelativePath runtime/initscript $1 "--p=$script_path"
