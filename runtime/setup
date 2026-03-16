@@ -1,3 +1,10 @@
 #!/bin/zsh
 
-echo "--init called"
+parse="source \$HOME${_dot_files_root_dir#$HOME}configureshell"
+if [[ "$( grep -o "$parse" $HOME/.zshrc )" == "$parse" ]] ; then
+  debug dots are already configured
+else
+  debug dots are configured
+  echo $parse | cat - $HOME/.zshrc > $HOME/.zshrcmv && mv $HOME/.zshrcmv $HOME/.zshrc
+  source ${_dot_files_root_dir}configureshell
+fi
