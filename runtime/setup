@@ -5,6 +5,25 @@ if [[ "$( grep -o "$parse" $HOME/.zshrc )" == "$parse" ]] ; then
   debug dots are already configured
 else
   debug dots are configured
-  echo $parse | cat - $HOME/.zshrc > $HOME/.zshrcmv && mv $HOME/.zshrcmv $HOME/.zshrc
-  source ${_dot_files_root_dir}configureshell
+  local cwd=$(pwd)
+  cd $_dot_files_root_dir
+  local giturl="$(git remote get-url origin 2>/dev/null)"
+  if [[ -z $giturl ]] ; then 
+    echo $parse | cat - $HOME/.zshrc > $HOME/.zshrcmv && mv $HOME/.zshrcmv $HOME/.zshrc
+    source ${_dot_files_root_dir}configureshell
+  else
+    local dotfiledir="\$HOME${_dot_files_root_dir#$HOME}"
+    local dotfiledirroot="${dotfiledir%/}"
+    local dotfiledirroot="${dotfiledirroot%/*}"
+    echo "
+    if [[ -d $dotfiledir ]] ; then
+      $parse
+    else 
+      cd $dotfiledirroot
+      git clone $giturl
+      $parse
+    fi
+    " | sed -e "s#^    ##g" | cat - $HOME/.zshrc > $HOME/.zshrcmv && mv $HOME/.zshrcmv $HOME/.zshrc 
+  fi
+  cd $cwd
 fi
