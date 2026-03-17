@@ -1,12 +1,12 @@
 #!/bin/zsh
 
-local _dot_flag_enable() {
+_dot_flag_enable() {
   $_dot_files_root_dir/runtime/logger debug "Enable Flag : $1"
   echo "$1" >> $_dot_files_root_dir/config/FLAGS
   export $1=1
 }
 
-local _dot_flag_disable() {
+_dot_flag_disable() {
   $_dot_files_root_dir/runtime/logger debug "Disable Flag : $1"
   if [[ -f $_dot_files_root_dir/config/FLAGS_$1 ]] ; then
     rm $_dot_files_root_dir/config/FLAGS_$1
@@ -47,17 +47,21 @@ dotToggleflags() {
     return 
   fi
   export _DOT_TOGGLE_FLAGS_IN_USE=1
+  local RED="\e[1;31m"
+  local RESET="\e[0m"
   local CROSS="✗"
   DISABLE_DOT_LIST_PAGER=1
-  local output="$(dotListFlag | fzf --ansi)"
-  if [[ $output == "" ]] ; then
-    return
-  fi
-  if [[ "$(echo $output| awk '{ print $1 }')" == $CROSS ]] ; then
-    _dot_flag_enable "$(echo $output | awk '{ print $2 }')"
-  else
-    _dot_flag_disable "$(echo $output | awk '{ print $2 }')"
-  fi
+  while true ; do
+    local output="$(dotListFlag | {cat; echo "${RED}quit${RESET}" ;} | fzf --ansi)"
+    if [[ $output == "" ]] || [[ $output == "quit" ]] ; then
+      return
+    fi
+    if [[ "$(echo $output| awk '{ print $1 }')" == $CROSS ]] ; then
+      _dot_flag_enable "$(echo $output | awk '{ print $2 }')"
+    else
+      _dot_flag_disable "$(echo $output | awk '{ print $2 }')"
+    fi
+  done
   unset DISABLE_DOT_LIST_PAGER
   unset _DOT_TOGGLE_FLAGS_IN_USE
 }

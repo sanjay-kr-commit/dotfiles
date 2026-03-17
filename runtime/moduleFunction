@@ -28,12 +28,13 @@ dotListModule() {
   fi
 }
 
-local _dot_module_enable() {
+_dot_module_enable() {
   $_dot_files_root_dir/runtime/logger debug "Enable module : $1"
   echo "$1" >> $_dot_files_root_dir/config/LOAD_MODULE
+  source ${_dot_files_root_dir}module/$1
 }
 
-local _dot_module_disable() {
+_dot_module_disable() {
   suffix="$( echo $1 | sed -e "s/\//#/g" )"
   $_dot_files_root_dir/runtime/logger debug "Disable Module : $1"
   if [[ -f $_dot_files_root_dir/config/LOAD_MODULE_$suffix ]] ; then
@@ -46,6 +47,7 @@ local _dot_module_disable() {
     fi
   done < $_dot_files_root_dir/config/LOAD_MODULE
   mv $_dot_files_root_dir/config/LOAD_MODULE_$suffix $_dot_files_root_dir/config/LOAD_MODULE
+  debug "Shell Retart is required to apply changed"
 }
 
 dotToggleModule() {
@@ -53,17 +55,21 @@ dotToggleModule() {
     return 
   fi
   export _DOT_TOGGLE_MODULES_IN_USE=1
+  local RED="\e[1;31m"
+  local RESET="\e[0m"
   local CROSS="✗"
   DISABLE_DOT_LIST_PAGER=1
-  local output="$(dotListModule | fzf --ansi)"
-  if [[ $output == "" ]] ; then
-    return
-  fi
-  if [[ "$(echo $output| awk '{ print $1 }')" == $CROSS ]] ; then
-    _dot_module_enable "$(echo $output | awk '{ print $2 }')"
-  else
-    _dot_module_disable "$(echo $output | awk '{ print $2 }')"
-  fi
+  while true ; do
+    local output="$(dotListModule | {cat; echo "${RED}quit${RESET}";} | fzf --ansi)"
+    if [[ $output == "" ]] || [[ "$output" == "quit" ]] ; then
+      break 
+    fi
+    if [[ "$(echo $output| awk '{ print $1 }')" == $CROSS ]] ; then
+      _dot_module_enable "$(echo $output | awk '{ print $2 }')"
+    else
+      _dot_module_disable "$(echo $output | awk '{ print $2 }')"
+    fi
+  done
   unset DISABLE_DOT_LIST_PAGER
   unset _DOT_TOGGLE_MODULES_IN_USE
 }
