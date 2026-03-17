@@ -81,3 +81,11 @@ local resolveDependency() {
 while IFS= read -r file; do
   loadModule $file 
 done < $(printRelativePath ../config/LOAD_MODULE )
+
+# option to force load modules
+if [[ -v forcedModules ]] ; then 
+  for module in  ${forcedModules[@]} ; do 
+    debug "Loading Forced Module : $module"
+    loadModule $module
+  done
+fi
