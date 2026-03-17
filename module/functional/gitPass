@@ -1,0 +1,52 @@
+#!/bin/zsh
+
+git() {
+  local actualGit="/usr/bin/git"
+  local user_name="$( $actualGit remote get-url origin | \
+    sed -e 's#https://##g' | \
+    sed -e 's#^[^/]*/##g' | \
+    sed -e 's#/.*##g' )"
+  local userconfig=""
+  if [[ -f ${_dot_files_root_dir}config/private/gitPass/userconfigs ]] ; then
+    userconfig="$( grep "$user_name.*" ${_dot_files_root_dir}config/private/gitPass/userconfigs )"
+  else
+    error \[gitPass\] userconfig not found creating empty file
+    mkdir -p ${_dot_files_root_dir}config/private/gitPass
+    touch ${_dot_files_root_dir}config/private/gitPass/userconfigs
+  fi
+  if [[ $userconfig == "" ]] ; then 
+    error \[gitPass\] user config for $user_name not found executing git normally
+    user_name="$(cat ~/.gitconfig | grep -o "name.*" | sed -e "s#name.*= *##g" | grep -o '[^ ]*')"
+    user_email="$(cat ~/.gitconfig | grep -o "email.*" | sed -e "s#email.*= *##g" | grep -o '[^ ]*')"
+    $actualGit config user.name \"$user_name\"
+    $actualGit config user.email \"$user_email\"
+    $actualGit $*
+  else
+    local user_email="$( echo $userconfig | awk '{ print $2 }' )"
+    local user_key="$( echo $userconfig | awk '{ print $3 }' )"
+    $actualGit config user.name \"$user_name\"
+    $actualGit config user.email \"$user_email\"
+    # automate password prompt
+    expect -c "
+      log_user 0
+      spawn $actualGit $* 
+      log_user 1
+      expect {
+          \"Username\" {
+              send \"$user_name\r\"
+              exp_continue
+          }
+          \"Password\" {
+              send \"$user_key\r\"
+              exp_continue
+          }
+          eof {
+          }
+      }
+    "
+    unset user_key 
+  fi
+  unset user_email
+  unset user_name
+  unset userconfig
+}
