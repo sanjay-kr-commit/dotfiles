@@ -1,4 +1,3 @@
-builtin alias push='gitPass push sanjay'
 builtin alias removeAndroidStudioLock='rm .var/app/com.google.AndroidStudio/config/Google/AndroidStudio2024.1/.lock'
 builtin alias xclip='xclip -selection c'
 builtin alias :q='exit'
@@ -44,3 +43,4 @@ builtin alias lsm='ls -la | awk  "{ printf \$0 ; printf \" \" ; printf (\$5/1024
 builtin alias searchwiki='echo -n "query: " && read -r query && query=$(echo $query | jq -sRr @uri | sed -e "s/%0A//g") && echo searching $query && redirectedPage=$(curl -Ls -o /dev/shm/content -w "%{url_effective}
 " https://wiki.archlinux.org/index.php\?limit\=1000000\&search\=$query) && if [[ $redirectedPage =~ ".*/title/.*" ]] ; then cat /dev/shm/content | html2text | nvim ; else cat /dev/shm/content | html2text | grep -o "\* *\[.*\] *(.*)" | grep -o "(.*)" | sed -e "s#(/#https://wiki.archlinux.org/#" -e "s/[()]//g" | grep -o "https[^ ]*" | fzf | xargs -I {} curl {} 2>/dev/null | html2text >/dev/shm/content && nvim /dev/shm/content ; fi && unset redirectedPage && unset query && rm /dev/shm/content'
 builtin alias send='selectedDevices="$(devices=$(kdeconnect-cli -a 2>/dev/shm/deviceCount) && deviceCount=$(grep -o "[0-9]*" /dev/shm/deviceCount) && if [[ $deviceCount == 0 ]] ; then echo no device found ; elif [[ $deviceCount == 1 ]] ; then echo $devices ; else echo $devices | fzf ; fi )" && kdeconnect-cli -d  $(echo $selectedDevices |  grep -o ": *[^ ]*" | grep -o " .*") --share '
+builtin alias push=git\ push
