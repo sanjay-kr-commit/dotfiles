@@ -1,0 +1,114 @@
+#!/bin/zsh
+
+if [[ -f ${_dot_files_root_dir}config/public/persistentAlias/STORED_ALIASES  ]] ; then 
+  source ${_dot_files_root_dir}config/public/persistentAlias/STORED_ALIASES
+  debug \[persistentAlias\] sourced STORED_ALIASES config file 
+else
+  warn \[persistentAlias\] no aliases found : STORED_ALIASES config file missing
+  mkdir -p ${_dot_files_root_dir}config/public/persistentAlias/
+  touch ${_dot_files_root_dir}config/public/persistentAlias/STORED_ALIASES
+  warn \[persistentAlias\] created STORED_ALIASES config file 
+fi
+
+unalias() {
+  local newAliasTempFile="${_dot_files_root_dir}config/public/persistentAlias/STORED_ALIASES_NEW"
+  if [[ -v USE_RAM_FOR_TEMP_ALIAS_FILE ]] ; then
+    newAliasTempFile="/dev/shm/persistentAlias/STORED_ALIASES_NEW"
+  fi
+  if [[ ! -d ${newAliasTempFile%/*} ]] ; then 
+    mkdir -p ${newAliasTempFile%/*}
+  fi
+  for arg in "$@"; do
+    builtin unalias $arg 
+    local didItWorked=$?
+    if [[ $didItWorked > 0 ]] ; then 
+      error \[persistentAlias\] "failed to unalias $arg"
+      continue
+    fi
+    touch $newAliasTempFile
+    local name=$arg
+    local ignore=false
+    local oldAlias=""
+    while read -r line ; do 
+      if [[ $( echo $line | awk '{ print $1 }'  ) == 'builtin' ]] ; then
+        if [[ $ignore == true ]] ; then 
+          ignore=false
+        fi
+        local iteratedAliasName="$(echo $line | awk '{ print $3 }' | awk -F '=' '{print $1}')"
+        if [[ $iteratedAliasName == $name ]] ; then 
+          ignore=true
+        fi
+      fi
+      if [[ $ignore == true ]]; then
+        oldAlias="$oldAlias\n$line"
+      else
+        echo $line >> $newAliasTempFile
+      fi
+    done < ${_dot_files_root_dir}config/public/persistentAlias/STORED_ALIASES
+    mv $newAliasTempFile ${_dot_files_root_dir}config/public/persistentAlias/STORED_ALIASES
+    if [[ ! -z $oldAlias ]] ; then 
+      debug \[persistentAlias\] "deleted alias $oldAlias"
+    fi
+  done
+}
+
+alias() {
+  builtin alias "$@"
+  local exitCode=$?
+  if [[ $exitCode > 0 ]] ; then
+    error \[persistentAlias\] return $exitCode for alias \"$@\"
+    return
+  fi
+
+  local newAliasTempFile="${_dot_files_root_dir}config/public/persistentAlias/STORED_ALIASES_NEW"
+  
+  if [[ -v USE_RAM_FOR_TEMP_ALIAS_FILE ]] ; then
+    newAliasTempFile="/dev/shm/persistentAlias/STORED_ALIASES_NEW"
+  fi
+
+  if [[ ! -d ${newAliasTempFile%/*} ]] ; then 
+    mkdir -p ${newAliasTempFile%/*}
+  fi
+
+  for arg in "$@"; do
+    if [[ -f $newAliasTempFile ]] ; then 
+      rm $newAliasTempFile
+    fi
+    touch $newAliasTempFile
+    print -r -- "builtin alias ${(q)arg}" > $newAliasTempFile 
+    source $newAliasTempFile >/dev/null 2>&1
+    local drySource=$?
+    if [[ $drySource > 0 ]] ; then 
+      error \[persistentAlias\] "the alias correct but failed when written to file code : \"$drySource\" alias: \"$@\""
+      continue
+    fi
+    rm $newAliasTempFile
+    touch $newAliasTempFile
+    local name=$(echo $arg | awk -F '=' '{ print $1 }' )
+    local ignore=false
+    local oldAlias=""
+    while read -r line ; do 
+      if [[ $( echo $line | awk '{ print $1 }'  ) == 'builtin' ]] ; then
+        if [[ $ignore == true ]] ; then 
+          ignore=false
+        fi
+        local iteratedAliasName="$(echo $line | awk '{ print $3 }' | awk -F '=' '{print $1}')"
+        if [[ $iteratedAliasName == $name ]] ; then 
+          ignore=true
+        fi
+      fi
+      if [[ $ignore == true ]]; then
+        oldAlias="$oldAlias\n$line"
+      else
+        echo $line >> $newAliasTempFile
+      fi
+    done < ${_dot_files_root_dir}config/public/persistentAlias/STORED_ALIASES
+    print -r -- "builtin alias ${(q)arg}" >> $newAliasTempFile
+    mv $newAliasTempFile ${_dot_files_root_dir}config/public/persistentAlias/STORED_ALIASES
+    if [[ -z $oldAlias ]] ; then 
+      debug \[persistentAlias\] "added new alias builtin alias ${(q)arg}"
+    else
+      debug \[persistentAlias\] "replaced old alias $oldAlias"
+    fi
+  done
+}
