@@ -1,5 +1,6 @@
-gitPass
 tmux_terminal
 omz
 fzfForPreviousCmd
 fastFetch
+gitPass
+persistentAlias

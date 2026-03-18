@@ -1,48 +1,48 @@
 #!/bin/zsh
 
-processRelativePath logger debug entered module loader
+debug entered module loader
 
 local modules="$(printRelativePath ../module)"
 local modulePrefix="$( printRelativePath ../module/ )"
 local enaledModules=$(cat $(printRelativePath ../config/LOAD_MODULE ) | tr '\n' ' ' )
 local loadedModule=()
 
-processRelativePath logger debug enabled modules ${enaledModules[@]}
+debug enabled modules ${enaledModules[@]}
 
 local loadModule() {
   _failedStatus=0
   local file=$1
   if [[ ! -f $modulePrefix$file ]] ; then 
     _failedStatus=1
-    processRelativePath logger error "Module is mentions but doesn't exist : $file"
+    error "Module is mentions but doesn't exist : $file"
     return
   fi
   local header=$( grep " *#!.*" $modulePrefix$file )
   if [[ $header == "#!/bin/bash" ]] || [[ $header == "#!/bin/zsh" ]] ||  [[ $header == "#!/bin/sh" ]] ||  \
     [[ $header == "#!/bin/env bash" ]] || [[ $header == "#!/bin/env zsh" ]] ||  [[ $header == "#!/bin/env sh" ]] ; then
-    processRelativePath logger debug "Loading module : $file"
+    debug "Loading module : $file"
     resolveDependency $modulePrefix$file
   else 
     _failedStatus=1
-    processRelativePath logger error "Module doesn't have script header ( i.e. #! ) : $file"
+    error "Module doesn't have script header ( i.e. #! ) : $file"
   fi
 }
 
 local resolveDependency() {
   local script=$1
   if [[ "${loadedModule[@]}" =~ ".*$script.*" ]] ; then 
-    processRelativePath logger debug "Duplicate module entry or requested by other module ${script#$modulePrefix}" 
+    debug "Duplicate module entry or requested by other module ${script#$modulePrefix}" 
     return
   fi
   loadedModule+=($script)
   grep " *#->.*" $script | tr '\n' ',' | xargs echo | sed -e 's/#->//g' \
     | while read -r -d ',' module; do
     module="${module// /}"
-    processRelativePath logger debug "Loading module as dependency $module" 
+    debug "Loading module as dependency $module" 
     loadModule $module
     if [[ $_failedStatus == 1 ]] ; then
       unset _failedStatus
-      processRelativePath logger error "Failed to load module ${script#$modulePrefix} depends on $module"
+      error "Failed to load module ${script#$modulePrefix} depends on $module"
       return
     fi
     unset _failedStatus
@@ -75,32 +75,56 @@ local resolveDependency() {
       source $script
     fi
   fi
-  processRelativePath logger debug "Loaded module ${script#$modulePrefix}" 
+  debug "Loaded module ${script#$modulePrefix}" 
 }
 
-# Fix the priority loading loop and the phantom $line bug
-if [[ -f ${_dot_files_root_dir}config/PRIORITY_LOADING ]] ; then
-  while IFS= read -r module <&3 ; do
-    if [[ "${enaledModules[@]}" =~ ".*$module.*" ]] ; then
-      debug "Loading PRIORITY_LOADING : $module"
-      loadModule "$module"
-    else
-      warn "$module is mentioned in PRIORITY_LOADING but isn't enabled"
-    fi
-  done 3< "${_dot_files_root_dir}config/PRIORITY_LOADING"
-else
-  touch ${_dot_files_root_dir}config/PRIORITY_LOADING
+if [[ ! -f ${_dot_files_root_dir}config/POST_LOAD_MODULE ]] ; then
+  touch ${_dot_files_root_dir}config/POST_LOAD_MODULE
 fi
 
+# Fix the priority loading loop and the phantom $line bug
+if [[ -f ${_dot_files_root_dir}config/PRE_LOAD_MODULE ]] ; then
+  while IFS= read -r module <&3 ; do
+    if [[ "${enaledModules[@]}" =~ ".*$module.*" ]] ; then
+      debug "Loading PRE_LOAD_MODULE : $module"
+      loadModule "$module"
+    else
+      warn "$module is mentioned in PRE_LOAD_MODULE but isn't enabled"
+    fi
+  done 3< "${_dot_files_root_dir}config/PRE_LOAD_MODULE"
+else
+  touch ${_dot_files_root_dir}config/PRE_LOAD_MODULE
+fi
+
+local postLoadModules="$( cat ${_dot_files_root_dir}config/POST_LOAD_MODULE | tr '\n' ' ' )"
+
 # Fix the normal loading loop
-while IFS= read -r file <&3; do
-  loadModule "$file"
-done 3< "$(printRelativePath ../config/LOAD_MODULE)"
+while IFS= read -r module <&3; do
+  if [[ ${postLoadModules} =~ ".*$module.*" ]] ; then
+    debug "Module is in POST_LOAD_MODULE $module so will be loaded later"
+  else
+    loadModule "$module"
+  fi
+done 3< "${_dot_files_root_dir}config/LOAD_MODULE"
+
 
 # option to force load modules
 if [[ -v forcedModules ]] ; then 
   for module in  ${forcedModules[@]} ; do 
-    debug "Loading Forced Module : $module"
-    loadModule $module
+    if [[ ${postLoadModules} =~ ".*$module.*" ]] ; then
+      debug "Module is in POST_LOAD_MODULE $module so will be loaded later"
+    else
+      debug "Loading Forced Module : $module"
+      loadModule $module
+    fi
   done
 fi
+
+while IFS= read -r module <&3 ; do
+  if [[ "${enaledModules[@]}" =~ ".*$module.*" ]] ; then
+    debug "Loading POST_LOAD_MODULE : $module"
+    loadModule "$module"
+  else
+    warn "$module is mentioned in POST_LOAD_MODULE but isn't enabled"
+  fi
+done 3< "${_dot_files_root_dir}config/POST_LOAD_MODULE"
