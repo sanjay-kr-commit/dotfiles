@@ -78,23 +78,24 @@ local resolveDependency() {
   processRelativePath logger debug "Loaded module ${script#$modulePrefix}" 
 }
 
+# Fix the priority loading loop and the phantom $line bug
 if [[ -f ${_dot_files_root_dir}config/PRIORITY_LOADING ]] ; then
-  while IFS= read -r module ; do 
-    if [[ "${enaledModules[@]}" =~ ".*$line.*" ]] ; then 
-      debug "Loading PRIORITY_LOADING : $line"
-      loadModule $module
+  while IFS= read -r module <&3 ; do
+    if [[ "${enaledModules[@]}" =~ ".*$module.*" ]] ; then
+      debug "Loading PRIORITY_LOADING : $module"
+      loadModule "$module"
     else
-      warn "$line is mentioned in PRIORITY_LOADING but isn't enabled"
+      warn "$module is mentioned in PRIORITY_LOADING but isn't enabled"
     fi
-  done < ${_dot_files_root_dir}config/PRIORITY_LOADING 
-else 
+  done 3< "${_dot_files_root_dir}config/PRIORITY_LOADING"
+else
   touch ${_dot_files_root_dir}config/PRIORITY_LOADING
 fi
 
-# load normally
-while IFS= read -r file; do
-  loadModule $file 
-done < $(printRelativePath ../config/LOAD_MODULE )
+# Fix the normal loading loop
+while IFS= read -r file <&3; do
+  loadModule "$file"
+done 3< "$(printRelativePath ../config/LOAD_MODULE)"
 
 # option to force load modules
 if [[ -v forcedModules ]] ; then 
