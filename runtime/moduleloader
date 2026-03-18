@@ -78,6 +78,20 @@ local resolveDependency() {
   processRelativePath logger debug "Loaded module ${script#$modulePrefix}" 
 }
 
+if [[ -f ${_dot_files_root_dir}config/PRIORITY_LOADING ]] ; then
+  while IFS= read -r module ; do 
+    if [[ "${enaledModules[@]}" =~ ".*$line.*" ]] ; then 
+      debug "Loading PRIORITY_LOADING : $line"
+      loadModule $module
+    else
+      warn "$line is mentioned in PRIORITY_LOADING but isn't enabled"
+    fi
+  done < ${_dot_files_root_dir}config/PRIORITY_LOADING 
+else 
+  touch ${_dot_files_root_dir}config/PRIORITY_LOADING
+fi
+
+# load normally
 while IFS= read -r file; do
   loadModule $file 
 done < $(printRelativePath ../config/LOAD_MODULE )
