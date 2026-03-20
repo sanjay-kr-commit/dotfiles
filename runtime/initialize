@@ -1,9 +1,9 @@
 #!/bin/zsh
 
-processRelativePath logger debug initialization script entered
-processRelativePath logger debug calling module loader
+debug initialization script entered
+debug calling module loader
 processRelativePath moduleloader
-processRelativePath logger debug calling flag fucniton
+debug calling flag fucniton
 processRelativePath flagFunctions
-processRelativePath logger debug calling module fucniton
+debug calling module fucniton
 processRelativePath moduleFunction

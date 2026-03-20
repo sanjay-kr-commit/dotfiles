@@ -1,6 +1,7 @@
 #!/bin/zsh
 
 # p-> 1002
+# f-> USE_RAM_FOR_TEMP_ALIAS_FILE
 
 if [[ -f ${_dot_files_root_dir}config/public/persistentAlias/STORED_ALIASES  ]] ; then 
   source ${_dot_files_root_dir}config/public/persistentAlias/STORED_ALIASES

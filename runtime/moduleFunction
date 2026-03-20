@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-dotListModule() {
+:listModule() {
   local RED="\e[1;31m"
   local GREEN=$'\e[1;32m'
   local RESET="\e[0m"
@@ -50,7 +50,7 @@ _dot_module_disable() {
   debug "Shell Retart is required to apply changed"
 }
 
-dotToggleModule() {
+:module() {
   if [[ -v _DOT_TOGGLE_MODULES_IN_USE ]] ; then
     return 
   fi
@@ -60,7 +60,7 @@ dotToggleModule() {
   local CROSS="✗"
   DISABLE_DOT_LIST_PAGER=1
   while true ; do
-    local output="$(dotListModule | {cat; echo "${RED}quit${RESET}";} | fzf --ansi)"
+    local output="$( :listModule | {cat; echo "${RED}quit${RESET}";} | fzf --ansi)"
     if [[ $output == "" ]] || [[ "$output" == "quit" ]] ; then
       break 
     fi

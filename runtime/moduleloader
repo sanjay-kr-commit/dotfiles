@@ -6,7 +6,7 @@ local modules="$(printRelativePath ../module)"
 local modulePrefix="$( printRelativePath ../module/ )"
 local enaledModules=$(cat $(printRelativePath ../config/LOAD_MODULE ) | tr '\n' ' ' )
 local loadedModule=()
-
+export _dot_dynamic_flags=""
 debug enabled modules ${enaledModules[@]}
 
 local loadModule() {
@@ -28,6 +28,17 @@ local loadModule() {
   fi
 }
 
+local loadDynamicFlags() {
+  local script=$1
+  local flag="$(grep " *# *f->.*" $script | \
+    sed -e "s/ *# *f-> *//g" | \
+    tr ' ' '\n' | \
+    awk '!/^[[:space:]]*$/')"
+  if [[ $flag =~ " *" ]] ; then
+    _dot_dynamic_flags+=$flag
+  fi
+}
+
 local resolveDependency() {
   local script=$1
   if [[ "${loadedModule[@]}" =~ ".*$script.*" ]] ; then 
@@ -46,28 +57,14 @@ local resolveDependency() {
       return
     fi
     unset _failedStatus
-  done
-
+  done 
+  loadDynamicFlags $script
   if [[ -v SILENT_MODULE_LOAD ]] ; then
     if [[ -v REDIRECT_ERROR_TO_OUTPUT_MODULE_LOAD ]] ; then 
       source $script > /dev/null 2>&1 
     else
       source $script > /dev/null
     fi
-  #elif [[ -v LOG_MODULE_LOAD ]] ; then 
-  #  #if [[ -d /dev/shm/logs ]] ; then 
-  #  #  mkdir /dev/shm/logs
-  #  #fi
-  #  #if [[ -v REDIRECT_ERROR_TO_OUTPUT_MODULE_LOAD ]] ; then 
-  #  #  source $script > /dev/shm/logs/$1_log 2>&1 
-  #  #else
-  #  #  source $script > /dev/shm/logs/$1_log 
-  #  #fi
-  #  if [[ -v REDIRECT_ERROR_TO_OUTPUT_MODULE_LOAD ]] ; then 
-  #    source $script 2>&1 | xargs ${_dot_files_root_dir}runtime/logger debug 
-  #  else
-  #    source $script | xargs ${_dot_files_root_dir}runtime/logger debug 
-  #  fi
   else
     if [[ -v REDIRECT_ERROR_TO_OUTPUT_MODULE_LOAD ]] ; then 
       source $script 2>&1
@@ -125,7 +122,6 @@ processAndAssignPriority() {
   }"
 }
 
-
 # priority module-name
 local orderedList=""
 # create priority list
@@ -149,51 +145,3 @@ debug \[Moduleloader\] postprocessed order $orderedList
 for module in ${(f)orderedList}; do
   loadModule "$( echo $module | awk '{ print $2 }' )"
 done
-
-
-## Fix the priority loading loop and the phantom $line bug
-#if [[ -f ${_dot_files_root_dir}config/PRE_LOAD_MODULE ]] ; then
-#  while IFS= read -r module <&3 ; do
-#    if [[ "${enaledModules[@]}" =~ ".*$module.*" ]] ; then
-#      debug "Loading PRE_LOAD_MODULE : $module"
-#      loadModule "$module"
-#    else
-#      warn "$module is mentioned in PRE_LOAD_MODULE but isn't enabled"
-#    fi
-#  done 3< "${_dot_files_root_dir}config/PRE_LOAD_MODULE"
-#else
-#  touch ${_dot_files_root_dir}config/PRE_LOAD_MODULE
-#fi
-#
-#local postLoadModules="$( cat ${_dot_files_root_dir}config/POST_LOAD_MODULE | tr '\n' ' ' )"
-#
-## Fix the normal loading loop
-#while IFS= read -r module <&3; do
-#  if [[ ${postLoadModules} =~ ".*$module.*" ]] ; then
-#    debug "Module is in POST_LOAD_MODULE $module so will be loaded later"
-#  else
-#    loadModule "$module"
-#  fi
-#done 3< "${_dot_files_root_dir}config/LOAD_MODULE"
-#
-#
-## option to force load modules
-#if [[ -v forcedModules ]] ; then 
-#  for module in  ${forcedModules[@]} ; do 
-#    if [[ ${postLoadModules} =~ ".*$module.*" ]] ; then
-#      debug "Module is in POST_LOAD_MODULE $module so will be loaded later"
-#    else
-#      debug "Loading Forced Module : $module"
-#      loadModule $module
-#    fi
-#  done
-#fi
-#
-#while IFS= read -r module <&3 ; do
-#  if [[ "${enaledModules[@]}" =~ ".*$module.*" ]] ; then
-#    debug "Loading POST_LOAD_MODULE : $module"
-#    loadModule "$module"
-#  else
-#    warn "$module is mentioned in POST_LOAD_MODULE but isn't enabled"
-#  fi
-#done 3< "${_dot_files_root_dir}config/POST_LOAD_MODULE"

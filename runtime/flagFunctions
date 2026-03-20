@@ -21,7 +21,7 @@ _dot_flag_disable() {
   unset $1
 }
 
-dotListFlag() {
+:listFlags() {
   local RED="\e[1;31m"
   local GREEN=$'\e[1;32m'
   local RESET="\e[0m"
@@ -35,6 +35,18 @@ dotListFlag() {
     fi
     echo "$line"
   done < $_dot_files_root_dir/runtime/LIST_OF_FLAGS )" 
+  while read -r line ; do
+    if [[ -z $line ]] ; then
+      continue
+    fi
+    output+="\n$(if [[ "$(grep -o "$line" $_dot_files_root_dir/config/FLAGS)" == $line ]] ; then
+      printf "${GREEN}${TICK}${RESET} "
+    else
+      printf "${RED}${CROSS}${RESET} "
+    fi
+    echo "$line")"
+  done <<< $_dot_dynamic_flags
+
   if [[ -v DISABLE_DOT_LIST_PAGER ]] ; then
     echo $output
   else 
@@ -42,7 +54,7 @@ dotListFlag() {
   fi
 }
 
-dotToggleflags() {
+:flag() {
   if [[ -v _DOT_TOGGLE_FLAGS_IN_USE ]] ; then
     return 
   fi
@@ -52,7 +64,7 @@ dotToggleflags() {
   local CROSS="✗"
   DISABLE_DOT_LIST_PAGER=1
   while true ; do
-    local output="$(dotListFlag | {cat; echo "${RED}quit${RESET}" ;} | fzf --ansi)"
+    local output="$( :listFlags | {cat; echo "${RED}quit${RESET}" ;} | fzf --ansi)"
     if [[ $output == "" ]] || [[ $output == "quit" ]] ; then
       return
     fi

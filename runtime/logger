@@ -9,7 +9,7 @@ if [[ -v SILENT_LOG ]] && [[ ! -v SILENT_LOG_ARR ]] ; then
   export SILENT_LOG_ARR=""
 fi
 
-listLog() {
+:log() {
   echo $SILENT_LOG_ARR | less
 }
 
