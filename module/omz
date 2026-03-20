@@ -1,5 +1,6 @@
 #!/bin/zsh
 
+# p->-99
 if [[ ! -d $HOME/.oh-my-zsh ]] ; then
   wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O - 2>/dev/null | \
     sed -e 's#\( *\)setup_zshrc()\( *\)#\1gibberish_setup_zshrc()\2#g' | \

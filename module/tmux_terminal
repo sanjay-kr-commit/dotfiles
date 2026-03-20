@@ -1,4 +1,5 @@
 #!/bin/env bash
+# p->-100
 
 if [[ ! -f $HOME/.tmux.conf ]]; then
   cp ${_dot_files_root_dir}static_config/public/tmux_terminal/tmux.conf $HOME/.tmux.conf

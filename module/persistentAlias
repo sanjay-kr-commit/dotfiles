@@ -1,5 +1,7 @@
 #!/bin/zsh
 
+# p-> 1002
+
 if [[ -f ${_dot_files_root_dir}config/public/persistentAlias/STORED_ALIASES  ]] ; then 
   source ${_dot_files_root_dir}config/public/persistentAlias/STORED_ALIASES
   debug \[persistentAlias\] sourced STORED_ALIASES config file 
