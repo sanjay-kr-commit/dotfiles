@@ -1,3 +1,5 @@
 [*] custom order plugin loading
 [*] custom order based on priority (automatic loading based on priority)
 [*] add dynamic flag loading
+[] add module for backing up config which symlinks
+[] add crypfs module for backing up sensitive information
