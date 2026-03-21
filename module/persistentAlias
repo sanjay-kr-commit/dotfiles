@@ -14,6 +14,12 @@ else
 fi
 
 unalias() {
+  local delete=false 
+  if [[ "$1" == "--delete" ]] ; then 
+    shift
+    debug "[persistentAlias] delete arg found $@"
+    delete=true 
+  fi
   local newAliasTempFile="${_dot_files_root_dir}config/public/persistentAlias/STORED_ALIASES_NEW"
   if [[ -v USE_RAM_FOR_TEMP_ALIAS_FILE ]] ; then
     newAliasTempFile="/dev/shm/persistentAlias/STORED_ALIASES_NEW"
@@ -24,6 +30,10 @@ unalias() {
   for arg in "$@"; do
     builtin unalias $arg 
     local didItWorked=$?
+    if [[ "$delete" == "false" ]] ; then 
+      debug "[persistentAlias] delete not found for this $arg"
+      continue
+    fi
     if [[ $didItWorked > 0 ]] ; then 
       error \[persistentAlias\] "failed to unalias $arg"
       continue
@@ -56,8 +66,18 @@ unalias() {
 }
 
 alias() {
+  local save=false
+  if [[ $1 == "--save" ]] ; then 
+    shift
+    debug "[persistentAlias] save arg found $@"
+    save=true
+  fi
   builtin alias "$@"
   local exitCode=$?
+  if [[ $save == "false" ]] ; then 
+    debug "[persistentAlias] save arg not found for $@"
+    return
+  fi
   if [[ $exitCode > 0 ]] ; then
     error \[persistentAlias\] return $exitCode for alias \"$@\"
     return
