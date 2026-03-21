@@ -3,3 +3,14 @@
 [*] add dynamic flag loading
 [] add module for backing up config which symlinks
 [] add crypfs module for backing up sensitive information
+[] dependency advertisement and resolving
+[] Add flag conflict management: Ensure modules negotiate and resolve flag usage conflicts.
+[] Add resource conflict handling: Prevent multiple modules from modifying the same resource at once.
+[] Implement priority resolution: Allow modules to decide which takes precedence when conflicts arise.
+[] Add module disable/enable conflict checks: Resolve conflicts when a module is enabled or disabled, not at runtime.
+[] Add dynamic flag registration checks: Prevent modules from registering the same flag twice.
+[] Add package manager abstraction: Let modules check and install dependencies across different package managers.
+[] Add interactive add-on configuration: Allow users to dynamically configure and enable oh-my-zsh add-ons.
+[] Add private git repo for sensitive configs: Track encrypted changes inside the private directory.
+[] Integrate cryptfs module: Mount private data if a key is present, else hide it.
+[] Add Dockerfile for environment replication: Provide a portable way to spin up the environment anywhere.
