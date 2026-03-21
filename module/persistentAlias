@@ -115,3 +115,8 @@ alias() {
     fi
   done
 }
+
+:listAliases() {
+  cat ${_dot_files_root_dir}config/public/persistentAlias/STORED_ALIASES | \
+    bat --language=zsh --wrap=auto --color=always
+}
