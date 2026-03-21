@@ -64,3 +64,37 @@ git() {
   unset user_name
   unset userconfig
 }
+
+:addGitUser() {
+  echo -n "Enter username : "
+  local user_name="$(read -re)"
+  echo -n "Enter email : "
+  local user_email="$(read -re)"
+  echo -n "Enter auth-key : "
+  local authkey="$(read -se)"
+  echo ""
+  awk "!/^$user_name .*/" ${_dot_files_root_dir}config/private/gitPass/userconfigs > ${_dot_files_root_dir}config/private/gitPass/userconfigs_new
+  echo "$user_name $user_email $authkey" >> ${_dot_files_root_dir}config/private/gitPass/userconfigs_new
+  mv ${_dot_files_root_dir}config/private/gitPass/userconfigs_new ${_dot_files_root_dir}config/private/gitPass/userconfigs
+}
+
+:listGitUser() {
+  echo "username email auth-key\n" | \
+    cat - ${_dot_files_root_dir}config/private/gitPass/userconfigs | \
+    awk '{
+      printf "\033[32m%-25s\033[0m ", $1;
+      printf "\033[33m%-25s\033[0m ", $2;
+      printf "\033[31m%-25s\033[0m\n", $3;
+    }' | bat -l txt | less
+}
+
+:removeGitUser() {
+  local output="$(cat ${_dot_files_root_dir}config/private/gitPass/userconfigs | \
+    awk '{ print $1 }' | \
+    fzf )"
+  if [[ $output == "" ]] ; then 
+    return 
+  fi
+  awk "!/^$output .*/" ${_dot_files_root_dir}config/private/gitPass/userconfigs > ${_dot_files_root_dir}config/private/gitPass/userconfigs_new
+  mv ${_dot_files_root_dir}config/private/gitPass/userconfigs_new ${_dot_files_root_dir}config/private/gitPass/userconfigs
+}
