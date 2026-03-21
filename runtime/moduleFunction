@@ -13,7 +13,7 @@
       continue
     fi
     line=${line#"${_dot_files_root_dir}module/"}
-    if [[ "$(grep -o "$line" $_dot_files_root_dir/config/LOAD_MODULE)" == $line ]] ; then
+    if [[ "$(grep -o "^$line\$" $_dot_files_root_dir/config/LOAD_MODULE)" == $line ]] ; then
       printf "${GREEN}${TICK}${RESET} "
     else
       printf "${RED}${CROSS}${RESET} "
