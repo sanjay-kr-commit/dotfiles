@@ -14,3 +14,4 @@
 [] Add private git repo for sensitive configs: Track encrypted changes inside the private directory.
 [] Integrate cryptfs module: Mount private data if a key is present, else hide it.
 [] Add Dockerfile for environment replication: Provide a portable way to spin up the environment anywhere.
+[] Add plugin for backing up explicit package install for restoration
