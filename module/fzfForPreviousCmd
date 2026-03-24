@@ -3,7 +3,7 @@ fzf-history-widget() {
   local cmd
   cmd=$( fc -l 1 | sed 's/^[ ]*[0-9]*[ ]*//' | tac | awk '{ if ( seen[$0]++ == 0 ) { print }}' | fzf --preview-window=wrap --preview 'echo {} | bat --decorations=never --language=zsh --wrap=auto --color=always')
   if [[ -n $cmd ]]; then
-    BUFFER="$cmd"
+    BUFFER=$( printf "%b" "$cmd" )
     CURSOR=${#BUFFER}
   fi
 }
@@ -16,10 +16,10 @@ fzf-smart-widget-up-arrow() {
     local cmd
     local entries
     entries=$(fc -l 1 | sed 's/^[ ]*[0-9]*[ ]*//' | tac | awk '{ if ( seen[$0]++ == 0 ) { print }}' | grep -o "$buff.*" )
-    if [[ ! -z "$( echo "$entries" | grep -o "[^ ].*" )" ]] ; then 
-      cmd=$( echo $entries | fzf --preview-window=wrap --preview 'echo {} | bat --decorations=never --language=zsh --wrap=auto --color=always')
+    if [[ ! -z "$entries" ]] ; then 
+      cmd=$( fc -l 1 | sed 's/^[ ]*[0-9]*[ ]*//' | tac | awk '{ if ( seen[$0]++ == 0 ) { print }}' | grep -o "$buff.*"  | fzf --preview-window=wrap --preview 'echo {} | bat --decorations=never --language=zsh --wrap=auto --color=always')
       if [[ -n $cmd ]]; then
-        BUFFER="$cmd"
+        BUFFER=$( printf "%b" "$cmd" )
         CURSOR=${#BUFFER}
       fi
     fi
