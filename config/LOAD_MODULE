@@ -1,7 +1,7 @@
 tmux_terminal
 omz
-fzfForPreviousCmd
 fastFetch
+z
 gitPass
 persistentAlias
-z
+omz_helper
