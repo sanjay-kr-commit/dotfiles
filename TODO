@@ -15,3 +15,4 @@
 [] Integrate cryptfs module: Mount private data if a key is present, else hide it.
 [] Add Dockerfile for environment replication: Provide a portable way to spin up the environment anywhere.
 [] Add plugin for backing up explicit package install for restoration
+[] Move the dependency resolution to enable module function, so a priority load can be made
