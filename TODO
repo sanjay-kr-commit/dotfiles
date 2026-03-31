@@ -16,3 +16,5 @@
 [] Add Dockerfile for environment replication: Provide a portable way to spin up the environment anywhere.
 [] Add plugin for backing up explicit package install for restoration
 [] Move the dependency resolution to enable module function, so a priority load can be made
+[] Rewrite of whole runtime for static loading and lazy loading
+[] Rewrite ./module/fzfForPreviousCmd for better handling history
