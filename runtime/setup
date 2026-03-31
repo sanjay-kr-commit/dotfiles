@@ -1,9 +1,9 @@
 #!/bin/zsh
 
 parse="source \$HOME${_dot_files_root_dir#$HOME}configureshell"
-if [[ ! -f $HOME/.zshrc ]] ; do 
+if [[ ! -f $HOME/.zshrc ]] ; then
   touch $HOME/.zshrc
-done
+fi
 if [[ "$( grep -o "$parse" $HOME/.zshrc )" == "$parse" ]] ; then
   debug dots are already configured
 else
