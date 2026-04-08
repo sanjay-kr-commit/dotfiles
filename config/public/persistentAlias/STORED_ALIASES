@@ -45,3 +45,4 @@ builtin alias searchwiki='echo -n "query: " && read -r query && query=$(echo $qu
 builtin alias send='selectedDevices="$(devices=$(kdeconnect-cli -a 2>/dev/shm/deviceCount) && deviceCount=$(grep -o "[0-9]*" /dev/shm/deviceCount) && if [[ $deviceCount == 0 ]] ; then echo no device found ; elif [[ $deviceCount == 1 ]] ; then echo $devices ; else echo $devices | fzf ; fi )" && kdeconnect-cli -d  $(echo $selectedDevices |  grep -o ": *[^ ]*" | grep -o " .*") --share '
 builtin alias push=git\ push
 builtin alias globurl=noglob\ urlglobber\
+builtin alias rebuildKwinPlugin=yay\ -S\ \$\(ls\ /usr/lib/qt6/plugins/kwin/effects/plugins\ \|\ xargs\ -I\ \{\}\ pacman\ -Qoq\ /usr/lib/qt6/plugins/kwin/effects/plugins/\{\}\)\ --rebuild\ --noconfirm
