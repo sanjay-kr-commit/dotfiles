@@ -1,8 +1,8 @@
 #!/bin/zsh
 
-# this variable means it's acting as a GIT_ASKPASS
+# this variable means it's acting as a SUDO_ASKPASSASK
 if [[ -v _SUDO_PASS_ACT_AS_ASKSCRIPT ]] ; then 
-  systemd-ask-password
+  systemd-ask-password "$1"
   return
 fi
 
@@ -19,6 +19,8 @@ sudo() {
   actualSudo='/usr/bin/sudo'
   export _SUDO_PASS_ACT_AS_ASKSCRIPT=1
   SUDO_ASKPASS=$_SUDO_PASS_PATH_TO_SCRIPT \
-  $actualSudo -A $*
+  $actualSudo -A "$@"
+  local ret=$?
   unset _SUDO_PASS_ACT_AS_ASKSCRIPT
+  return $ret
 }
