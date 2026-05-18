@@ -6,3 +6,5 @@ gitPass
 persistentAlias
 omz_helper
 fzfForPreviousCmd
+sdkman
+sudo_systemd_ask_pass
