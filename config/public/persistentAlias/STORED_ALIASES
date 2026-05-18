@@ -14,7 +14,6 @@ builtin alias :i='nvim .'
 builtin alias removeOrphanPackages='sudo pacman -Rns $(pacman -Qdtq)'
 builtin alias removePackageCache='paccache -r && paccache -ruk0'
 builtin alias removeOldJournalEntries='journalctl --vacuum-time=4weeks'
-builtin alias updateMirror='sudo reflector --protocol https --verbose --latest 25 --sort rate --save /etc/pacman.d/mirrorlist && eos-rankmirrors --verbose && eos-update --aur'
 builtin alias :si='sudo nvim .'
 builtin alias pull='git pull'
 builtin alias :c='clear'
@@ -46,3 +45,5 @@ builtin alias send='selectedDevices="$(devices=$(kdeconnect-cli -a 2>/dev/shm/de
 builtin alias push=git\ push
 builtin alias globurl=noglob\ urlglobber\
 builtin alias rebuildKwinPlugin=yay\ -S\ \$\(ls\ /usr/lib/qt6/plugins/kwin/effects/plugins\ \|\ xargs\ -I\ \{\}\ pacman\ -Qoq\ /usr/lib/qt6/plugins/kwin/effects/plugins/\{\}\)\ --rebuild\ --noconfirm
+builtin alias rsf=faillock\ --user\ \$USER\ --reset
+builtin alias updateMirror=sudo\ reflector\ --protocol\ https\ --verbose\ --latest\ 25\ --sort\ rate\ --save\ /etc/pacman.d/mirrorlist\ \&\&\ yay\ -Syyu
