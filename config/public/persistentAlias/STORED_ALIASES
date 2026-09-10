@@ -51,4 +51,4 @@ builtin alias prettifyPWD=find\ \$\(pwd\)\ -type\ f\ \|\ while\ IFS=\ read\ -r\ 
 builtin alias liveserverstart=nvim\ --headless\ +\"LiveServerStart\"
 builtin alias prettify=nvim\ --headless\ +\"lua\ require\(\"conform\"\).format\(\)\"\ +wq
 builtin alias :ls=liveserverstart
-builtin alias :vt=if\ \[\[\ -p\ /dev/stdin\ \]\]\;\ then\ buffer=\"\$\(cat\)\"\ \&\&\ tempfile=\"\$\(mktemp\ -p\ /dev/shm\)\"\ \&\&\ print\ -r\ --\ \"\$buffer\"\ \>\ \"\$tempfile\"\ \&\&\ unset\ buffer\ \;\ else\ tempfile=\"\$\(mktemp\ -p\ /dev/shm\)\"\ \&\&\ touch\ \"\$tempfile\"\ \;\ fi\ \&\&\ nvim\ \"\$tempfile\"\ \&\&\ cat\ \"\$tempfile\"\ \&\&\ rm\ \"\$tempfile\"\ \&\&\ unset\ tempfile
+builtin alias :vt=\(\)\{\ tempfile=\"\$\(mktemp\ -p\ /dev/shm\)\"\ \&\&\ if\ \[\[\ -p\ /dev/stdin\ \]\]\;\ then\ cat\ \>\ \"\$tempfile\"\ \;\ else\ touch\ \"\$tempfile\"\;\ fi\ \&\&\ nvim\ \"\$@\"\ \"\$tempfile\"\ 2\>/dev/null\ \&\&\ cat\ \"\$tempfile\"\;\ rm\ -f\ \"\$tempfile\"\;\ unset\ tempfile\ \}
